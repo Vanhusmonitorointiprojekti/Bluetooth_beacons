@@ -144,3 +144,26 @@ app.post('/new_beacon', upload.none(), function(req,res) {
     res.send(result)
   })
 })
+
+
+/*
+// beaconin tietojen haku edit- lomakkeeseen
+app.get('/beacon/one/:id', function (req, res) {
+  let id = req.params.id;
+
+  db.query('SELECT * FROM beacon_info where id=?', [id], function (error, result) {
+
+  })
+})
+*/
+
+app.post('/edit_beacon/:id', upload.none(), function(req,res) {
+  
+  console.log(req.body);
+  db.query('UPDATE beacon_info SET beacon_user=?, WHERE id=?',
+  [req.body.user, req.body.id], function(error, result, fields) {
+
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.send(result)
+  })
+})

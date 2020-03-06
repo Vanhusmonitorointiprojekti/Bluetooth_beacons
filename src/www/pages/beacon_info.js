@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Paper, Table, TableRow, TableHead, TableCell, TableBody, Button } from '@material-ui/core';
 import { Link, Router, BrowserRouter, Route, Switch } from 'react-router-dom'
 import AddBeacon from './addnew_beacon'
+import EditBeacon from './beacon_edit'
 
 class Beacon_info extends Component {
     constructor(props) {
@@ -50,6 +51,8 @@ render() {
                         <TableRow>
                             <TableCell>Beacon User</TableCell>
                             <TableCell>Beacon ID</TableCell>
+                            <TableCell></TableCell>
+                            <TableCell></TableCell>
                             
                         </TableRow>
                     </TableHead>
@@ -58,7 +61,18 @@ render() {
                             <TableRow key={member.beacon_id}>
                             <TableCell>{member.beacon_user}</TableCell>
                             <TableCell>{member.beacon_id}</TableCell>
-                            <Button onClick={this.delete_beacon.bind(this, member.beacon_id)}>Poista</Button>
+                            <TableCell><Button>
+                                <BrowserRouter>
+                                <div>
+                                    <nav>
+                                    <Link to='/EditBeacon'>Muokkaa</Link>
+                                    </nav>
+                                    <Switch>
+                                        <Route path="/EditBeacon"><EditBeacon/></Route>
+                                        </Switch>
+                                    </div></BrowserRouter>
+                                </Button></TableCell>
+                            <TableCell><Button onClick={this.delete_beacon.bind(this, member.beacon_id)}>Poista</Button></TableCell>
                             </TableRow>
                             )}
                             
@@ -70,7 +84,6 @@ render() {
                     <div>
                 <nav>
                 <Link to="/AddBeacon"> Add new </Link>
-                
                 </nav>
 
                 <Switch>
