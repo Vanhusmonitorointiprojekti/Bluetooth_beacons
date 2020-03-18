@@ -75,15 +75,26 @@ render() {
                             <TableRow key={member.beacon_user}>
                             <TableCell>{member.beacon_user}</TableCell>
                             <TableCell>{member.receiver_id}</TableCell>
-                                {member.signal_db > -60 &&
-                                <TableCell style={{backgroundColor: 'green'}}>{member.signal_db}</TableCell>
-                                }
-                                {member.signal_db < -59 &&
+                                {member.location_type == 'red' &&
                                 <TableCell style={{backgroundColor: 'red'}}>{member.signal_db}</TableCell>
+                                }
+                                {member.location_type == 'yellow' &&
+                                <TableCell style={{backgroundColor: 'yellow'}}>{member.signal_db}</TableCell>
+                                }
+                                {member.location_type == 'green' &&
+                                <TableCell style={{backgroundColor: 'green'}}>{member.signal_db}</TableCell>
                                 }
 
                             <TableCell>{member.measument_time.substring(11,19)}</TableCell>
-                            <TableCell>{member.location_type}</TableCell>
+                            {member.location_type == 'red' &&
+                            <TableCell style={{backgroundColor: 'red'}}>{member.location_type}</TableCell>
+                            }
+                            {member.location_type == 'yellow' &&
+                            <TableCell style={{backgroundColor: 'yellow'}}>{member.location_type}</TableCell>
+                            }
+                            {member.location_type == 'green' &&
+                            <TableCell style={{backgroundColor: 'green'}}>{member.location_type}</TableCell>
+                            }
                             </TableRow>
                             )}
                     </TableBody>
