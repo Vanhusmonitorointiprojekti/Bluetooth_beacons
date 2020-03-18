@@ -1,10 +1,15 @@
 //Show events
 SHOW EVENTS FROM bt_beacons
 
-//Create event, which deletes detections older than 1 days
+//Create event, which deletes detections older than 1 days and leave 3 last day's detections
 CREATE EVENT delete_old_detections 
-ON SCHEDULE EVERY 1 DAY STARTS CURRENT_TIMESTAMP 
+ON SCHEDULE EVERY 1 DAY STARTS '2020-03-18 00:00:00' 
 DO 
-  delete from beacon_detections 
-  where datediff(now(), beacon_detections.measument_time) > 1;
+  CREATE TEMPORARY TABLE temp_table SELECT * from beacon_detections where datediff(now(), beacon_detections.measument_time) > 1 ORDER BY measument_time LIMIT 3;
+  DELETE from beacon_detections where datediff(now(), beacon_detections.measument_time > 1);
+  INSERT INTO beacon_detections (Select * from temp_table);
+  DROP TEMPORARY TABLE temp_table;
+
+
+
 

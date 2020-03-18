@@ -98,6 +98,13 @@ app.get('/beacon_locations', function(req, res){
         if (!err){
             console.log(rows, "\n Rows fetched from the databese")
             res.setHeader('Access-Control-Allow-Origin', '*');
+
+                Receiver1_AVG = (Math.round(rows[0].signal_db + rows[1].signal_db + rows[2].signal_db) / 3).toFixed(0);
+                Receiver2_AVG = (Math.round(rows[3].signal_db + rows[4].signal_db + rows[5].signal_db) / 3).toFixed(0);
+                Receiver3_AVG = (Math.round(rows[6].signal_db + rows[7].signal_db + rows[8].signal_db) / 3).toFixed(0);
+               // Receiver4_AVG = (Math.round(rows[9].signal_db + rows[10].signal_db + rows[11].signal_db) / 3).toFixed(0);
+                console.log(Receiver1_AVG, Receiver2_AVG, Receiver3_AVG)
+
             res.send(rows)
         }
         else{
@@ -358,3 +365,4 @@ app.post('/beacon/edit/:id', upload.none(), function(req,res) {
             res.send(result)
         })
 })
+
