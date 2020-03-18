@@ -67,6 +67,7 @@ render() {
                             <TableCell>Receiver ID</TableCell>
                             <TableCell>Signal DB</TableCell>
                             <TableCell>Time</TableCell>
+                            <TableCell>Location Type</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -81,8 +82,8 @@ render() {
                                 <TableCell style={{backgroundColor: 'red'}}>{member.signal_db}</TableCell>
                                 }
 
-
                             <TableCell>{member.measument_time}</TableCell>
+                            <TableCell>{member.location_type}</TableCell>
                             </TableRow>
                             )}
                     </TableBody>
