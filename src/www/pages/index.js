@@ -27,10 +27,10 @@ render(){
     <div>
         <AppBar position="static">
           <Tabs value={this.state.value} onChange={this.handleChange}>
-            <Link to="/"><Tab label="Beacon info"  /></Link>
-            <Link to="/BeaconDetections"><Tab label="Beacon detections" /></Link>
-            <Link to="/ReceiverInfo"><Tab label="Receiver info" /></Link>
-            <Link to="/BeaconLocations"><Tab label="Beacon locations" /></Link>
+            <Tab label="Beacon info" component={Link} to="/"/>
+            <Tab label="Beacon detections" component={Link} to="/BeaconDetections" />
+            <Tab label="Receiver info" component={Link} to="/ReceiverInfo" />
+            <Tab label="Beacon locations" component={Link} to="/BeaconLocations" />
            
           </Tabs>
           
