@@ -82,7 +82,7 @@ render() {
                                 <TableCell style={{backgroundColor: 'red'}}>{member.signal_db}</TableCell>
                                 }
 
-                            <TableCell>{member.measument_time}</TableCell>
+                            <TableCell>{member.measument_time.substring(11,19)}</TableCell>
                             <TableCell>{member.location_type}</TableCell>
                             </TableRow>
                             )}
