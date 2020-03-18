@@ -9,7 +9,9 @@ class Beacon_locations extends Component {
         this.state = {
             tieto: [],
             endpoint: "http://127.0.0.1:4001",
-            response: []
+
+            warning: [],
+            newWarning: ''
         }
     }
 
@@ -24,7 +26,35 @@ class Beacon_locations extends Component {
                 const socket = socketIOClient(endpoint);
                 socket.on("emitSocket", data => this.setState({ tieto: data }));
             });
+
     }
+
+// Not implemented as of now / placeholder for creating history of warnings
+
+    testWarnings = (e) => {
+
+        if (this.state.tieto[0].signal_db < -59) {
+           this.setState({warning: [...this.state.warning, this.state.tieto[0]]})
+
+        }
+
+        else if (this.state.tieto[1].signal_db < -59) {
+            this.setState({warning: [...this.state.warning, this.state.tieto[1]]})
+
+        }
+
+        else if (this.state.tieto[2].signal_db < -59) {
+            this.setState({warning: [...this.state.warning, this.state.tieto[2]]})
+
+        }
+
+     //   console.log(this.state.warning)
+     //   console.log(this.state.tieto)
+
+    }
+
+
+
 
 render() {
         return (
@@ -41,7 +71,7 @@ render() {
                     </TableHead>
                     <TableBody>
                         {this.state.tieto.map(member =>
-                            <TableRow key={member.receiver_id}>
+                            <TableRow key={member.beacon_user}>
                             <TableCell>{member.beacon_user}</TableCell>
                             <TableCell>{member.receiver_id}</TableCell>
                                 {member.signal_db > -60 &&
@@ -57,6 +87,7 @@ render() {
                             )}
                     </TableBody>
                 </Table>
+
                 </Paper>
 
             </div>
