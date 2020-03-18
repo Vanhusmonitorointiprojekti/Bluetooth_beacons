@@ -25,7 +25,7 @@ global.GET_last_beacon_detections =
             LIMIT 10 \
             ';
 
-global.GET_beacon_locations =
+ global.GET_beacon_locations =
             ' \
             (SELECT d.receiver_id, i.beacon_user, d.signal_db, d.measument_time, r.location_type \
             FROM beacon_detections d \

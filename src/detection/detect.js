@@ -16,7 +16,7 @@ const socketServer = require('../socketio/socketio')
 //App, listen this port
 socketServer.start()
 expressPort = 4000;
-var server = app.listen(expressPort,()=>console.log('\nExpress is running at port no : ' + expressPort));
+var server = app.listen(expressPort,()=>console.log('Express is running at port no : ' + expressPort));
 
     //Write instructions to '/' -page
     app.get('/', (req, res) => {

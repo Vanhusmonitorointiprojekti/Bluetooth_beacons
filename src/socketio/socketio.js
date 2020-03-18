@@ -37,7 +37,7 @@ const emit = async socket => {
   }
 };
 
-httpServer.listen(port, () => console.log(`Listening on port ${port}`));
+httpServer.listen(port, () => console.log(`\nSocket.io running on port ${port}`));
 }
 
 module.exports = {
