@@ -58,15 +58,4 @@ render() {
 
 }
 
-const styles =  {
-    buttonStyle: {
-        width: 80,
-        height: 80
-    },
-    headerStyle: {
-        textAlign: 'center'
-    }
-        
-} ;
-
 export default Beacon_detections;

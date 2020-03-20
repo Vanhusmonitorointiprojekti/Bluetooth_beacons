@@ -1,0 +1,10 @@
+//Show events
+SHOW EVENTS FROM bt_beacons
+
+//Create event, which deletes detections older than 1 days
+CREATE EVENT delete_old_detections 
+ON SCHEDULE EVERY 1 DAY STARTS CURRENT_TIMESTAMP 
+DO 
+  delete from beacon_detections 
+  where datediff(now(), beacon_detections.measument_time) > 1;
+
