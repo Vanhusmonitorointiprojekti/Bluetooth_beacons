@@ -58,14 +58,13 @@ class Beacon_info extends Component {
                                     <TableRow key={member.beacon_id}>
                                         <TableCell>{member.beacon_user}</TableCell>
                                         <TableCell>{member.beacon_id}</TableCell>
-                                        <Button onClick={() => { 
+                                        <Button style={{backgroundColor: 'khaki'}}><Link to={"/beacon/one/"+member.beacon_id}>Edit</Link></Button>
+                                        <Button style={{backgroundColor: 'indianred'}} onClick={() => { 
                                             if (window.confirm("Beacon user: " + (this,member.beacon_user)  + "\nBeacon ID: " + (this,member.beacon_id) + "\nAre you sure you want to delete this user?")) { 
                                             let delete_beacon = this.delete_beacon.bind(this, member.beacon_id);
-                                            delete_beacon();}}}>Poista </Button>
-                                        <Link to={"/beacon/one/"+member.beacon_id}>Muuta</Link>
+                                            delete_beacon();}}} >Delete</Button>
                                     </TableRow>
                                 )}
-
                             </TableBody>
                         </Table>
                     </Paper>
