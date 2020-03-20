@@ -103,9 +103,25 @@ app.get('/beacon_locations', function(req, res){
                 Receiver2_AVG = (Math.round(rows[3].signal_db + rows[4].signal_db + rows[5].signal_db) / 3).toFixed(0);
                 Receiver3_AVG = (Math.round(rows[6].signal_db + rows[7].signal_db + rows[8].signal_db) / 3).toFixed(0);
                // Receiver4_AVG = (Math.round(rows[9].signal_db + rows[10].signal_db + rows[11].signal_db) / 3).toFixed(0);
-                console.log(Receiver1_AVG, Receiver2_AVG, Receiver3_AVG)
+                console.log(Receiver1_AVG,Receiver2_AVG,Receiver3_AVG);
+              
 
-            res.send(rows)
+            //TODO: Add loop here
+            rows[0].average_signal_db = Receiver1_AVG;
+            rows[1].average_signal_db = Receiver1_AVG;
+            rows[2].average_signal_db = Receiver1_AVG;
+
+            rows[3].average_signal_db = Receiver2_AVG;
+            rows[4].average_signal_db = Receiver2_AVG;
+            rows[5].average_signal_db = Receiver2_AVG;
+
+            rows[6].average_signal_db = Receiver3_AVG;
+            rows[7].average_signal_db = Receiver3_AVG;
+            rows[8].average_signal_db = Receiver3_AVG;
+            
+            res.json(rows);
+            
+           
         }
         else{
             console.log(err)
