@@ -75,11 +75,11 @@ render() {
                             <TableRow key={member.beacon_user}>
                             <TableCell>{member.beacon_user}</TableCell>
                             <TableCell>{member.receiver_id}</TableCell>
-                                {member.signal_db > -60 &&
-                                <TableCell style={{backgroundColor: 'green'}}>{member.signal_db}</TableCell>
+                                {member.average_signal_db > -60 &&
+                                <TableCell style={{backgroundColor: 'green'}}>{member.average_signal_db}</TableCell>
                                 }
-                                {member.signal_db < -59 &&
-                                <TableCell style={{backgroundColor: 'red'}}>{member.signal_db}</TableCell>
+                                {member.average_signal_db < -59 &&
+                                <TableCell style={{backgroundColor: 'red'}}>{member.average_signal_db}</TableCell>
                                 }
 
                             <TableCell>{member.measument_time}</TableCell>
