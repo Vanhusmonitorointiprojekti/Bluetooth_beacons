@@ -1,15 +1,62 @@
 //Show events
 SHOW EVENTS FROM bt_beacons
 
-//Create event, which deletes detections older than 1 days and leave 3 last day's detections
-CREATE EVENT delete_old_detections 
+//CREATE temporary table and select 3 latest valus for wristlet 1
+CREATE EVENT select_latest_values_wristlet_1
 ON SCHEDULE EVERY 1 DAY STARTS '2020-03-18 00:00:00' 
 DO 
-  CREATE TEMPORARY TABLE temp_table SELECT * from beacon_detections where datediff(now(), beacon_detections.measument_time) > 1 ORDER BY measument_time LIMIT 3;
-  DELETE from beacon_detections where datediff(now(), beacon_detections.measument_time > 1);
-  INSERT INTO beacon_detections (Select * from temp_table);
+  CREATE TEMPORARY TABLE temp_table 
+    SELECT * from beacon_detections 
+    WHERE datediff(now(), beacon_detections.measument_time) > 1 
+    AND beacon_id='e2:e3:23:d1:b0:54' 
+      ORDER BY measument_time DESC LIMIT 3;
+
+//INSERT INTO temporary table and select 3 latest valus for wristlet 2
+CREATE EVENT select_latest_values_wristlet_2
+ON SCHEDULE EVERY 1 DAY STARTS '2020-03-18 00:01:00' 
+DO 
+  INSERT INTO temp_table 
+    SELECT * from beacon_detections 
+    WHERE datediff(now(), beacon_detections.measument_time) > 1 
+    AND beacon_id='d6:2c:ca:c0:d4:9c' 
+      ORDER BY measument_time DESC LIMIT 3;
+
+//INSERT INTO temporary table and select 3 latest valus for wristlet 3
+CREATE EVENT select_latest_values_wristlet_3
+ON SCHEDULE EVERY 1 DAY STARTS '2020-03-18 00:02:00' 
+DO 
+  INSERT INTO temp_table 
+    SELECT * from beacon_detections 
+    WHERE datediff(now(), beacon_detections.measument_time) > 1 
+    AND beacon_id='f2:36:00:21:c0:50' 
+      ORDER BY measument_time DESC LIMIT 3;
+
+//INSERT INTO temporary table and select 3 latest valus for wristlet 4
+CREATE EVENT select_latest_values_wristlet_4
+ON SCHEDULE EVERY 1 DAY STARTS '2020-03-18 00:03:00' 
+DO 
+  INSERT INTO temp_table 
+    SELECT * from beacon_detections 
+    WHERE datediff(now(), beacon_detections.measument_time) > 1 
+    AND beacon_id='e2:18:ef:c9:66:f4' 
+      ORDER BY measument_time DESC LIMIT 3;
+
+//DELETE detections which are older than 24h
+CREATE EVENT Delete_24h_detections
+ON SCHEDULE EVERY 1 DAY STARTS '2020-03-18 00:04:00' 
+DO 
+  DELETE from beacon_detections where measument_time < now() - INTERVAL 24 HOUR;
+
+//INSERT temp_data to beacon_detections
+CREATE EVENT insert_backup_data_to_detections
+ON SCHEDULE EVERY 1 DAY STARTS '2020-03-18 00:05:00' 
+DO 
+ INSERT INTO beacon_detections (Select * from temp_table);
+
+//Drop temp_table
+CREATE EVENT drop_temporary_table
+ON SCHEDULE EVERY 1 DAY STARTS '2020-03-18 00:06:00' 
+DO 
   DROP TEMPORARY TABLE temp_table;
-
-
 
 
