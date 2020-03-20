@@ -63,8 +63,8 @@ render() {
                <Table>
                     <TableHead>
                         <TableRow>
-                            <TableCell>Beacon ID</TableCell>
-                            <TableCell>Receiver ID</TableCell>
+                            <TableCell>Beacon User</TableCell>
+                            <TableCell>Receiver Location</TableCell>
                             <TableCell>Signal DB</TableCell>
                             <TableCell>Time</TableCell>
                             <TableCell>Location Type</TableCell>
@@ -74,7 +74,7 @@ render() {
                         {this.state.tieto.map(member =>
                             <TableRow key={member.beacon_user}>
                             <TableCell>{member.beacon_user}</TableCell>
-                            <TableCell>{member.receiver_id}</TableCell>
+                            <TableCell>{member.receiver_location}</TableCell>
                                 {member.location_type === 'red' &&
                                 <TableCell style={{backgroundColor: 'red'}}>{member.signal_db}</TableCell>
                                 }
