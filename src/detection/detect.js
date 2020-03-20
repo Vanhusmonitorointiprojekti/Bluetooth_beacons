@@ -102,8 +102,13 @@ app.get('/beacon_locations', function(req, res){
                 Receiver1_AVG = (Math.round(rows[0].signal_db + rows[1].signal_db + rows[2].signal_db) / 3).toFixed(0);
                 Receiver2_AVG = (Math.round(rows[3].signal_db + rows[4].signal_db + rows[5].signal_db) / 3).toFixed(0);
                 Receiver3_AVG = (Math.round(rows[6].signal_db + rows[7].signal_db + rows[8].signal_db) / 3).toFixed(0);
-               // Receiver4_AVG = (Math.round(rows[9].signal_db + rows[10].signal_db + rows[11].signal_db) / 3).toFixed(0);
-                console.log(Receiver1_AVG,Receiver2_AVG,Receiver3_AVG);
+                Receiver4_AVG = (Math.round(rows[9].signal_db + rows[10].signal_db + rows[11].signal_db) / 3).toFixed(0);
+                console.log('Averages from receivers:\n' + 
+                            'Receiver1: ' + Receiver1_AVG + '\n' +
+                            'Receiver2: ' + Receiver2_AVG + '\n' +
+                            'Receiver3: ' + Receiver3_AVG + '\n' +
+                            'Receiver4: ' + Receiver4_AVG
+                            );
               
 
             //TODO: Add loop here
@@ -118,6 +123,10 @@ app.get('/beacon_locations', function(req, res){
             rows[6].average_signal_db = Receiver3_AVG;
             rows[7].average_signal_db = Receiver3_AVG;
             rows[8].average_signal_db = Receiver3_AVG;
+
+            rows[9].average_signal_db = Receiver4_AVG;
+            rows[10].average_signal_db = Receiver4_AVG;
+            rows[11].average_signal_db = Receiver4_AVG;
             
             res.json(rows);
             
