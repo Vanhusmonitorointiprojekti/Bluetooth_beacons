@@ -3,11 +3,13 @@ const app = express();
 const alert = require('alert-node');
 const bodyparser = require('body-parser');
 app.use(bodyparser.json());
-const database = require('../database/connect_to_db')
-const queries = require('../database/queries')
-const alerting = require('../detection/alerts')
+const database = require('../database/connect_to_db');
+const queries = require('../database/queries');
+const alerting = require('../detection/alerts');
 const multer = require('multer');
-const socketServer = require('../socketio/socketio')
+const socketServer = require('../socketio/socketio');
+const moment = require('moment');
+
 
 //This is the backend -code which is required to run with front-end.
 //Component handles all the end-point requests and database queries.
