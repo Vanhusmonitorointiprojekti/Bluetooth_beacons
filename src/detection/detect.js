@@ -326,7 +326,7 @@ app.get('/beacon_locations', function(req, res){
                     }
 
                     let Timestamp = checkCurrentTime.CurrentTime()
-                    //console.log(rows)
+                    console.log(rows)
 
                     //check which signal is strongest and print the receiver which had the highest value
                     if (rows[0].AVG_Receiver1_Ranneke3 > rows[0].AVG_Receiver2_Ranneke3 && rows[0].AVG_Receiver1_Ranneke3 > rows[0].AVG_Receiver3_Ranneke3) {

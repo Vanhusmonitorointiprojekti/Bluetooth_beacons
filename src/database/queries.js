@@ -26,8 +26,7 @@ global.GET_last_beacon_detections =
             LIMIT 10 \
             ';
 
-//Add new wristlet to the end of query, structure cannot be changed!
-// UNION (SELECT d.receiver_id, i.beacon_user, d.signal_db, d.measument_time, r.location_type FROM beacon_detections d JOIN receiver_info r ON (d.receiver_id = r.receiver_id) JOIN beacon_info i ON (d.beacon_id = i.beacon_id) WHERE d.beacon_id = "e2:18:ef:c9:66:f4" ORDER BY measument_time DESC limit 3);
+//Add new wristlet to the end of query, structure cannot be changed!d
  global.GET_beacon_locations =
             ' \
             (SELECT d.receiver_id, i.beacon_user, d.signal_db, d.measument_time, r.location_type \
@@ -40,18 +39,24 @@ global.GET_last_beacon_detections =
             UNION (SELECT d.receiver_id, i.beacon_user, d.signal_db, d.measument_time, r.location_type FROM beacon_detections d JOIN receiver_info r ON (d.receiver_id = r.receiver_id) JOIN beacon_info i ON (d.beacon_id = i.beacon_id) WHERE d.beacon_id = "e2:18:ef:c9:66:f4" ORDER BY measument_time DESC limit 3); \
             \
             ';
-            
+
 global.GET_detections_ranneke1 = 
             ' \
-            SELECT( \
-                \
+            SELECT \
+                ( \
                 SELECT signal_db \
                 FROM beacon_detections \
                 WHERE receiver_id = "Receiver1" \
                 AND beacon_id = "e2:e3:23:d1:b0:54" \
                 ORDER BY measument_time DESC \
-                LIMIT 1 ) AS AVG_Receiver1_Ranneke1,\
-                \
+                LIMIT 1 ) AS AVG_Receiver1_Ranneke1, \
+                ( \
+                    SELECT measument_time \
+                    FROM beacon_detections \
+                    WHERE receiver_id = "Receiver1" \
+                    AND beacon_id = "e2:e3:23:d1:b0:54" \
+                    ORDER BY measument_time DESC \
+                    LIMIT 1 ) AS Time_Receiver1_Ranneke1, \
                 ( \
                 SELECT signal_db \
                 FROM beacon_detections \
@@ -59,28 +64,47 @@ global.GET_detections_ranneke1 =
                 AND beacon_id = "e2:e3:23:d1:b0:54" \
                 ORDER BY measument_time DESC \
                 LIMIT 1 ) AS AVG_Receiver2_Ranneke1,\
-                \
+                ( \
+                    SELECT measument_time \
+                    FROM beacon_detections \
+                    WHERE receiver_id = "Receiver1" \
+                    AND beacon_id = "e2:e3:23:d1:b0:54" \
+                    ORDER BY measument_time DESC \
+                    LIMIT 1 ) AS Time_Receiver1_Ranneke1, \
                 ( \
                 SELECT signal_db \
                 FROM beacon_detections \
                 WHERE receiver_id = "Receiver3" \
                 AND beacon_id = "e2:e3:23:d1:b0:54" \
                 ORDER BY measument_time DESC \
-                LIMIT 1 ) AS AVG_Receiver3_Ranneke1 \
+                LIMIT 1 ) AS AVG_Receiver3_Ranneke1, \
+                ( \
+                    SELECT measument_time \
+                    FROM beacon_detections \
+                    WHERE receiver_id = "Receiver1" \
+                    AND beacon_id = "e2:e3:23:d1:b0:54" \
+                    ORDER BY measument_time DESC \
+                    LIMIT 1 ) AS Time_Receiver1_Ranneke1 \
                 \
             ';
 
 global.GET_detections_ranneke2 = 
             ' \
-            SELECT( \
-                \
+            SELECT \
+                ( \
                 SELECT signal_db \
                 FROM beacon_detections \
                 WHERE receiver_id = "Receiver1" \
                 AND beacon_id = "d6:2c:ca:c0:d4:9c" \
                 ORDER BY measument_time DESC \
-                LIMIT 1 ) AS AVG_Receiver1_Ranneke2,\
-                \
+                LIMIT 1 ) AS AVG_Receiver1_Ranneke2, \
+                ( \
+                    SELECT measument_time \
+                    FROM beacon_detections \
+                    WHERE receiver_id = "Receiver1" \
+                    AND beacon_id = "d6:2c:ca:c0:d4:9c" \
+                    ORDER BY measument_time DESC \
+                    LIMIT 1 ) AS Time_Receiver1_Ranneke2, \
                 ( \
                 SELECT signal_db \
                 FROM beacon_detections \
@@ -88,28 +112,47 @@ global.GET_detections_ranneke2 =
                 AND beacon_id = "d6:2c:ca:c0:d4:9c" \
                 ORDER BY measument_time DESC \
                 LIMIT 1 ) AS AVG_Receiver2_Ranneke2,\
-                \
+                ( \
+                    SELECT measument_time \
+                    FROM beacon_detections \
+                    WHERE receiver_id = "Receiver1" \
+                    AND beacon_id = "d6:2c:ca:c0:d4:9c" \
+                    ORDER BY measument_time DESC \
+                    LIMIT 1 ) AS Time_Receiver1_Ranneke2, \
                 ( \
                 SELECT signal_db \
                 FROM beacon_detections \
                 WHERE receiver_id = "Receiver3" \
                 AND beacon_id = "d6:2c:ca:c0:d4:9c" \
                 ORDER BY measument_time DESC \
-                LIMIT 1 ) AS AVG_Receiver3_Ranneke2 \
+                LIMIT 1 ) AS AVG_Receiver3_Ranneke2, \
+                ( \
+                    SELECT measument_time \
+                    FROM beacon_detections \
+                    WHERE receiver_id = "Receiver1" \
+                    AND beacon_id = "d6:2c:ca:c0:d4:9c" \
+                    ORDER BY measument_time DESC \
+                    LIMIT 1 ) AS Time_Receiver1_Ranneke2 \
                 \
             ';
 
 global.GET_detections_ranneke3 =
             ' \
-            SELECT( \
-                \
+            SELECT \
+                ( \
                 SELECT signal_db \
                 FROM beacon_detections \
                 WHERE receiver_id = "Receiver1" \
                 AND beacon_id = "f2:36:00:21:c0:50" \
                 ORDER BY measument_time DESC \
-                LIMIT 1 ) AS AVG_Receiver1_Ranneke3,\
-                \
+                LIMIT 1 ) AS AVG_Receiver1_Ranneke3, \
+                ( \
+                    SELECT measument_time \
+                    FROM beacon_detections \
+                    WHERE receiver_id = "Receiver1" \
+                    AND beacon_id = "f2:36:00:21:c0:50" \
+                    ORDER BY measument_time DESC \
+                    LIMIT 1 ) AS Time_Receiver1_Ranneke3, \
                 ( \
                 SELECT signal_db \
                 FROM beacon_detections \
@@ -117,28 +160,47 @@ global.GET_detections_ranneke3 =
                 AND beacon_id = "f2:36:00:21:c0:50" \
                 ORDER BY measument_time DESC \
                 LIMIT 1 ) AS AVG_Receiver2_Ranneke3,\
-                \
+                ( \
+                    SELECT measument_time \
+                    FROM beacon_detections \
+                    WHERE receiver_id = "Receiver2" \
+                    AND beacon_id = "f2:36:00:21:c0:50" \
+                    ORDER BY measument_time DESC \
+                    LIMIT 1 ) AS Time_Receiver2_Ranneke3, \
                 ( \
                 SELECT signal_db \
                 FROM beacon_detections \
                 WHERE receiver_id = "Receiver3" \
                 AND beacon_id = "f2:36:00:21:c0:50" \
                 ORDER BY measument_time DESC \
-                LIMIT 1 ) AS AVG_Receiver3_Ranneke3\
+                LIMIT 1 ) AS AVG_Receiver3_Ranneke3, \
+                ( \
+                    SELECT measument_time \
+                    FROM beacon_detections \
+                    WHERE receiver_id = "Receiver3" \
+                    AND beacon_id = "f2:36:00:21:c0:50" \
+                    ORDER BY measument_time DESC \
+                    LIMIT 1 ) AS Time_Receiver3_Ranneke3 \
                 \
             ';
 
 global.GET_detections_ranneke4 =
             ' \
-            SELECT( \
-                \
+            SELECT \
+                ( \
                 SELECT signal_db \
                 FROM beacon_detections \
                 WHERE receiver_id = "Receiver1" \
                 AND beacon_id = "e2:18:ef:c9:66:f4" \
                 ORDER BY measument_time DESC \
-                LIMIT 1 ) AS AVG_Receiver1_Ranneke4,\
-                \
+                LIMIT 1 ) AS AVG_Receiver1_Ranneke4, \
+                ( \
+                    SELECT measument_time \
+                    FROM beacon_detections \
+                    WHERE receiver_id = "Receiver1" \
+                    AND beacon_id = "e2:18:ef:c9:66:f4" \
+                    ORDER BY measument_time DESC \
+                    LIMIT 1 ) AS Time_Receiver1_Ranneke4, \
                 ( \
                 SELECT signal_db \
                 FROM beacon_detections \
@@ -146,14 +208,27 @@ global.GET_detections_ranneke4 =
                 AND beacon_id = "e2:18:ef:c9:66:f4" \
                 ORDER BY measument_time DESC \
                 LIMIT 1 ) AS AVG_Receiver2_Ranneke4,\
-                \
+                ( \
+                    SELECT measument_time \
+                    FROM beacon_detections \
+                    WHERE receiver_id = "Receiver2" \
+                    AND beacon_id = "e2:18:ef:c9:66:f4" \
+                    ORDER BY measument_time DESC \
+                    LIMIT 1 ) AS Time_Receiver2_Ranneke4, \
                 ( \
                 SELECT signal_db \
                 FROM beacon_detections \
                 WHERE receiver_id = "Receiver3" \
                 AND beacon_id = "e2:18:ef:c9:66:f4" \
                 ORDER BY measument_time DESC \
-                LIMIT 1 ) AS AVG_Receiver3_Ranneke4 \
+                LIMIT 1 ) AS AVG_Receiver3_Ranneke4, \
+                ( \
+                    SELECT measument_time \
+                    FROM beacon_detections \
+                    WHERE receiver_id = "Receiver3" \
+                    AND beacon_id = "e2:18:ef:c9:66:f4" \
+                    ORDER BY measument_time DESC \
+                    LIMIT 1 ) AS Time_Receiver3_Ranneke4 \
                 \
             ';
 
