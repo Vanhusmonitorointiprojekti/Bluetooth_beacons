@@ -9,11 +9,10 @@ const alerting = require('../detection/alerts');
 const multer = require('multer');
 const socketServer = require('../socketio/socketio');
 const moment = require('moment');
-
+const checkCurrentTime = require('./checkCurrentTime')
 
 //This is the backend -code which is required to run with front-end.
 //Component handles all the end-point requests and database queries.
-
 
 //App, listen this port
 socketServer.start()
@@ -100,6 +99,8 @@ app.get('/beacon_locations', function(req, res){
         if (!err){
             console.log(rows, "\n Rows fetched from the databese")
             res.setHeader('Access-Control-Allow-Origin', '*');
+
+            console.log(rows)
 
                 Receiver1_AVG = (Math.round(rows[0].signal_db + rows[1].signal_db + rows[2].signal_db) / 3).toFixed(0);
                 Receiver2_AVG = (Math.round(rows[3].signal_db + rows[4].signal_db + rows[5].signal_db) / 3).toFixed(0);
@@ -188,18 +189,43 @@ app.get('/beacon_locations', function(req, res){
             (err, rows, fields)=> {
 
                 if(!err) {
+                    if(rows[0].AVG_Receiver1_Ranneke1 == null) {
+                        rows[0].AVG_Receiver1_Ranneke1 = -999;
+                    }
+
+                    if(rows[0].AVG_Receiver2_Ranneke1 == null) {
+                        rows[0].AVG_Receiver2_Ranneke1 = -999;
+                    }
+
+                    if(rows[0].AVG_Receiver3_Ranneke1 == null) {
+                        rows[0].AVG_Receiver3_Ranneke1 = -999;
+                    }
+                    if(rows[0].Time_Receiver1_Ranneke1 == null) {
+                        rows[0].Time_Receiver1_Ranneke1 = 'not seen 24h';
+                    }
+
+                    if(rows[0].Time_Receiver2_Ranneke1 == null) {
+                        rows[0].Time_Receiver2_Ranneke1 = 'not seen in 24h';
+                    }
+
+                    if(rows[0].Time_Receiver3_Ranneke1 == null) {
+                        rows[0].Time_Receiver3_Ranneke1 = 'not seen in 24h';
+                    }
+                    
+
+                    let Timestamp = checkCurrentTime.CurrentTime()
+                    console.log(rows)
 
                 //check which signal is strongest and print the receiver which had the highest value
                     if (rows[0].AVG_Receiver1_Ranneke1 > rows[0].AVG_Receiver2_Ranneke1 && rows[0].AVG_Receiver1_Ranneke1 > rows[0].AVG_Receiver3_Ranneke1) {
                         console.log("RECEIVER1 VAHVIN")
-                        alert('Ranneke 1 ' + red_alert)
                     }
                     else if (rows[0].AVG_Receiver2_Ranneke1 > rows[0].AVG_Receiver1_Ranneke1 && rows[0].AVG_Receiver2_Ranneke1 > rows[0].AVG_Receiver3_Ranneke1) {
                         console.log("RECEIVER2 VAHVIN")
                     }
                     else if (rows[0].AVG_Receiver3_Ranneke1 > rows[0].AVG_Receiver2_Ranneke1 && rows[0].AVG_Receiver3_Ranneke1 > rows[0].AVG_Receiver1_Ranneke2) {
                         console.log("RECEIVER3 VAHVIN")
-                    }
+                    }    
             }
         
             else {
@@ -220,11 +246,21 @@ app.get('/beacon_locations', function(req, res){
                 (err, rows, fields)=> {
                 
                     if(!err) {
+                        if(rows[0].AVG_Receiver1_Ranneke1 == null) {
+                            rows[0].AVG_Receiver1_Ranneke1 = -999;
+                        }
+    
+                        if(rows[0].AVG_Receiver2_Ranneke1 == null) {
+                            rows[0].AVG_Receiver2_Ranneke1 = -999;
+                        }
+    
+                        if(rows[0].AVG_Receiver3_Ranneke1 == null) {
+                            rows[0].AVG_Receiver3_Ranneke1 = -999;
+                        }
 
                         //check which signal is strongest and print the receiver which had the highest value
                         if (rows[0].AVG_Receiver1_Ranneke2 > rows[0].AVG_Receiver2_Ranneke2 && rows[0].AVG_Receiver1_Ranneke2 > rows[0].AVG_Receiver3_Ranneke2) {
                             console.log("RECEIVER1 VAHVIN")
-                            alert('Ranneke 2 ' + red_alert) 
                         }
                         else if (rows[0].AVG_Receiver2_Ranneke2 > rows[0].AVG_Receiver1_Ranneke2 && rows[0].AVG_Receiver2_Ranneke2 > rows[0].AVG_Receiver3_Ranneke2) {
                             console.log("RECEIVER2 VAHVIN")
@@ -252,11 +288,21 @@ app.get('/beacon_locations', function(req, res){
             (err, rows, fields)=> {
 
                 if(!err) {
+                    if(rows[0].AVG_Receiver1_Ranneke1 == null) {
+                        rows[0].AVG_Receiver1_Ranneke1 = -999;
+                    }
+
+                    if(rows[0].AVG_Receiver2_Ranneke1 == null) {
+                        rows[0].AVG_Receiver2_Ranneke1 = -999;
+                    }
+
+                    if(rows[0].AVG_Receiver3_Ranneke1 == null) {
+                        rows[0].AVG_Receiver3_Ranneke1 = -999;
+                    }
 
                     //check which signal is strongest and print the receiver which had the highest value
                     if (rows[0].AVG_Receiver1_Ranneke3 > rows[0].AVG_Receiver2_Ranneke3 && rows[0].AVG_Receiver1_Ranneke3 > rows[0].AVG_Receiver3_Ranneke3) {
                         console.log("RECEIVER1 VAHVIN")
-                        alert('Ranneke 3 ' + red_alert) 
                     }
                     else if (rows[0].AVG_Receiver2_Ranneke3 > rows[0].AVG_Receiver1_Ranneke3 && rows[0].AVG_Receiver2_Ranneke3 > rows[0].AVG_Receiver3_Ranneke3) {
                         console.log("RECEIVER2 VAHVIN")
@@ -288,11 +334,21 @@ app.get('/beacon_locations', function(req, res){
                 (err, rows, fields)=> {
 
                 if(!err) {
+                    if(rows[0].AVG_Receiver1_Ranneke1 == null) {
+                        rows[0].AVG_Receiver1_Ranneke1 = -999;
+                    }
+
+                    if(rows[0].AVG_Receiver2_Ranneke1 == null) {
+                        rows[0].AVG_Receiver2_Ranneke1 = -999;
+                    }
+
+                    if(rows[0].AVG_Receiver3_Ranneke1 == null) {
+                        rows[0].AVG_Receiver3_Ranneke1 = -999;
+                    }
                       
                         //check which signal is strongest and print the receiver which had the highest value
                         if (rows[0].AVG_Receiver1_Ranneke4 > rows[0].AVG_Receiver2_Ranneke4 && rows[0].AVG_Receiver1_Ranneke4 > rows[0].AVG_Receiver3_Ranneke4) {
                             console.log("RECEIVER1 VAHVIN")
-                            alert('Ranneke 4 ' + red_alert)  
                         }
                         else if (rows[0].AVG_Receiver2_Ranneke4 > rows[0].AVG_Receiver1_Ranneke4 && rows[0].AVG_Receiver2_Ranneke4 > rows[0].AVG_Receiver3_Ranneke4) {
                             console.log("RECEIVER2 VAHVIN")

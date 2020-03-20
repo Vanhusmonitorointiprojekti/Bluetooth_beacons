@@ -24,9 +24,12 @@ let hours = ts.getHours();
 //Timestamp minutes NOTICE if value is between 1-10 format will be for example 12:1 instead of 12:01
 let minutes = ts.getMinutes();
 
+//Timestamp seconds
+let seconds = ts.getSeconds();
+
 //Timestamp used
-console.log(ts)
-console.log(year + '-' + month + '-' + date + ' ' + hours + ':' + minutes)
+//console.log(ts)
+console.log('\n Current time: ' + year + '-' + month + '-' + date + ' ' + hours + ':' + minutes + ':' + seconds)
 
 
 /* TESTING
@@ -45,7 +48,6 @@ console.log(erotus)
 */
 
 }
-CurrentTime();
 
 exports.CurrentTime = CurrentTime;
 
