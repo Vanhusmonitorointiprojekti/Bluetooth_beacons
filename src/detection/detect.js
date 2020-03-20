@@ -187,17 +187,6 @@ app.get('/beacon_locations', function(req, res){
 
                 //check if database contains null values (not detected) and change them to -999 ("out of range")
                 if(!err) {
-                    if(rows[0].AVG_Receiver1_Ranneke1 == null) {
-                        rows[0].AVG_Receiver1_Ranneke1 = -999;
-                    }
-
-                    if(rows[0].AVG_Receiver2_Ranneke1 == null) {
-                        rows[0].AVG_Receiver2_Ranneke1 = -999;
-                    }
-
-                    if(rows[0].AVG_Receiver3_Ranneke1 == null) {
-                        rows[0].AVG_Receiver3_Ranneke1 = -999;
-                    }
 
                 //check which signal is strongest and print the receiver which had the highest value
                     if (rows[0].AVG_Receiver1_Ranneke1 > rows[0].AVG_Receiver2_Ranneke1 && rows[0].AVG_Receiver1_Ranneke1 > rows[0].AVG_Receiver3_Ranneke1) {
@@ -235,17 +224,7 @@ app.get('/beacon_locations', function(req, res){
                 
                     //check if database contains null values (not detected) and change them to -999 ("out of range")
                     if(!err) {
-                        if(rows[0].AVG_Receiver1_Ranneke2 == null) {
-                            rows[0].AVG_Receiver1_Ranneke2 = -999;
-                        }
-    
-                        if(rows[0].AVG_Receiver2_Ranneke2 == null) {
-                            rows[0].AVG_Receiver2_Ranneke2 = -999;
-                        }
-    
-                        if(rows[0].AVG_Receiver3_Ranneke2 == null) {
-                            rows[0].AVG_Receiver3_Ranneke2 = -999;
-                        }
+
                         //check which signal is strongest and print the receiver which had the highest value
                         if (rows[0].AVG_Receiver1_Ranneke2 > rows[0].AVG_Receiver2_Ranneke2 && rows[0].AVG_Receiver1_Ranneke2 > rows[0].AVG_Receiver3_Ranneke2) {
                             console.log("RECEIVER1 VAHVIN")
@@ -282,17 +261,7 @@ app.get('/beacon_locations', function(req, res){
 
                 //check if database contains null values (not detected) and change them to -999 ("out of range")
                 if(!err) {
-                    if(rows[0].AVG_Receiver1_Ranneke3 == null) {
-                        rows[0].AVG_Receiver1_Ranneke3 = -999;
-                    }
 
-                    if(rows[0].AVG_Receiver2_Ranneke3 == null) {
-                        rows[0].AVG_Receiver2_Ranneke3 = -999;
-                    }
-
-                    if(rows[0].AVG_Receiver3_Ranneke3 == null) {
-                        rows[0].AVG_Receiver3_Ranneke3 = -999;
-                    }
                     //check which signal is strongest and print the receiver which had the highest value
                     if (rows[0].AVG_Receiver1_Ranneke3 > rows[0].AVG_Receiver2_Ranneke3 && rows[0].AVG_Receiver1_Ranneke3 > rows[0].AVG_Receiver3_Ranneke3) {
                         console.log("RECEIVER1 VAHVIN")
@@ -333,17 +302,7 @@ app.get('/beacon_locations', function(req, res){
 
                 //check if database contains null values (not detected) and change them to -999 ("out of range")
                 if(!err) {
-                        if(rows[0].AVG_Receiver1_Ranneke4 == null) {
-                            rows[0].AVG_Receiver1_Ranneke4 = -999;
-                        }
-
-                        if(rows[0].AVG_Receiver2_Ranneke4 == null) {
-                            rows[0].AVG_Receiver2_Ranneke4 = -999;
-                        }
-
-                        if(rows[0].AVG_Receiver3_Ranneke4 == null) {
-                            rows[0].AVG_Receiver3_Ranneke4 = -999;
-                        }
+                      
                         //check which signal is strongest and print the receiver which had the highest value
                         if (rows[0].AVG_Receiver1_Ranneke4 > rows[0].AVG_Receiver2_Ranneke4 && rows[0].AVG_Receiver1_Ranneke4 > rows[0].AVG_Receiver3_Ranneke4) {
                             console.log("RECEIVER1 VAHVIN")
