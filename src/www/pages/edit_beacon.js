@@ -46,7 +46,7 @@ class EditBeacon extends Component
             <div>
 
                 <TextField label='Beacon user' name='user' value={this.state.user} onChange = {this.changeData}/>
-                <TextField label='Beacon ID' name='id' value={this.state.id} onChange = {this.changeData}/>
+                
                 <Button onClick={this.edit_beacon}>Muuta</Button>
             </div>
         );

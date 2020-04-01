@@ -63,8 +63,8 @@ render() {
                <Table>
                     <TableHead>
                         <TableRow>
-                            <TableCell>Beacon ID</TableCell>
-                            <TableCell>Receiver ID</TableCell>
+                            <TableCell>Beacon User</TableCell>
+                            <TableCell>Receiver Location</TableCell>
                             <TableCell>Signal DB</TableCell>
                             <TableCell>Time</TableCell>
                             <TableCell>Location Type</TableCell>
@@ -74,25 +74,25 @@ render() {
                         {this.state.tieto.map(member =>
                             <TableRow key={member.beacon_user}>
                             <TableCell>{member.beacon_user}</TableCell>
-                            <TableCell>{member.receiver_id}</TableCell>
-                                {member.location_type == 'red' &&
+                            <TableCell>{member.receiver_location}</TableCell>
+                                {member.location_type === 'red' &&
                                 <TableCell style={{backgroundColor: 'red'}}>{member.signal_db}</TableCell>
                                 }
-                                {member.location_type == 'yellow' &&
+                                {member.location_type === 'yellow' &&
                                 <TableCell style={{backgroundColor: 'yellow'}}>{member.signal_db}</TableCell>
                                 }
-                                {member.location_type == 'green' &&
+                                {member.location_type === 'green' &&
                                 <TableCell style={{backgroundColor: 'green'}}>{member.signal_db}</TableCell>
                                 }
 
                             <TableCell>{member.measument_time.substring(11,19)}</TableCell>
-                            {member.location_type == 'red' &&
+                            {member.location_type === 'red' &&
                             <TableCell style={{backgroundColor: 'red'}}>{member.location_type}</TableCell>
                             }
-                            {member.location_type == 'yellow' &&
+                            {member.location_type === 'yellow' &&
                             <TableCell style={{backgroundColor: 'yellow'}}>{member.location_type}</TableCell>
                             }
-                            {member.location_type == 'green' &&
+                            {member.location_type === 'green' &&
                             <TableCell style={{backgroundColor: 'green'}}>{member.location_type}</TableCell>
                             }
                             </TableRow>
