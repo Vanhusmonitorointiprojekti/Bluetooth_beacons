@@ -74,9 +74,12 @@ render() {
                         {this.state.tieto.map(member =>
                             <TableRow key={member.beacon_user}>
                             <TableCell>{member.beacon_user}</TableCell>
-                            <TableCell>{member.receiver_location}</TableCell>
-                                {member.location_type === 'red' &&
-                                <TableCell style={{backgroundColor: 'red'}}>{member.signal_db}</TableCell>
+                            <TableCell>{member.receiver_id}</TableCell>
+                                {member.average_signal_db > -60 &&
+                                <TableCell style={{backgroundColor: 'green'}}>{member.average_signal_db}</TableCell>
+                                }
+                                {member.average_signal_db < -59 &&
+                                <TableCell style={{backgroundColor: 'red'}}>{member.average_signal_db}</TableCell>
                                 }
                                 {member.location_type === 'yellow' &&
                                 <TableCell style={{backgroundColor: 'yellow'}}>{member.signal_db}</TableCell>
