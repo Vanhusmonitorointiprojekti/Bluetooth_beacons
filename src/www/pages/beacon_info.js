@@ -1,12 +1,8 @@
 import React, { Component } from 'react';
 import { Paper, Table, TableRow, TableHead, TableCell, TableBody, Button } from '@material-ui/core';
 import { Link, Router, BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
-import AddBeacon from './addnew_beacon'
-<<<<<<< HEAD
-import EditBeacon from './beacon_edit'
-=======
+import AddBeacon from './addnew_beacon';
 import EditBeacon from "./edit_beacon";
->>>>>>> development
 
 class Beacon_info extends Component {
     constructor(props) {
@@ -46,46 +42,7 @@ class Beacon_info extends Component {
 
     render() {
         return (
-<<<<<<< HEAD
-      <div>
-            <Paper>
-               <Table>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Beacon User</TableCell>
-                            <TableCell>Beacon ID</TableCell>
-                            <TableCell></TableCell>
-                            <TableCell></TableCell>
-                            
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {this.state.tieto.map(member =>
-                            <TableRow key={member.beacon_id}>
-                            <TableCell>{member.beacon_user}</TableCell>
-                            <TableCell>{member.beacon_id}</TableCell>
-                            <TableCell><Button>
-                                <BrowserRouter>
-                                <div>
-                                    <nav>
-                                    <Link to='/EditBeacon'>Muokkaa</Link>
-                                    </nav>
-                                    <Switch>
-                                        <Route path="/EditBeacon"><EditBeacon/></Route>
-                                        </Switch>
-                                    </div></BrowserRouter>
-                                </Button></TableCell>
-                            <TableCell><Button onClick={this.delete_beacon.bind(this, member.beacon_id)}>Poista</Button></TableCell>
-                            </TableRow>
-                            )}
-                            
-                    </TableBody>
-                </Table>
-                </Paper>
-
-=======
             <div>
->>>>>>> development
                 <BrowserRouter>
                     <Paper>
                         <Table>
@@ -111,18 +68,6 @@ class Beacon_info extends Component {
 
 
                     <div>
-<<<<<<< HEAD
-                <nav>
-                <Link to="/AddBeacon"> Add new </Link>
-                </nav>
-
-                <Switch>
-                    <Route path="/AddBeacon">
-                    <AddBeacon />
-                    </Route>
-                </Switch>
-                </div>
-=======
                         <nav>
                             <Link to="/AddBeacon"> Add new </Link>
 
@@ -134,7 +79,6 @@ class Beacon_info extends Component {
 
                         </Switch>
                     </div>
->>>>>>> development
                 </BrowserRouter>
             </div>
 
