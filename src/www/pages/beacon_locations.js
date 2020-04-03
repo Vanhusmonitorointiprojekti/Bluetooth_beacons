@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Paper, Table, TableRow, TableHead, TableCell, TableBody } from '@material-ui/core';
 import socketIOClient from "socket.io-client";
 
-
 class Beacon_locations extends Component {
     constructor(props) {
         super(props)
@@ -53,8 +52,17 @@ class Beacon_locations extends Component {
 
     }
 
-
-
+    testAlert = () => {
+        if (this.state.tieto[0].location_type === "green"){
+        alert("User " + this.state.tieto[0].beacon_user + " has entered the " +this.state.tieto[0].location_type + " room at: " + this.state.tieto[0].measument_time.substring(11,19))
+        }
+        else if (this.state.tieto[1].location_type === "green"){
+            alert("User " + this.state.tieto[1].beacon_user + " has entered the " +this.state.tieto[1].location_type + " room at: " + this.state.tieto[1].measument_time.substring(11,19))
+        }
+        else if (this.state.tieto[2].location_type === "green"){
+            alert("User " + this.state.tieto[2].beacon_user + " has entered the " +this.state.tieto[2].location_type + " room at: " + this.state.tieto[2].measument_time.substring(11,19))
+        }
+    }
 
 render() {
         return (
@@ -82,9 +90,8 @@ render() {
                                 <TableCell style={{backgroundColor: 'yellow'}}>{member.signal_db}</TableCell>
                                 }
                                 {member.location_type === 'green' &&
-                                <TableCell style={{backgroundColor: 'green'}}>{member.signal_db}</TableCell>
+                                <TableCell style={{backgroundColor: 'green'}}>{member.signal_db}  {this.testAlert()}</TableCell>
                                 }
-
                             <TableCell>{member.measument_time.substring(11,19)}</TableCell>
                             {member.location_type === 'red' &&
                             <TableCell style={{backgroundColor: 'red'}}>{member.location_type}</TableCell>
@@ -93,23 +100,16 @@ render() {
                             <TableCell style={{backgroundColor: 'yellow'}}>{member.location_type}</TableCell>
                             }
                             {member.location_type === 'green' &&
-                            <TableCell style={{backgroundColor: 'green'}}>{member.location_type}</TableCell>
+                            <TableCell style={{backgroundColor: 'green'}}>{member.location_type }</TableCell>
                             }
                             </TableRow>
-                            )}
+                            )}                            
                     </TableBody>
                 </Table>
-
-                </Paper>
-
-            </div>
-
-
-           
+                </Paper>                
+            </div>      
         );
     }
-
-
 }
 
 const styles =  {
