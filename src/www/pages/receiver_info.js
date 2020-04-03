@@ -40,7 +40,15 @@ render() {
                             <TableRow key={member.receiver_id}>
                             <TableCell>{member.receiver_id}</TableCell>
                             <TableCell>{member.receiver_location}</TableCell>
-                            <TableCell>{member.location_type}</TableCell>
+                            {member.location_type === 'red' &&
+                            <TableCell style={{backgroundColor: 'red'}}>{member.location_type}</TableCell>
+                            }
+                            {member.location_type === 'yellow' &&
+                            <TableCell style={{backgroundColor: 'yellow'}}>{member.location_type}</TableCell>
+                            }
+                            {member.location_type === 'green' &&
+                            <TableCell style={{backgroundColor: 'green'}}>{member.location_type}</TableCell>
+                            }
                             </TableRow>
                             )}
                     </TableBody>
