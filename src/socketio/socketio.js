@@ -31,6 +31,8 @@ const emit = async socket => {
       "http://localhost:4000/beacon_locations"
     );
     // -> data structure for socket.emit ->  topic name you emit -> res. -> data. -> json attribute/value
+    
+    
     socket.emit("emitSocket", res.data);
   } catch (error) {
     console.error(`Error: ${error.code}`);

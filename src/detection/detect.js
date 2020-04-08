@@ -3,15 +3,15 @@ const app = express();
 const alert = require('alert-node');
 const bodyparser = require('body-parser');
 app.use(bodyparser.json());
-const database = require('../database/connect_to_db')
-const queries = require('../database/queries')
-const alerting = require('../detection/alerts')
+const database = require('../database/connect_to_db');
+const queries = require('../database/queries');
+const alerting = require('../detection/alerts');
 const multer = require('multer');
-const socketServer = require('../socketio/socketio')
+const socketServer = require('../socketio/socketio');
+const moment = require('moment');
 
 //This is the backend -code which is required to run with front-end.
 //Component handles all the end-point requests and database queries.
-
 
 //App, listen this port
 socketServer.start()
@@ -98,7 +98,110 @@ app.get('/beacon_locations', function(req, res){
         if (!err){
             console.log(rows, "\n Rows fetched from the databese")
             res.setHeader('Access-Control-Allow-Origin', '*');
-            res.send(rows)
+
+            //Get latest packet's timediff and use it as "seconds ago"
+            let rawTimeDiff1 = rows[2].Timediff
+            let Receiver1_timediff = rawTimeDiff1.split(':');
+            let Receiver1_seconds = (+Receiver1_timediff[0]) * 60 * 60 + (Receiver1_timediff[1]) * 60 + (+Receiver1_timediff[2]);
+
+            let rawTimeDiff2 = rows[5].Timediff
+            let Receiver2_timediff = rawTimeDiff2.split(':');
+            let Receiver2_seconds = (+Receiver2_timediff[0]) * 60 * 60 + (Receiver2_timediff[1]) * 60 + (+Receiver2_timediff[2]);
+
+            let rawTimeDiff3 = rows[8].Timediff
+            let Receiver3_timediff = rawTimeDiff3.split(':');
+            let Receiver3_seconds = (+Receiver3_timediff[0]) * 60 * 60 + (Receiver3_timediff[1]) * 60 + (+Receiver3_timediff[2])
+
+            let rawTimeDiff4 = rows[11].Timediff
+            let Receiver4_timediff = rawTimeDiff4.split(':');
+            let Receiver4_seconds = (+Receiver4_timediff[0]) * 60 * 60 + (Receiver4_timediff[1]) * 60 + (+Receiver4_timediff[2]);
+
+                Receiver1_AVG = (Math.round(rows[0].signal_db + rows[1].signal_db + rows[2].signal_db) / 3).toFixed(0);
+                Receiver2_AVG = (Math.round(rows[3].signal_db + rows[4].signal_db + rows[5].signal_db) / 3).toFixed(0);
+                Receiver3_AVG = (Math.round(rows[6].signal_db + rows[7].signal_db + rows[8].signal_db) / 3).toFixed(0);
+                Receiver4_AVG = (Math.round(rows[9].signal_db + rows[10].signal_db + rows[11].signal_db) / 3).toFixed(0);
+                console.log('Averages from receivers:\n' + 
+                            'Receiver1: ' + Receiver1_AVG + '\n' +
+                            'Receiver2: ' + Receiver2_AVG + '\n' +
+                            'Receiver3: ' + Receiver3_AVG + '\n' +
+                            'Receiver4: ' + Receiver4_AVG
+                            );
+
+
+            //Check the status of each Receiver
+            let Receiver1_status = rows[2].status;
+                if(Receiver1_seconds < 300) {
+                    Receiver1_status = 'OK'
+                }
+                if(Receiver1_seconds >= 300 && Receiver4_seconds <= 599) {
+                    Receiver1_status = 'Unsure'
+                }
+                if(Receiver1_seconds >= 600) {
+                    Receiver1_status = 'Alarm'
+                }
+            
+            let Receiver2_status = rows[5].status;
+                if(Receiver2_seconds < 300) {
+                    Receiver2_status = 'OK'
+                }
+                if(Receiver2_seconds >= 300 && Receiver4_seconds <= 599) {
+                    Receiver2_status = 'Unsure'
+                }
+                if(Receiver2_seconds >= 600) {
+                    Receiver2_status = 'Alarm'
+                }
+
+            let Receiver3_status = rows[8].status;
+                if(Receiver3_seconds < 300) {
+                    Receiver3_status = 'OK'
+                }
+                if(Receiver3_seconds >= 300 && Receiver4_seconds <= 599) {
+                    Receiver3_status = 'Unsure'
+                }
+                if(Receiver3_seconds >= 600) {
+                    Receiver3_status = 'Alarm'
+                }
+
+            let Receiver4_status = rows[11].status;
+                if(Receiver4_seconds < 300) {
+                    Receiver4_status = 'OK'
+                }
+                if(Receiver4_seconds >= 300 && Receiver4_seconds <= 599) {
+                    Receiver4_status = 'Unsure'
+                }
+                if(Receiver4_seconds >= 600) {
+                    Receiver4_status = 'Alarm'
+                }
+                
+            //Add data to json
+            //TODO: Add loop here
+            rows[0].average_signal_db = Receiver1_AVG;
+            rows[1].average_signal_db = Receiver1_AVG;
+            rows[2].average_signal_db = Receiver1_AVG;
+            rows[2].timediff_in_seconds = Receiver1_seconds;
+            rows[2].status = Receiver1_status
+
+
+            rows[3].average_signal_db = Receiver2_AVG;
+            rows[4].average_signal_db = Receiver2_AVG;
+            rows[5].average_signal_db = Receiver2_AVG;
+            rows[5].timediff_in_seconds = Receiver2_seconds;
+            rows[5].status = Receiver2_status
+
+            rows[6].average_signal_db = Receiver3_AVG;
+            rows[7].average_signal_db = Receiver3_AVG;
+            rows[8].average_signal_db = Receiver3_AVG;
+            rows[8].timediff_in_seconds = Receiver3_seconds;
+            rows[8].status = Receiver3_status
+
+            rows[9].average_signal_db = Receiver4_AVG;
+            rows[10].average_signal_db = Receiver4_AVG;
+            rows[11].average_signal_db = Receiver4_AVG;
+            rows[11].timediff_in_seconds = Receiver4_seconds;
+            rows[11].status = Receiver4_status
+            
+            res.json(rows);
+           
         }
         else{
             console.log(err)
@@ -143,7 +246,7 @@ app.get('/beacon_locations', function(req, res){
         })
     })
 
-    //GET ranneke3 avg detections
+    //GET ranneke1 avg detections
    app.get('/detections/ranneke1',(req,res)=>{
     function avg_ranneke1() {
 
@@ -153,7 +256,6 @@ app.get('/beacon_locations', function(req, res){
 
             (err, rows, fields)=> {
 
-                //check if database contains null values (not detected) and change them to -999 ("out of range")
                 if(!err) {
                     if(rows[0].AVG_Receiver1_Ranneke1 == null) {
                         rows[0].AVG_Receiver1_Ranneke1 = -999;
@@ -166,22 +268,28 @@ app.get('/beacon_locations', function(req, res){
                     if(rows[0].AVG_Receiver3_Ranneke1 == null) {
                         rows[0].AVG_Receiver3_Ranneke1 = -999;
                     }
+                    if(rows[0].Time_Receiver1_Ranneke1 == null) {
+                        rows[0].Time_Receiver1_Ranneke1 = 'not seen 24h';
+                    }
+
+                    if(rows[0].Time_Receiver2_Ranneke1 == null) {
+                        rows[0].Time_Receiver2_Ranneke1 = 'not seen in 24h';
+                    }
+
+                    if(rows[0].Time_Receiver3_Ranneke1 == null) {
+                        rows[0].Time_Receiver3_Ranneke1 = 'not seen in 24h';
+                    }
 
                 //check which signal is strongest and print the receiver which had the highest value
                     if (rows[0].AVG_Receiver1_Ranneke1 > rows[0].AVG_Receiver2_Ranneke1 && rows[0].AVG_Receiver1_Ranneke1 > rows[0].AVG_Receiver3_Ranneke1) {
                         console.log("RECEIVER1 VAHVIN")
-                        alert('Ranneke 1 ' + red_alert)
                     }
                     else if (rows[0].AVG_Receiver2_Ranneke1 > rows[0].AVG_Receiver1_Ranneke1 && rows[0].AVG_Receiver2_Ranneke1 > rows[0].AVG_Receiver3_Ranneke1) {
                         console.log("RECEIVER2 VAHVIN")
                     }
                     else if (rows[0].AVG_Receiver3_Ranneke1 > rows[0].AVG_Receiver2_Ranneke1 && rows[0].AVG_Receiver3_Ranneke1 > rows[0].AVG_Receiver1_Ranneke2) {
                         console.log("RECEIVER3 VAHVIN")
-                    }
-                //Check if all signals are equal, if yes assume that those are not in range
-                    else if (rows[0].AVG_Receiver1_Ranneke1 == rows[0].AVG_Receiver2_Ranneke1 && rows[0].AVG_Receiver1_Ranneke1 == rows[0].AVG_Receiver1_Ranneke1 && rows[0].AVG_Receiver2_Ranneke1 == rows[0].AVG_Receiver3_Ranneke1) {
-                        console.log('Not in range')
-                    }
+                    }    
             }
         
             else {
@@ -191,7 +299,7 @@ app.get('/beacon_locations', function(req, res){
         }setInterval(avg_ranneke1, 1000);
 });
 
-    //GET ranneke4 avg detections
+    //GET ranneke2 detections
     app.get('/detections/ranneke2',(req,res)=>{
         function avg_ranneke2() {
 
@@ -201,7 +309,6 @@ app.get('/beacon_locations', function(req, res){
 
                 (err, rows, fields)=> {
                 
-                    //check if database contains null values (not detected) and change them to -999 ("out of range")
                     if(!err) {
                         if(rows[0].AVG_Receiver1_Ranneke2 == null) {
                             rows[0].AVG_Receiver1_Ranneke2 = -999;
@@ -214,20 +321,27 @@ app.get('/beacon_locations', function(req, res){
                         if(rows[0].AVG_Receiver3_Ranneke2 == null) {
                             rows[0].AVG_Receiver3_Ranneke2 = -999;
                         }
+                        if(rows[0].Time_Receiver1_Ranneke2 == null) {
+                            rows[0].Time_Receiver1_Ranneke2 = 'not seen 24h';
+                        }
+    
+                        if(rows[0].Time_Receiver2_Ranneke2 == null) {
+                            rows[0].Time_Receiver2_Ranneke2 = 'not seen in 24h';
+                        }
+    
+                        if(rows[0].Time_Receiver3_Ranneke2 == null) {
+                            rows[0].Time_Receiver3_Ranneke2 = 'not seen in 24h';
+                        }
+
                         //check which signal is strongest and print the receiver which had the highest value
                         if (rows[0].AVG_Receiver1_Ranneke2 > rows[0].AVG_Receiver2_Ranneke2 && rows[0].AVG_Receiver1_Ranneke2 > rows[0].AVG_Receiver3_Ranneke2) {
                             console.log("RECEIVER1 VAHVIN")
-                            alert('Ranneke 2 ' + red_alert) 
                         }
                         else if (rows[0].AVG_Receiver2_Ranneke2 > rows[0].AVG_Receiver1_Ranneke2 && rows[0].AVG_Receiver2_Ranneke2 > rows[0].AVG_Receiver3_Ranneke2) {
                             console.log("RECEIVER2 VAHVIN")
                         }
                         else if (rows[0].AVG_Receiver3_Ranneke2 > rows[0].AVG_Receiver2_Ranneke2 && rows[0].AVG_Receiver3_Ranneke2 > rows[0].AVG_Receiver1_Ranneke2) {
                             console.log("RECEIVER3 VAHVIN")
-                        }
-                        //Check if all signals are equal, if yes assume that those are not in range
-                        else if (rows[0].AVG_Receiver1_Ranneke2 == rows[0].AVG_Receiver2_Ranneke2 && rows[0].AVG_Receiver1_Ranneke2 == rows[0].AVG_Receiver1_Ranneke2 && rows[0].AVG_Receiver2_Ranneke2 == rows[0].AVG_Receiver3_Ranneke2) {
-                            console.log('Not in range')
                         }
                 }
             
@@ -238,7 +352,7 @@ app.get('/beacon_locations', function(req, res){
             }setInterval(avg_ranneke2, 1000);
     });
 
-   //GET ranneke3 avg detections
+   //GET ranneke3 detections
    app.get('/detections/ranneke3',(req,res)=>{
     function avg_ranneke3() {
 
@@ -248,7 +362,6 @@ app.get('/beacon_locations', function(req, res){
 
             (err, rows, fields)=> {
 
-                //check if database contains null values (not detected) and change them to -999 ("out of range")
                 if(!err) {
                     if(rows[0].AVG_Receiver1_Ranneke3 == null) {
                         rows[0].AVG_Receiver1_Ranneke3 = -999;
@@ -261,24 +374,31 @@ app.get('/beacon_locations', function(req, res){
                     if(rows[0].AVG_Receiver3_Ranneke3 == null) {
                         rows[0].AVG_Receiver3_Ranneke3 = -999;
                     }
+                    if(rows[0].Time_Receiver1_Ranneke3 == null) {
+                        rows[0].Time_Receiver1_Ranneke3 = 'not seen 24h';
+                    }
+
+                    if(rows[0].Time_Receiver2_Ranneke3 == null) {
+                        rows[0].Time_Receiver2_Ranneke3 = 'not seen in 24h';
+                    }
+
+                    if(rows[0].Time_Receiver3_Ranneke3 == null) {
+                        rows[0].Time_Receiver3_Ranneke3 = 'not seen in 24h';
+                    }
+
                     //check which signal is strongest and print the receiver which had the highest value
                     if (rows[0].AVG_Receiver1_Ranneke3 > rows[0].AVG_Receiver2_Ranneke3 && rows[0].AVG_Receiver1_Ranneke3 > rows[0].AVG_Receiver3_Ranneke3) {
                         console.log("RECEIVER1 VAHVIN")
-                        alert('Ranneke 3 ' + red_alert) 
                     }
                     else if (rows[0].AVG_Receiver2_Ranneke3 > rows[0].AVG_Receiver1_Ranneke3 && rows[0].AVG_Receiver2_Ranneke3 > rows[0].AVG_Receiver3_Ranneke3) {
                         console.log("RECEIVER2 VAHVIN")
-                        res.setHeader('Access-Control-Allow-Origin', '*');
-                        res.json({ receiver: "RECEIVER2 VAHVIN" })
+                       // res.setHeader('Access-Control-Allow-Origin', '*');
+                      //  res.json({ receiver: "RECEIVER2 VAHVIN" })
 
-                        setTimeout()
+                       // setTimeout()
                     }
                     else if (rows[0].AVG_Receiver3_Ranneke3 > rows[0].AVG_Receiver2_Ranneke3 && rows[0].AVG_Receiver3_Ranneke3 > rows[0].AVG_Receiver1_Ranneke3) {
                         console.log("RECEIVER3 VAHVIN")
-                    }
-                    //Check if all signals are equal, if yes assume that those are not in range
-                    else if (rows[0].AVG_Receiver1_Ranneke3 == rows[0].AVG_Receiver2_Ranneke3 && rows[0].AVG_Receiver1_Ranneke3 == rows[0].AVG_Receiver1_Ranneke3 && rows[0].AVG_Receiver2_Ranneke3 == rows[0].AVG_Receiver3_Ranneke3) {
-                        console.log('Not in range')
                     }
             }
         
@@ -299,23 +419,33 @@ app.get('/beacon_locations', function(req, res){
 
                 (err, rows, fields)=> {
 
-                //check if database contains null values (not detected) and change them to -999 ("out of range")
                 if(!err) {
-                        if(rows[0].AVG_Receiver1_Ranneke4 == null) {
-                            rows[0].AVG_Receiver1_Ranneke4 = -999;
-                        }
+                    if(rows[0].AVG_Receiver1_Ranneke4 == null) {
+                        rows[0].AVG_Receiver1_Ranneke4 = -999;
+                    }
 
-                        if(rows[0].AVG_Receiver2_Ranneke4 == null) {
-                            rows[0].AVG_Receiver2_Ranneke4 = -999;
-                        }
+                    if(rows[0].AVG_Receiver2_Ranneke4 == null) {
+                        rows[0].AVG_Receiver2_Ranneke4 = -999;
+                    }
 
-                        if(rows[0].AVG_Receiver3_Ranneke4 == null) {
-                            rows[0].AVG_Receiver3_Ranneke4 = -999;
-                        }
+                    if(rows[0].AVG_Receiver3_Ranneke4 == null) {
+                        rows[0].AVG_Receiver3_Ranneke4 = -999;
+                    }
+                    if(rows[0].Time_Receiver1_Ranneke4 == null) {
+                        rows[0].Time_Receiver1_Ranneke4 = 'not seen 24h';
+                    }
+
+                    if(rows[0].Time_Receiver2_Ranneke4 == null) {
+                        rows[0].Time_Receiver2_Ranneke4 = 'not seen in 24h';
+                    }
+
+                    if(rows[0].Time_Receiver3_Ranneke4 == null) {
+                        rows[0].Time_Receiver3_Ranneke4 = 'not seen in 24h';
+                    }
+                      
                         //check which signal is strongest and print the receiver which had the highest value
                         if (rows[0].AVG_Receiver1_Ranneke4 > rows[0].AVG_Receiver2_Ranneke4 && rows[0].AVG_Receiver1_Ranneke4 > rows[0].AVG_Receiver3_Ranneke4) {
                             console.log("RECEIVER1 VAHVIN")
-                            alert('Ranneke 4 ' + red_alert)  
                         }
                         else if (rows[0].AVG_Receiver2_Ranneke4 > rows[0].AVG_Receiver1_Ranneke4 && rows[0].AVG_Receiver2_Ranneke4 > rows[0].AVG_Receiver3_Ranneke4) {
                             console.log("RECEIVER2 VAHVIN")
@@ -323,10 +453,6 @@ app.get('/beacon_locations', function(req, res){
                         else if (rows[0].AVG_Receiver3_Ranneke4 > rows[0].AVG_Receiver2_Ranneke4 && rows[0].AVG_Receiver3_Ranneke4 > rows[0].AVG_Receiver1_Ranneke4) {
                             console.log(rows)
                             console.log("RECEIVER3 VAHVIN")
-                        }
-                        //Check if all signals are equal, if yes assume that those are not in range
-                        else if (rows[0].AVG_Receiver1_Ranneke4 == rows[0].AVG_Receiver2_Ranneke4 && rows[0].AVG_Receiver1_Ranneke4 == rows[0].AVG_Receiver1_Ranneke4 && rows[0].AVG_Receiver2_Ranneke4 == rows[0].AVG_Receiver3_Ranneke4) {
-                            console.log('Not in range')
                         }
                 }
 
