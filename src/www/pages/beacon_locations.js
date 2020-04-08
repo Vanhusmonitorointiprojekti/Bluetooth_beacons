@@ -66,7 +66,7 @@ render() {
                             <TableCell>Beacon User</TableCell>
                             <TableCell>Receiver Location</TableCell>
                             <TableCell>Signal DB</TableCell>
-                            <TableCell>Time</TableCell>
+                            <TableCell>Measurement Time (seconds)</TableCell>
                             <TableCell>Location Type</TableCell>
                         </TableRow>
                     </TableHead>
@@ -85,7 +85,7 @@ render() {
                                 <TableCell style={{backgroundColor: 'green'}}>{member.signal_db}</TableCell>
                                 }
 
-                            <TableCell>{member.measument_time.substring(11,19)}</TableCell>
+                            <TableCell>{member.timediff_in_seconds}</TableCell>
                             {member.location_type === 'red' &&
                             <TableCell style={{backgroundColor: 'red'}}>{member.location_type}</TableCell>
                             }
