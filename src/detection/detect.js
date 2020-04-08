@@ -100,7 +100,22 @@ app.get('/beacon_locations', function(req, res){
             console.log(rows, "\n Rows fetched from the databese")
             res.setHeader('Access-Control-Allow-Origin', '*');
 
-            console.log(rows)
+            //Get latest packet's timediff and use it as "seconds ago"
+            let rawTimeDiff1 = rows[2].Timediff
+            let Receiver1_timediff = rawTimeDiff1.split(':');
+            let Receiver1_seconds = (+Receiver1_timediff[0]) * 60 * 60 + (Receiver1_timediff[1]) * 60 + (+Receiver1_timediff[2]);
+
+            let rawTimeDiff2 = rows[5].Timediff
+            let Receiver2_timediff = rawTimeDiff2.split(':');
+            let Receiver2_seconds = (+Receiver2_timediff[0]) * 60 * 60 + (Receiver2_timediff[1]) * 60 + (+Receiver2_timediff[2]);
+
+            let rawTimeDiff3 = rows[8].Timediff
+            let Receiver3_timediff = rawTimeDiff3.split(':');
+            let Receiver3_seconds = (+Receiver3_timediff[0]) * 60 * 60 + (Receiver3_timediff[1]) * 60 + (+Receiver3_timediff[2])
+
+            let rawTimeDiff4 = rows[11].Timediff
+            let Receiver4_timediff = rawTimeDiff4.split(':');
+            let Receiver4_seconds = (+Receiver4_timediff[0]) * 60 * 60 + (Receiver4_timediff[1]) * 60 + (+Receiver4_timediff[2]);
 
                 Receiver1_AVG = (Math.round(rows[0].signal_db + rows[1].signal_db + rows[2].signal_db) / 3).toFixed(0);
                 Receiver2_AVG = (Math.round(rows[3].signal_db + rows[4].signal_db + rows[5].signal_db) / 3).toFixed(0);
@@ -113,23 +128,28 @@ app.get('/beacon_locations', function(req, res){
                             'Receiver4: ' + Receiver4_AVG
                             );
               
-
+            //Add data to json
             //TODO: Add loop here
             rows[0].average_signal_db = Receiver1_AVG;
             rows[1].average_signal_db = Receiver1_AVG;
             rows[2].average_signal_db = Receiver1_AVG;
+            rows[2].timediff_in_seconds = Receiver1_seconds;
+
 
             rows[3].average_signal_db = Receiver2_AVG;
             rows[4].average_signal_db = Receiver2_AVG;
             rows[5].average_signal_db = Receiver2_AVG;
+            rows[5].timediff_in_seconds = Receiver2_seconds;
 
             rows[6].average_signal_db = Receiver3_AVG;
             rows[7].average_signal_db = Receiver3_AVG;
             rows[8].average_signal_db = Receiver3_AVG;
+            rows[8].timediff_in_seconds = Receiver3_seconds;
 
             rows[9].average_signal_db = Receiver4_AVG;
             rows[10].average_signal_db = Receiver4_AVG;
             rows[11].average_signal_db = Receiver4_AVG;
+            rows[11].timediff_in_seconds = Receiver4_seconds;
             
             res.json(rows);
             
