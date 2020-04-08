@@ -10,7 +10,7 @@ const multer = require('multer');
 const socketServer = require('../socketio/socketio');
 const moment = require('moment');
 const checkCurrentTime = require('./checkCurrentTime')
-
+const fetch = require("node-fetch");
 //This is the backend -code which is required to run with front-end.
 //Component handles all the end-point requests and database queries.
 
@@ -97,22 +97,23 @@ app.get('/beacon_locations', function(req, res){
     db.query(global.GET_beacon_locations, (err, rows, fields) => {
         
         if (!err){
-            console.log(rows, "\n Rows fetched from the databese")
+           // console.log(rows, "\n Rows fetched from the databese")
             res.setHeader('Access-Control-Allow-Origin', '*');
 
-            console.log(rows)
+            //console.log(rows)
 
                 Receiver1_AVG = (Math.round(rows[0].signal_db + rows[1].signal_db + rows[2].signal_db) / 3).toFixed(0);
                 Receiver2_AVG = (Math.round(rows[3].signal_db + rows[4].signal_db + rows[5].signal_db) / 3).toFixed(0);
                 Receiver3_AVG = (Math.round(rows[6].signal_db + rows[7].signal_db + rows[8].signal_db) / 3).toFixed(0);
                 Receiver4_AVG = (Math.round(rows[9].signal_db + rows[10].signal_db + rows[11].signal_db) / 3).toFixed(0);
+               /*
                 console.log('Averages from receivers:\n' + 
                             'Receiver1: ' + Receiver1_AVG + '\n' +
                             'Receiver2: ' + Receiver2_AVG + '\n' +
                             'Receiver3: ' + Receiver3_AVG + '\n' +
                             'Receiver4: ' + Receiver4_AVG
                             );
-              
+              */
 
             //TODO: Add loop here
             rows[0].average_signal_db = Receiver1_AVG;
@@ -143,6 +144,99 @@ app.get('/beacon_locations', function(req, res){
 
 
 });
+
+app.get('/beacon_locations_average', function(req, res){
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    const url = "http://localhost:4000/beacon_locations";
+    let averageData = [];
+    const getData = async url => {
+        try {
+          const res = await fetch(url);
+          const json = await res.json();
+         
+          if (json[0].signal_db> json[1].signal_db && json[0].signal_db > json[2].signal_db) {
+           // console.log(json[0])
+            averageData.push(json[0])
+            
+        }
+        else if (json[1].signal_db> json[0].signal_db && json[1].signal_db > json[2].signal_db) {
+           // console.log(json[1])
+            averageData.push(json[1])
+            
+        }
+        else if (json[2].signal_db> json[1].signal_db && json[2].signal_db > json[0].signal_db) {
+            //console.log(json[2])
+            averageData.push(json[2])
+            
+        }
+
+         if (json[3].signal_db> json[4].signal_db && json[3].signal_db > json[5].signal_db) {
+           //console.log(json[3])
+            averageData.push(json[3])
+            
+        } else if (json[4].signal_db> json[3].signal_db && json[4].signal_db > json[5].signal_db) {
+            //console.log(json[4])
+            averageData.push(json[4])
+         
+
+        } else if (json[5].signal_db> json[3].signal_db && json[5].signal_db > json[4].signal_db) {
+            //console.log(json[5])
+            averageData.push(json[5])
+          
+
+        }
+
+         if (json[6].signal_db> json[7].signal_db && json[6].signal_db > json[8].signal_db) {
+            //console.log(json[6])
+            averageData.push(json[6])
+           
+
+        } else if (json[7].signal_db> json[6].signal_db && json[7].signal_db > json[8].signal_db) {
+          //  console.log(json[7])
+            averageData.push(json[7])
+            
+
+        } else if (json[8].signal_db> json[7].signal_db && json[8].signal_db > json[7].signal_db) {
+           // console.log(json[8])
+            averageData.push(json[8])
+            
+
+        }
+
+        if (json[9].signal_db> json[10].signal_db && json[9].signal_db > json[11].signal_db) {
+          // console.log(json[9])
+           averageData.push(json[9])
+            
+
+        } else if (json[10].signal_db> json[9].signal_db && json[10].signal_db > json[9].signal_db) {
+           // console.log(json[10])
+            averageData.push(json[10])
+           
+
+        } else if (json[11].signal_db> json[10].signal_db && json[11].signal_db > json[9].signal_db) {
+            //console.log(json[11])
+            averageData.push(json[11])
+           
+        }
+      
+
+        
+        } catch (error) {
+          console.log(error);
+        }
+        await res.json(averageData);
+ 
+        //console.log("average data below")
+        console.log(averageData.length);
+        //console.log(averageData);
+      
+
+      };
+      
+      
+      getData(url);
+});
+
 
     //delete beacon with it's id
     app.get('/delete/:id', function(req, res) {
