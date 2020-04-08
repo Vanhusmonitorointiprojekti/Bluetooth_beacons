@@ -178,73 +178,11 @@ app.get('/beacon_locations_average', function(req, res){
         try {
           const res = await fetch(url);
           const json = await res.json();
-         
-          if (json[0].signal_db> json[1].signal_db && json[0].signal_db > json[2].signal_db) {
-           // console.log(json[0])
-            averageData.push(json[0])
-            
-        }
-        else if (json[1].signal_db> json[0].signal_db && json[1].signal_db > json[2].signal_db) {
-           // console.log(json[1])
-            averageData.push(json[1])
-            
-        }
-        else if (json[2].signal_db> json[1].signal_db && json[2].signal_db > json[0].signal_db) {
-            //console.log(json[2])
+        
             averageData.push(json[2])
-            
-        }
-
-         if (json[3].signal_db> json[4].signal_db && json[3].signal_db > json[5].signal_db) {
-           //console.log(json[3])
-            averageData.push(json[3])
-            
-        } else if (json[4].signal_db> json[3].signal_db && json[4].signal_db > json[5].signal_db) {
-            //console.log(json[4])
-            averageData.push(json[4])
-         
-
-        } else if (json[5].signal_db> json[3].signal_db && json[5].signal_db > json[4].signal_db) {
-            //console.log(json[5])
             averageData.push(json[5])
-          
-
-        }
-
-         if (json[6].signal_db> json[7].signal_db && json[6].signal_db > json[8].signal_db) {
-            //console.log(json[6])
-            averageData.push(json[6])
-           
-
-        } else if (json[7].signal_db> json[6].signal_db && json[7].signal_db > json[8].signal_db) {
-          //  console.log(json[7])
-            averageData.push(json[7])
-            
-
-        } else if (json[8].signal_db> json[7].signal_db && json[8].signal_db > json[7].signal_db) {
-           // console.log(json[8])
             averageData.push(json[8])
-            
-
-        }
-
-        if (json[9].signal_db> json[10].signal_db && json[9].signal_db > json[11].signal_db) {
-          // console.log(json[9])
-           averageData.push(json[9])
-            
-
-        } else if (json[10].signal_db> json[9].signal_db && json[10].signal_db > json[9].signal_db) {
-           // console.log(json[10])
-            averageData.push(json[10])
-           
-
-        } else if (json[11].signal_db> json[10].signal_db && json[11].signal_db > json[9].signal_db) {
-            //console.log(json[11])
             averageData.push(json[11])
-           
-        }
-      
-
         
         } catch (error) {
           console.log(error);
@@ -252,8 +190,8 @@ app.get('/beacon_locations_average', function(req, res){
         await res.json(averageData);
  
         //console.log("average data below")
-        console.log(averageData.length);
-        //console.log(averageData);
+        //console.log(averageData.length);
+        console.log(averageData);
       
 
       };
