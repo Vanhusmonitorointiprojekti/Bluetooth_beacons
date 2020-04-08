@@ -64,8 +64,6 @@ var server = app.listen(expressPort,()=>console.log('Express is running at port 
             res.setHeader('Access-Control-Allow-Origin', '*');
             res.send(rows)
 
-            checkCurrentTime.CurrentTime()
-
         }
     
         else {
@@ -304,9 +302,6 @@ app.get('/beacon_locations_average', function(req, res){
                         rows[0].AVG_Receiver3_Ranneke1 = -999;
                     }
 
-                    let Timestamp = checkCurrentTime.CurrentTime()
-                    //console.log(rows)
-
                 //check which signal is strongest and print the receiver which had the highest value
                     if (rows[0].AVG_Receiver1_Ranneke1 > rows[0].AVG_Receiver2_Ranneke1 && rows[0].AVG_Receiver1_Ranneke1 > rows[0].AVG_Receiver3_Ranneke1) {
                         console.log("RECEIVER1 VAHVIN")
@@ -436,9 +431,6 @@ app.get('/beacon_locations_average', function(req, res){
                     if(rows[0].AVG_Receiver3_Ranneke4 == null) {
                         rows[0].AVG_Receiver3_Ranneke4 = -999;
                     }
-
-                    let Timestamp = checkCurrentTime.CurrentTime()
-                    console.log(rows)
                       
                         //check which signal is strongest and print the receiver which had the highest value
                         if (rows[0].AVG_Receiver1_Ranneke4 > rows[0].AVG_Receiver2_Ranneke4 && rows[0].AVG_Receiver1_Ranneke4 > rows[0].AVG_Receiver3_Ranneke4) {
