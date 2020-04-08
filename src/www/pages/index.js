@@ -70,11 +70,10 @@ render(){
       <div>
           <AppBar position="static">
             <Tabs value={this.state.activeTab} onChange={this.handleActiveTabChange}>
-              <Tab label="Beacon info" component={Link} to="/"/>
-              <Tab label="Beacon detections" component={Link} to="/BeaconDetections" />
-              <Tab label="Receiver info" component={Link} to="/ReceiverInfo" />
-              <Tab label="Beacon locations" component={Link} to="/BeaconLocations" />
-              <Tab label= {t("kieli")}></Tab>
+              <Tab label={t("Beacon info")} component={Link} to="/"/>
+              <Tab label={t("Beacon detections")} component={Link} to="/BeaconDetections" />
+              <Tab label={t("Receiver info")} component={Link} to="/ReceiverInfo" />
+              <Tab label={t("Beacon locations")} component={Link} to="/BeaconLocations" />
               <Button onClick={this.switchEn}>EN</Button>
               <Button onClick={this.switchFi}>FI</Button>
             </Tabs>

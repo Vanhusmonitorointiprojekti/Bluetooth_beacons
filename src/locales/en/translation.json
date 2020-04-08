@@ -1,5 +1,8 @@
 {
-    "kieli": "englanniksi",
-    "Beacon Detections" : "Beacon Detections",
-    "Receiver Info" : "Receiver Info"
+    "kieli" : "englanniksi",
+    "Beacon info" : "Beacon Info",
+    "Beacon detections" : "Beacon Detections",
+    "Receiver info" : "Receiver Info",
+    "Beacon locations" : "Beacon Locations"
+    
 }

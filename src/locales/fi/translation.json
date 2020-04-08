@@ -1,5 +1,8 @@
 {
-    "paska": "suomeksi",
-    "Beacon Detections" : "Beacon Detections",
-    "Receiver Info" : "Receiver Info"
+    "kieli": "suomeksi",
+    "Beacon info" : "Ranneke info",
+    "Beacon detections" : "Rannekkeiden havainnot",
+    "Receiver info" : "Vastaanotin info",
+    "Beacon locations" : "Rannekkeiden sijainnit"
+   
 }
