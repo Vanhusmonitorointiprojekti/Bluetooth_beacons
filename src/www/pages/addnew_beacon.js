@@ -10,6 +10,8 @@ import { Link } from 'react-router-dom';
 import { TextField } from '@material-ui/core';
 import axios from 'axios';
 
+import { withTranslation } from "react-i18next";
+
 
 
 
@@ -50,17 +52,17 @@ class AddBeacon extends Component
         })
         }
 
-render()
-{
-return (   
-    <div>           
-                    
-                    <TextField label='Beacon user' name='user' onChange = {this.changeData}/>
-                    <TextField label='Beacon ID' name='id' onChange = {this.changeData}/>
-                    <Button onClick={this.add_beacon}>Lisää uusi</Button>
-                    </div>  
-            );
+render(){
+    const { t, i18n } = this.props;
+    return (   
+        <div>           
+                        
+                        <TextField label={t('Beacon User')} name='user' onChange = {this.changeData}/>
+                        <TextField label={t('Beacon ID')} name='id' onChange = {this.changeData}/>
+                        <Button onClick={this.add_beacon}>{t("Add New")}</Button>
+                        </div>  
+                );
+        }
     }
-}
 
-export default AddBeacon;
+export default (withTranslation("translation"))(AddBeacon);

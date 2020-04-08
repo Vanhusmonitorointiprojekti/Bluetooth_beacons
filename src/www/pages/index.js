@@ -1,7 +1,7 @@
 import React, { Component, useEffect } from 'react';
 import { AppBar, Tabs, Tab, Button } from '@material-ui/core';
 import { Route, Switch, BrowserRouter, Link } from 'react-router-dom'
-import { translate, withTranslation } from "react-i18next";
+import { withTranslation } from "react-i18next";
 
 import Receiver_info from './receiver_info.js';
 import Beacon_info from './beacon_info.js';
@@ -54,15 +54,6 @@ toggleLang = event => {
 
 render(){
   const { t, i18n } = this.props;
-  const isEnglish = this.state.isEnglish;
-  let langButton;
-  if (isEnglish) {
-    langButton = <Button onClick={this.switchFi}>FI</Button>;
-  } else {
-    langButton = <Button onClick={this.switchEn}>EN</Button>;
-  }
-
-
   return(
   <div>
     <BrowserRouter>
