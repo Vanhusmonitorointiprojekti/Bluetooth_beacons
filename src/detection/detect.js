@@ -131,144 +131,144 @@ app.get('/beacon_locations', function(req, res){
                             );
 
             //Check the status of each Receiver
-                if(Receiver1_seconds < 300) {
-                    if(rows[2].location_type == 'green') {
-                        Receiver1_status = 'OK'
-                    }
-                    if(rows[2].locacation_type == 'yellow') {
-                        Receiver1_status = 'Unsure'
-                    }
-                    if(rows[2].location_type == 'red') {
-                        Receiver1_status = 'Alarm'
-                    }
+            if(Receiver1_seconds < 300) {
+                if(rows[2].location_type == 'green') {
+                    Receiver1_status = 'OK'
                 }
-                if(Receiver1_seconds >= 300 && Receiver4_seconds <= 599) {
-                    if(rows[2].location_type == 'green') {
-                        Receiver1_status = 'Unsure'
-                    }
-                    if(rows[2].locacation_type == 'yellow') {
-                        Receiver1_status = 'Unsure'
-                    }
-                    if(rows[2].location_type == 'red') {
-                        Receiver1_status = 'Alarm'
-                    }
+                if(rows[2].location_type == 'yellow') {
+                    Receiver1_status = 'Unsure'
                 }
-                if(Receiver1_seconds >= 600) {
-                    if(rows[2].location_type == 'green') {
-                        Receiver1_status = 'Alarm'
-                    }
-                    if(rows[2].locacation_type == 'yellow') {
-                        Receiver1_status = 'Alarm'
-                    }
-                    if(rows[2].location_type == 'red') {
-                        Receiver1_status = 'Alarm'
-                    }
+                if(rows[2].location_type == 'red') {
+                    Receiver1_status = 'Alarm'
                 }
-            
-            let Receiver2_status = rows[5].status;
-                if(Receiver2_seconds < 300) {
-                    if(rows[5].location_type == 'green') {
-                        Receiver2_status = 'OK'
-                    }
-                    if(rows[5].locacation_type == 'yellow') {
-                        Receiver2_status = 'Unsure'
-                    }
-                    if(rows[5].location_type == 'red') {
-                        Receiver2_status = 'Alarm'
-                    }
+            }
+            if(Receiver1_seconds >= 300 && Receiver4_seconds <= 599) {
+                if(rows[2].location_type == 'green') {
+                    Receiver1_status = 'Unsure'
                 }
-                if(Receiver2_seconds >= 300 && Receiver4_seconds <= 599) {
-                    if(rows[5].location_type == 'green') {
-                        Receiver2_status = 'Unsure'
-                    }
-                    if(rows[5].locacation_type == 'yellow') {
-                        Receiver2_status = 'Unsure'
-                    }
-                    if(rows[5].location_type == 'red') {
-                        Receiver2_status = 'Alarm'
-                    }
+                if(rows[2].location_type == 'yellow') {
+                    Receiver1_status = 'Unsure'
                 }
-                if(Receiver2_seconds >= 600) {
-                    if(rows[5].location_type == 'green') {
-                        Receiver2_status = 'Alarm'
-                    }
-                    if(rows[5].locacation_type == 'yellow') {
-                        Receiver2_status = 'Alarm'
-                    }
-                    if(rows[5].location_type == 'red') {
-                        Receiver2_status = 'Alarm'
-                    }
+                if(rows[2].location_type == 'red') {
+                    Receiver1_status = 'Alarm'
                 }
+            }
+            if(Receiver1_seconds >= 600) {
+                if(rows[2].location_type == 'green') {
+                    Receiver1_status = 'Alarm'
+                }
+                if(rows[2].location_type == 'yellow') {
+                    Receiver1_status = 'Alarm'
+                }
+                if(rows[2].location_type == 'red') {
+                    Receiver1_status = 'Alarm'
+                }
+            }
+        
+        let Receiver2_status = rows[5].status;
+            if(Receiver2_seconds < 300) {
+                if(rows[5].location_type == 'green') {
+                    Receiver2_status = 'OK'
+                }
+                if(rows[5].location_type == 'yellow') {
+                    Receiver2_status = 'Unsure'
+                }
+                if(rows[5].location_type == 'red') {
+                    Receiver2_status = 'Alarm'
+                }
+            }
+            if(Receiver2_seconds >= 300 && Receiver4_seconds <= 599) {
+                if(rows[5].location_type == 'green') {
+                    Receiver2_status = 'Unsure'
+                }
+                if(rows[5].location_type == 'yellow') {
+                    Receiver2_status = 'Unsure'
+                }
+                if(rows[5].location_type == 'red') {
+                    Receiver2_status = 'Alarm'
+                }
+            }
+            if(Receiver2_seconds >= 600) {
+                if(rows[5].location_type == 'green') {
+                    Receiver2_status = 'Alarm'
+                }
+                if(rows[5].location_type == 'yellow') {
+                    Receiver2_status = 'Alarm'
+                }
+                if(rows[5].location_type == 'red') {
+                    Receiver2_status = 'Alarm'
+                }
+            }
 
-            let Receiver3_status = rows[8].status;
-                if(Receiver3_seconds < 300) {
-                    if(rows[8].location_type == 'green') {
-                        Receiver3_status = 'OK'
-                    }
-                    if(rows[8].locacation_type == 'yellow') {
-                        Receiver3_status = 'Unsure'
-                    }
-                    if(rows[8].location_type == 'red') {
-                        Receiver3_status = 'Alarm'
-                    }
+        let Receiver3_status = rows[8].status;
+            if(Receiver3_seconds < 300) {
+                if(rows[8].location_type == 'green') {
+                    Receiver3_status = 'OK'
                 }
-                if(Receiver3_seconds >= 300 && Receiver4_seconds <= 599) {
-                    if(rows[8].location_type == 'green') {
-                        Receiver3_status = 'Unsure'
-                    }
-                    if(rows[8].locacation_type == 'yellow') {
-                        Receiver3_status = 'Unsure'
-                    }
-                    if(rows[8].location_type == 'red') {
-                        Receiver3_status = 'Alarm'
-                    }
+                if(rows[8].location_type == 'yellow') {
+                    Receiver3_status = 'Unsure'
                 }
-                if(Receiver3_seconds >= 600) {
-                    if(rows[8].location_type == 'green') {
-                        Receiver3_status = 'Alarm'
-                    }
-                    if(rows[8].locacation_type == 'yellow') {
-                        Receiver3_status = 'Alarm'
-                    }
-                    if(rows[8].location_type == 'red') {
-                        Receiver3_status = 'Alarm'
-                    }
+                if(rows[8].location_type == 'red') {
+                    Receiver3_status = 'Alarm'
                 }
+            }
+            if(Receiver3_seconds >= 300 && Receiver4_seconds <= 599) {
+                if(rows[8].location_type == 'green') {
+                    Receiver3_status = 'Unsure'
+                }
+                if(rows[8].location_type == 'yellow') {
+                    Receiver3_status = 'Unsure'
+                }
+                if(rows[8].location_type == 'red') {
+                    Receiver3_status = 'Alarm'
+                }
+            }
+            if(Receiver3_seconds >= 600) {
+                if(rows[8].location_type == 'green') {
+                    Receiver3_status = 'Alarm'
+                }
+                if(rows[8].location_type == 'yellow') {
+                    Receiver3_status = 'Alarm'
+                }
+                if(rows[8].location_type == 'red') {
+                    Receiver3_status = 'Alarm'
+                }
+            }
 
-            let Receiver4_status = rows[11].status;
-                if(Receiver4_seconds < 300) {
-                    if(rows[11].location_type == 'green') {
-                        Receiver4_status = 'OK'
-                    }
-                    if(rows[11].locacation_type == 'yellow') {
-                        Receiver4_status = 'Unsure'
-                    }
-                    if(rows[11].location_type == 'red') {
-                        Receiver4_status = 'Alarm'
-                    }
+        let Receiver4_status = rows[11].status;
+            if(Receiver4_seconds < 300) {
+                if(rows[11].location_type == 'green') {
+                    Receiver4_status = 'OK'
                 }
-                if(Receiver4_seconds >= 300 && Receiver4_seconds <= 599) {
-                    if(rows[11].location_type == 'green') {
-                        Receiver4_status = 'Unsure'
-                    }
-                    if(rows[11].locacation_type == 'yellow') {
-                        Receiver4_status = 'Unsure'
-                    }
-                    if(rows[11].location_type == 'red') {
-                        Receiver4_status = 'Alarm'
-                    }
+                if(rows[11].location_type == 'yellow') {
+                    Receiver4_status = 'Unsure'
                 }
-                if(Receiver4_seconds >= 600) {
-                    if(rows[11].location_type == 'green') {
-                        Receiver4_status = 'Alarm'
-                    }
-                    if(rows[11].locacation_type == 'yellow') {
-                        Receiver4_status = 'Alarm'
-                    }
-                    if(rows[11].location_type == 'red') {
-                        Receiver4_status = 'Alarm'
-                    }
+                if(rows[11].location_type == 'red') {
+                    Receiver4_status = 'Alarm'
                 }
+            }
+            if(Receiver4_seconds >= 300 && Receiver4_seconds <= 599) {
+                if(rows[11].location_type == 'green') {
+                    Receiver4_status = 'Unsure'
+                }
+                if(rows[11].location_type == 'yellow') {
+                    Receiver4_status = 'Unsure'
+                }
+                if(rows[11].location_type == 'red') {
+                    Receiver4_status = 'Alarm'
+                }
+            }
+            if(Receiver4_seconds >= 600) {
+                if(rows[11].location_type == 'green') {
+                    Receiver4_status = 'Alarm'
+                }
+                if(rows[11].location_type == 'yellow') {
+                    Receiver4_status = 'Alarm'
+                }
+                if(rows[11].location_type == 'red') {
+                    Receiver4_status = 'Alarm'
+                }
+            }
                 
             //Add data to json
             //TODO: Add loop here
@@ -526,11 +526,7 @@ app.get('/beacon_locations_average', function(req, res){
                     if(rows[0].AVG_Receiver3_Ranneke4 == null) {
                         rows[0].AVG_Receiver3_Ranneke4 = -999;
                     }
-<<<<<<< HEAD
-
-=======
                       
->>>>>>> feature/connect_front_and_back
                         //check which signal is strongest and print the receiver which had the highest value
                         if (rows[0].AVG_Receiver1_Ranneke4 > rows[0].AVG_Receiver2_Ranneke4 && rows[0].AVG_Receiver1_Ranneke4 > rows[0].AVG_Receiver3_Ranneke4) {
                             console.log("RECEIVER1 VAHVIN")
