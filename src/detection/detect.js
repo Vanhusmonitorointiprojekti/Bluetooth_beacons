@@ -9,7 +9,6 @@ const alerting = require('../detection/alerts');
 const multer = require('multer');
 const socketServer = require('../socketio/socketio');
 const moment = require('moment');
-const checkCurrentTime = require('./checkCurrentTime')
 
 //This is the backend -code which is required to run with front-end.
 //Component handles all the end-point requests and database queries.
@@ -231,10 +230,6 @@ app.get('/beacon_locations', function(req, res){
                     if(rows[0].Time_Receiver3_Ranneke1 == null) {
                         rows[0].Time_Receiver3_Ranneke1 = 'not seen in 24h';
                     }
-                    
-
-                    let Timestamp = checkCurrentTime.CurrentTime()
-                    //console.log(rows)
 
                 //check which signal is strongest and print the receiver which had the highest value
                     if (rows[0].AVG_Receiver1_Ranneke1 > rows[0].AVG_Receiver2_Ranneke1 && rows[0].AVG_Receiver1_Ranneke1 > rows[0].AVG_Receiver3_Ranneke1) {
@@ -289,9 +284,6 @@ app.get('/beacon_locations', function(req, res){
                             rows[0].Time_Receiver3_Ranneke2 = 'not seen in 24h';
                         }
 
-                        let Timestamp = checkCurrentTime.CurrentTime()
-                        console.log(rows)
-
                         //check which signal is strongest and print the receiver which had the highest value
                         if (rows[0].AVG_Receiver1_Ranneke2 > rows[0].AVG_Receiver2_Ranneke2 && rows[0].AVG_Receiver1_Ranneke2 > rows[0].AVG_Receiver3_Ranneke2) {
                             console.log("RECEIVER1 VAHVIN")
@@ -344,9 +336,6 @@ app.get('/beacon_locations', function(req, res){
                     if(rows[0].Time_Receiver3_Ranneke3 == null) {
                         rows[0].Time_Receiver3_Ranneke3 = 'not seen in 24h';
                     }
-
-                    let Timestamp = checkCurrentTime.CurrentTime()
-                    console.log(rows)
 
                     //check which signal is strongest and print the receiver which had the highest value
                     if (rows[0].AVG_Receiver1_Ranneke3 > rows[0].AVG_Receiver2_Ranneke3 && rows[0].AVG_Receiver1_Ranneke3 > rows[0].AVG_Receiver3_Ranneke3) {
@@ -404,9 +393,6 @@ app.get('/beacon_locations', function(req, res){
                     if(rows[0].Time_Receiver3_Ranneke4 == null) {
                         rows[0].Time_Receiver3_Ranneke4 = 'not seen in 24h';
                     }
-
-                    let Timestamp = checkCurrentTime.CurrentTime()
-                    console.log(rows)
                       
                         //check which signal is strongest and print the receiver which had the highest value
                         if (rows[0].AVG_Receiver1_Ranneke4 > rows[0].AVG_Receiver2_Ranneke4 && rows[0].AVG_Receiver1_Ranneke4 > rows[0].AVG_Receiver3_Ranneke4) {
@@ -449,4 +435,3 @@ app.post('/beacon/edit/:id', upload.none(), function(req,res) {
             res.send(result)
         })
 })
-
