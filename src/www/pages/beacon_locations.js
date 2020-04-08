@@ -17,7 +17,7 @@ class Beacon_locations extends Component {
 
 
     componentDidMount() {
-        fetch("http://localhost:4000/beacon_locations")
+        fetch("http://localhost:4000/beacon_locations_average")
             .then(response => response.json())
             .then(responseJson => {
                 this.setState({ tieto: responseJson });
@@ -31,7 +31,7 @@ class Beacon_locations extends Component {
 
 // Not implemented as of now / placeholder for creating history of warnings
 
-    testWarnings = (e) => {
+  /* testWarnings = (e) => {
 
         if (this.state.tieto[0].signal_db < -59) {
            this.setState({warning: [...this.state.warning, this.state.tieto[0]]})
@@ -46,12 +46,12 @@ class Beacon_locations extends Component {
         else if (this.state.tieto[2].signal_db < -59) {
             this.setState({warning: [...this.state.warning, this.state.tieto[2]]})
 
-        }
-
+        }}
+*/
      //   console.log(this.state.warning)
      //   console.log(this.state.tieto)
 
-    }
+    
 
 
 
@@ -76,13 +76,13 @@ render() {
                             <TableCell>{member.beacon_user}</TableCell>
                             <TableCell>{member.receiver_location}</TableCell>
                                 {member.location_type === 'red' &&
-                                <TableCell style={{backgroundColor: 'red'}}>{member.signal_db}</TableCell>
+                                <TableCell style={{backgroundColor: 'red'}}>{member.average_signal_db}</TableCell>
                                 }
                                 {member.location_type === 'yellow' &&
-                                <TableCell style={{backgroundColor: 'yellow'}}>{member.signal_db}</TableCell>
+                                <TableCell style={{backgroundColor: 'yellow'}}>{member.average_signal_db}</TableCell>
                                 }
                                 {member.location_type === 'green' &&
-                                <TableCell style={{backgroundColor: 'green'}}>{member.signal_db}</TableCell>
+                                <TableCell style={{backgroundColor: 'green'}}>{member.average_signal_db}</TableCell>
                                 }
 
                             <TableCell>{member.timediff_in_seconds}</TableCell>
