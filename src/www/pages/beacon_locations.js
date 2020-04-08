@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Paper, Table, TableRow, TableHead, TableCell, TableBody } from '@material-ui/core';
 import socketIOClient from "socket.io-client";
 
-
 class Beacon_locations extends Component {
     constructor(props) {
         super(props)
@@ -31,7 +30,7 @@ class Beacon_locations extends Component {
 
 // Not implemented as of now / placeholder for creating history of warnings
 
-  /* testWarnings = (e) => {
+    testWarnings = (e) => {
 
         if (this.state.tieto[0].signal_db < -59) {
            this.setState({warning: [...this.state.warning, this.state.tieto[0]]})
@@ -46,15 +45,24 @@ class Beacon_locations extends Component {
         else if (this.state.tieto[2].signal_db < -59) {
             this.setState({warning: [...this.state.warning, this.state.tieto[2]]})
 
-        }}
-*/
+        }
+
      //   console.log(this.state.warning)
      //   console.log(this.state.tieto)
 
-    
+    }
 
-
-
+  /*  testAlert = () => {
+        if (this.state.tieto[0].location_type === "green"){
+        alert("User " + this.state.tieto[0].beacon_user + " has entered the " +this.state.tieto[0].location_type + " room at: " + this.state.tieto[0].measument_time.substring(11,19))
+        }
+        else if (this.state.tieto[1].location_type === "green"){
+            alert("User " + this.state.tieto[1].beacon_user + " has entered the " +this.state.tieto[1].location_type + " room at: " + this.state.tieto[1].measument_time.substring(11,19))
+        }
+        else if (this.state.tieto[2].location_type === "green"){
+            alert("User " + this.state.tieto[2].beacon_user + " has entered the " +this.state.tieto[2].location_type + " room at: " + this.state.tieto[2].measument_time.substring(11,19))
+        }
+    }*/
 
 render() {
         return (
@@ -66,50 +74,84 @@ render() {
                             <TableCell>Beacon User</TableCell>
                             <TableCell>Receiver Location</TableCell>
                             <TableCell>Signal DB</TableCell>
-                            <TableCell>Measurement Time (seconds)</TableCell>
+                            <TableCell>Measurement Time</TableCell>
                             <TableCell>Location Type</TableCell>
+                            <TableCell>Status</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {this.state.tieto.map(member =>
                             <TableRow key={member.beacon_user}>
-                            <TableCell>{member.beacon_user}</TableCell>
-                            <TableCell>{member.receiver_location}</TableCell>
-                                {member.location_type === 'red' &&
-                                <TableCell style={{backgroundColor: 'red'}}>{member.average_signal_db}</TableCell>
+                                {member.status === 'Alarm' &&
+                                <TableCell style={{backgroundColor: 'red'}}>{member.beacon_user}</TableCell>
                                 }
-                                {member.location_type === 'yellow' &&
-                                <TableCell style={{backgroundColor: 'yellow'}}>{member.average_signal_db}</TableCell>
+                                {member.status === 'Unsure' &&
+                                <TableCell style={{backgroundColor: 'yellow'}}>{member.beacon_user}</TableCell>
                                 }
-                                {member.location_type === 'green' &&
-                                <TableCell style={{backgroundColor: 'green'}}>{member.average_signal_db}</TableCell>
+                                {member.status === 'OK' &&
+                                <TableCell style={{backgroundColor: 'green'}}>{member.beacon_user} </TableCell>
                                 }
 
-                            <TableCell>{member.timediff_in_seconds}</TableCell>
-                            {member.location_type === 'red' &&
+
+                                {member.status === 'Alarm' &&
+                                <TableCell style={{backgroundColor: 'red'}}>{member.receiver_location}</TableCell>
+                                }
+                                {member.status === 'Unsure' &&
+                                <TableCell style={{backgroundColor: 'yellow'}}>{member.receiver_location}</TableCell>
+                                }
+                                {member.status === 'OK' &&
+                                <TableCell style={{backgroundColor: 'green'}}>{member.receiver_location} </TableCell>
+                                }
+
+                                {member.status === 'Alarm' &&
+                                <TableCell style={{backgroundColor: 'red'}}>{member.signal_db}</TableCell>
+                                }
+                                {member.status === 'Unsure' &&
+                                <TableCell style={{backgroundColor: 'yellow'}}>{member.signal_db}</TableCell>
+                                }
+                                {member.status === 'OK' &&
+                                <TableCell style={{backgroundColor: 'green'}}>{member.signal_db} </TableCell>
+                                }
+
+                                {member.status === 'Alarm' &&
+                                <TableCell style={{backgroundColor: 'red'}}>{member.timediff_in_seconds} seconds ago</TableCell>
+                                }
+                                {member.status === 'Unsure' &&
+                                <TableCell style={{backgroundColor: 'yellow'}}>{member.timediff_in_seconds} seconds ago</TableCell>
+                                }
+                                {member.status === 'OK' &&
+                                <TableCell style={{backgroundColor: 'green'}}>{member.timediff_in_seconds} seconds ago</TableCell>
+                                }
+
+
+                            {member.status === 'Alarm' &&
                             <TableCell style={{backgroundColor: 'red'}}>{member.location_type}</TableCell>
                             }
-                            {member.location_type === 'yellow' &&
+                            {member.status === 'Unsure' &&
                             <TableCell style={{backgroundColor: 'yellow'}}>{member.location_type}</TableCell>
                             }
-                            {member.location_type === 'green' &&
-                            <TableCell style={{backgroundColor: 'green'}}>{member.location_type}</TableCell>
+                            {member.status === 'OK' &&
+                            <TableCell style={{backgroundColor: 'green'}}>{member.location_type }</TableCell>
                             }
+
+                            {member.status === 'Alarm' &&
+                            <TableCell style={{backgroundColor: 'red'}}>{member.status}</TableCell>
+                            }
+                            {member.status === 'Unsure' &&
+                            <TableCell style={{backgroundColor: 'yellow'}}>{member.status}</TableCell>
+                            }
+                            {member.status === 'OK' &&
+                            <TableCell style={{backgroundColor: 'green'}}>{member.status} </TableCell>
+                            }
+                            
                             </TableRow>
-                            )}
+                            )}                            
                     </TableBody>
                 </Table>
-
-                </Paper>
-
-            </div>
-
-
-           
+                </Paper>                
+            </div>      
         );
     }
-
-
 }
 
 const styles =  {
