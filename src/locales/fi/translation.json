@@ -1,8 +1,18 @@
 {
     "kieli": "suomeksi",
-    "Beacon info" : "Ranneke info",
-    "Beacon detections" : "Rannekkeiden havainnot",
-    "Receiver info" : "Vastaanotin info",
-    "Beacon locations" : "Rannekkeiden sijainnit"
+    "Beacon info" : "Ranneketiedot",
+    "Receiver info" : "Vastaanotintiedot",
+    "Beacon locations" : "Rannekkeiden Sijainnit",
+
+    "Beacon User" : "Rannekkeen nimi",
+    "Beacon ID" : "Ranneke ID",
+    "Receiver ID" : "Vastaanotin ID",
+    "Receiver Location" : "Vastaanottimen sijainti",
+    "Location Type" : "Sijaintityyppi",
+    "Signal DB" : "Signaalin vahvuus",
+    "Time" : "Mittausaika (sekunneissa)",
    
+    "Edit" : "Muokkaa",
+    "Delete" : "Poista",
+    "Add New" : "Lisää Uusi"
 }

@@ -3,7 +3,6 @@ import { AppBar, Tabs, Tab, Button } from '@material-ui/core';
 import { Route, Switch, BrowserRouter, Link } from 'react-router-dom'
 import { translate, withTranslation } from "react-i18next";
 
-import Beacon_detections from './beacon_detections.js';
 import Receiver_info from './receiver_info.js';
 import Beacon_info from './beacon_info.js';
 import Beacon_locations from "./beacon_locations";
@@ -71,7 +70,6 @@ render(){
           <AppBar position="static">
             <Tabs value={this.state.activeTab} onChange={this.handleActiveTabChange}>
               <Tab label={t("Beacon info")} component={Link} to="/"/>
-              <Tab label={t("Beacon detections")} component={Link} to="/BeaconDetections" />
               <Tab label={t("Receiver info")} component={Link} to="/ReceiverInfo" />
               <Tab label={t("Beacon locations")} component={Link} to="/BeaconLocations" />
               <Button onClick={this.switchEn}>EN</Button>
@@ -83,7 +81,6 @@ render(){
         <div>
                           <Switch>
                               <Route exact path="/" component={Beacon_info}></Route>
-                              <Route path="/BeaconDetections" component={Beacon_detections}></Route>
                               <Route path="/ReceiverInfo" component={Receiver_info}></Route>
                               <Route path="/BeaconLocations" component={Beacon_locations}></Route>
 

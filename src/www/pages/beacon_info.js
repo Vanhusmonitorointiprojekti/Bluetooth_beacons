@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Paper, Table, TableRow, TableHead, TableCell, TableBody, Button } from '@material-ui/core';
 import { Link, Router, BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
-import AddBeacon from './addnew_beacon'
+import AddBeacon from './addnew_beacon';
 import EditBeacon from "./edit_beacon";
+import { withTranslation } from 'react-i18next';
 
 class Beacon_info extends Component {
     constructor(props) {
@@ -41,6 +42,7 @@ class Beacon_info extends Component {
     }
 
     render() {
+        const { t, i18n } = this.props;
         return (
             <div>
                 <BrowserRouter>
@@ -48,8 +50,8 @@ class Beacon_info extends Component {
                         <Table>
                             <TableHead>
                                 <TableRow>
-                                    <TableCell>Beacon User</TableCell>
-                                    <TableCell>Beacon ID</TableCell>
+                                    <TableCell>{t("Beacon User")}</TableCell>
+                                    <TableCell>{t("Beacon ID")}</TableCell>
 
                                 </TableRow>
                             </TableHead>
@@ -69,7 +71,7 @@ class Beacon_info extends Component {
 
                     <div>
                         <nav>
-                            <Link to="/AddBeacon"> Add new </Link>
+                            <Link to="/AddBeacon"> {t("Add New")} </Link>
 
                         </nav>
 
@@ -90,4 +92,4 @@ class Beacon_info extends Component {
 }
 
 
-export default Beacon_info;
+export default (withTranslation("translation"))(Beacon_info);

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Paper, Table, TableRow, TableHead, TableCell, TableBody } from '@material-ui/core';
 import socketIOClient from "socket.io-client";
-
+import { withTranslation } from 'react-i18next';
 
 class Beacon_locations extends Component {
     constructor(props) {
@@ -57,17 +57,18 @@ class Beacon_locations extends Component {
 
 
 render() {
+    const { t, i18n } = this.props;
         return (
             <div>
                 <Paper>
                <Table>
                     <TableHead>
                         <TableRow>
-                            <TableCell>Beacon ID</TableCell>
-                            <TableCell>Receiver ID</TableCell>
-                            <TableCell>Signal DB</TableCell>
-                            <TableCell>Time</TableCell>
-                            <TableCell>Location Type</TableCell>
+                            <TableCell>{t("Beacon ID")}</TableCell>
+                            <TableCell>{t("Receiver ID")}</TableCell>
+                            <TableCell>{t("Signal DB")}</TableCell>
+                            <TableCell>{t("Time")}</TableCell>
+                            <TableCell>{t("Location Type")}</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -123,4 +124,4 @@ const styles =  {
         
 } ;
 
-export default Beacon_locations;
+export default (withTranslation("translation"))(Beacon_locations);
