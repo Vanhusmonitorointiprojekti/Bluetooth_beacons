@@ -126,32 +126,81 @@ app.get('/beacon_locations', function(req, res){
                             'Receiver3: ' + Receiver3_AVG + '\n' +
                             'Receiver4: ' + Receiver4_AVG
                             );
-              
+
+
+            //Check the status of each Receiver
+            let Receiver1_status = rows[2].status;
+                if(Receiver1_seconds < 300) {
+                    Receiver1_status = 'OK'
+                }
+                if(Receiver1_seconds >= 300 && Receiver4_seconds <= 599) {
+                    Receiver1_status = 'Unsure'
+                }
+                if(Receiver1_seconds >= 600) {
+                    Receiver1_status = 'Alarm'
+                }
+            
+            let Receiver2_status = rows[5].status;
+                if(Receiver2_seconds < 300) {
+                    Receiver2_status = 'OK'
+                }
+                if(Receiver2_seconds >= 300 && Receiver4_seconds <= 599) {
+                    Receiver2_status = 'Unsure'
+                }
+                if(Receiver2_seconds >= 600) {
+                    Receiver2_status = 'Alarm'
+                }
+
+            let Receiver3_status = rows[8].status;
+                if(Receiver3_seconds < 300) {
+                    Receiver3_status = 'OK'
+                }
+                if(Receiver3_seconds >= 300 && Receiver4_seconds <= 599) {
+                    Receiver3_status = 'Unsure'
+                }
+                if(Receiver3_seconds >= 600) {
+                    Receiver3_status = 'Alarm'
+                }
+
+            let Receiver4_status = rows[11].status;
+                if(Receiver4_seconds < 300) {
+                    Receiver4_status = 'OK'
+                }
+                if(Receiver4_seconds >= 300 && Receiver4_seconds <= 599) {
+                    Receiver4_status = 'Unsure'
+                }
+                if(Receiver4_seconds >= 600) {
+                    Receiver4_status = 'Alarm'
+                }
+                
             //Add data to json
             //TODO: Add loop here
             rows[0].average_signal_db = Receiver1_AVG;
             rows[1].average_signal_db = Receiver1_AVG;
             rows[2].average_signal_db = Receiver1_AVG;
             rows[2].timediff_in_seconds = Receiver1_seconds;
+            rows[2].status = Receiver1_status
 
 
             rows[3].average_signal_db = Receiver2_AVG;
             rows[4].average_signal_db = Receiver2_AVG;
             rows[5].average_signal_db = Receiver2_AVG;
             rows[5].timediff_in_seconds = Receiver2_seconds;
+            rows[5].status = Receiver2_status
 
             rows[6].average_signal_db = Receiver3_AVG;
             rows[7].average_signal_db = Receiver3_AVG;
             rows[8].average_signal_db = Receiver3_AVG;
             rows[8].timediff_in_seconds = Receiver3_seconds;
+            rows[8].status = Receiver3_status
 
             rows[9].average_signal_db = Receiver4_AVG;
             rows[10].average_signal_db = Receiver4_AVG;
             rows[11].average_signal_db = Receiver4_AVG;
             rows[11].timediff_in_seconds = Receiver4_seconds;
+            rows[11].status = Receiver4_status
             
             res.json(rows);
-            
            
         }
         else{
