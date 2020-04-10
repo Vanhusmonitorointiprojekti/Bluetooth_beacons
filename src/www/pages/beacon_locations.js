@@ -16,7 +16,7 @@ class Beacon_locations extends Component {
 
 
     componentDidMount() {
-        fetch("http://localhost:4000/beacon_locations")
+        fetch("http://localhost:4000/beacon_locations_average")
             .then(response => response.json())
             .then(responseJson => {
                 this.setState({ tieto: responseJson });
@@ -52,7 +52,7 @@ class Beacon_locations extends Component {
 
     }
 
-    testAlert = () => {
+  /*  testAlert = () => {
         if (this.state.tieto[0].location_type === "green"){
         alert("User " + this.state.tieto[0].beacon_user + " has entered the " +this.state.tieto[0].location_type + " room at: " + this.state.tieto[0].measument_time.substring(11,19))
         }
@@ -62,7 +62,7 @@ class Beacon_locations extends Component {
         else if (this.state.tieto[2].location_type === "green"){
             alert("User " + this.state.tieto[2].beacon_user + " has entered the " +this.state.tieto[2].location_type + " room at: " + this.state.tieto[2].measument_time.substring(11,19))
         }
-    }
+    }*/
 
 render() {
         return (
@@ -74,34 +74,76 @@ render() {
                             <TableCell>Beacon User</TableCell>
                             <TableCell>Receiver Location</TableCell>
                             <TableCell>Signal DB</TableCell>
-                            <TableCell>Time</TableCell>
+                            <TableCell>Measurement Time</TableCell>
                             <TableCell>Location Type</TableCell>
+                            <TableCell>Status</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {this.state.tieto.map(member =>
                             <TableRow key={member.beacon_user}>
-                            <TableCell>{member.beacon_user}</TableCell>
-                            <TableCell>{member.receiver_location}</TableCell>
-                                {member.location_type === 'red' &&
+                                {member.status === 'Alarm' &&
+                                <TableCell style={{backgroundColor: 'red'}}>{member.beacon_user}</TableCell>
+                                }
+                                {member.status === 'Unsure' &&
+                                <TableCell style={{backgroundColor: 'yellow'}}>{member.beacon_user}</TableCell>
+                                }
+                                {member.status === 'OK' &&
+                                <TableCell style={{backgroundColor: 'green'}}>{member.beacon_user} </TableCell>
+                                }
+
+
+                                {member.status === 'Alarm' &&
+                                <TableCell style={{backgroundColor: 'red'}}>{member.receiver_location}</TableCell>
+                                }
+                                {member.status === 'Unsure' &&
+                                <TableCell style={{backgroundColor: 'yellow'}}>{member.receiver_location}</TableCell>
+                                }
+                                {member.status === 'OK' &&
+                                <TableCell style={{backgroundColor: 'green'}}>{member.receiver_location} </TableCell>
+                                }
+
+                                {member.status === 'Alarm' &&
                                 <TableCell style={{backgroundColor: 'red'}}>{member.signal_db}</TableCell>
                                 }
-                                {member.location_type === 'yellow' &&
+                                {member.status === 'Unsure' &&
                                 <TableCell style={{backgroundColor: 'yellow'}}>{member.signal_db}</TableCell>
                                 }
-                                {member.location_type === 'green' &&
-                                <TableCell style={{backgroundColor: 'green'}}>{member.signal_db}  {this.testAlert()}</TableCell>
+                                {member.status === 'OK' &&
+                                <TableCell style={{backgroundColor: 'green'}}>{member.signal_db} </TableCell>
                                 }
-                            <TableCell>{member.measument_time.substring(11,19)}</TableCell>
-                            {member.location_type === 'red' &&
+
+                                {member.status === 'Alarm' &&
+                                <TableCell style={{backgroundColor: 'red'}}>{member.timediff_in_seconds} seconds ago</TableCell>
+                                }
+                                {member.status === 'Unsure' &&
+                                <TableCell style={{backgroundColor: 'yellow'}}>{member.timediff_in_seconds} seconds ago</TableCell>
+                                }
+                                {member.status === 'OK' &&
+                                <TableCell style={{backgroundColor: 'green'}}>{member.timediff_in_seconds} seconds ago</TableCell>
+                                }
+
+
+                            {member.status === 'Alarm' &&
                             <TableCell style={{backgroundColor: 'red'}}>{member.location_type}</TableCell>
                             }
-                            {member.location_type === 'yellow' &&
+                            {member.status === 'Unsure' &&
                             <TableCell style={{backgroundColor: 'yellow'}}>{member.location_type}</TableCell>
                             }
-                            {member.location_type === 'green' &&
+                            {member.status === 'OK' &&
                             <TableCell style={{backgroundColor: 'green'}}>{member.location_type }</TableCell>
                             }
+
+                            {member.status === 'Alarm' &&
+                            <TableCell style={{backgroundColor: 'red'}}>{member.status}</TableCell>
+                            }
+                            {member.status === 'Unsure' &&
+                            <TableCell style={{backgroundColor: 'yellow'}}>{member.status}</TableCell>
+                            }
+                            {member.status === 'OK' &&
+                            <TableCell style={{backgroundColor: 'green'}}>{member.status} </TableCell>
+                            }
+                            
                             </TableRow>
                             )}                            
                     </TableBody>
