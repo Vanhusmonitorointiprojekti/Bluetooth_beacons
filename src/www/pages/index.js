@@ -1,4 +1,4 @@
-import React, { Component, useEffect} from 'react';
+import React, { Component, useEffect, Image } from 'react';
 import { AppBar, Tabs, Tab, Button } from '@material-ui/core';
 import { Route, Switch, BrowserRouter, Link } from 'react-router-dom'
 import { withTranslation } from "react-i18next";
@@ -6,6 +6,8 @@ import { withTranslation } from "react-i18next";
 import Receiver_info from './receiver_info.js';
 import Beacon_info from './beacon_info.js';
 import Beacon_locations from "./beacon_locations";
+import flag_UK from '../../locales/en/flag_UK.png'
+import flag_FI from '../../locales/fi/flag_FI.png'
 
 class AdminFrontPage extends Component{
   constructor(props){
@@ -63,8 +65,9 @@ render(){
               <Tab label={t("Beacon info")} component={Link} to="/"/>
               <Tab label={t("Receiver info")} component={Link} to="/ReceiverInfo" />
               <Tab label={t("Beacon locations")} component={Link} to="/BeaconLocations" />
-              <Button onClick={this.switchEn}>EN</Button>
-              <Button onClick={this.switchFi}>FI</Button>
+              <Button onClick={this.switchEn}><img src= {flag_UK} alt="FlagOfUK" height='30' width='50' /></Button>
+              <Button onClick={this.switchFi}><img src= {flag_FI} alt="FlagOfFI" height='30' width='50' /></Button>
+              
             </Tabs>
             
           </AppBar>
