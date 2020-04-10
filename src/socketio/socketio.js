@@ -19,7 +19,7 @@ io.on("connection", socket => {
   if (interval) {
     clearInterval(interval);
   }
-  interval = setInterval(() => emit(socket), 5000);
+  interval = setInterval(() => emit(socket), 6000);
   socket.on("disconnect", () => {
     console.log("Client disconnected");
   });
@@ -28,11 +28,12 @@ io.on("connection", socket => {
 const emit = async socket => {
   try {
     const res = await axios.get(
-      "http://localhost:4000/beacon_locations"
+      "http://localhost:4000/beacon_locations_average"
     );
     // -> data structure for socket.emit ->  topic name you emit -> res. -> data. -> json attribute/value
     
-    
+    // console.error(res);
+    // console.log(res)
     socket.emit("emitSocket", res.data);
   } catch (error) {
     console.error(`Error: ${error.code}`);

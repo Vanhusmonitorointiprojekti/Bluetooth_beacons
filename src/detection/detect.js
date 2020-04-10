@@ -9,7 +9,7 @@ const alerting = require('../detection/alerts');
 const multer = require('multer');
 const socketServer = require('../socketio/socketio');
 const moment = require('moment');
-
+const fetch = require("node-fetch");
 //This is the backend -code which is required to run with front-end.
 //Component handles all the end-point requests and database queries.
 
@@ -63,6 +63,9 @@ var server = app.listen(expressPort,()=>console.log('Express is running at port 
             console.log(rows, "\n Rows fetched from the database")
             res.setHeader('Access-Control-Allow-Origin', '*');
             res.send(rows)
+
+            checkCurrentTime.CurrentTime()
+
         }
     
         else {
@@ -96,7 +99,7 @@ app.get('/beacon_locations', function(req, res){
     db.query(global.GET_beacon_locations, (err, rows, fields) => {
         
         if (!err){
-            console.log(rows, "\n Rows fetched from the databese")
+           // console.log(rows, "\n Rows fetched from the databese")
             res.setHeader('Access-Control-Allow-Origin', '*');
 
             //Get latest packet's timediff and use it as "seconds ago"
@@ -116,17 +119,18 @@ app.get('/beacon_locations', function(req, res){
             let Receiver4_timediff = rawTimeDiff4.split(':');
             let Receiver4_seconds = (+Receiver4_timediff[0]) * 60 * 60 + (Receiver4_timediff[1]) * 60 + (+Receiver4_timediff[2]);
 
+                //Calculate the average signal db
                 Receiver1_AVG = (Math.round(rows[0].signal_db + rows[1].signal_db + rows[2].signal_db) / 3).toFixed(0);
                 Receiver2_AVG = (Math.round(rows[3].signal_db + rows[4].signal_db + rows[5].signal_db) / 3).toFixed(0);
                 Receiver3_AVG = (Math.round(rows[6].signal_db + rows[7].signal_db + rows[8].signal_db) / 3).toFixed(0);
                 Receiver4_AVG = (Math.round(rows[9].signal_db + rows[10].signal_db + rows[11].signal_db) / 3).toFixed(0);
+               
                 console.log('Averages from receivers:\n' + 
                             'Receiver1: ' + Receiver1_AVG + '\n' +
                             'Receiver2: ' + Receiver2_AVG + '\n' +
                             'Receiver3: ' + Receiver3_AVG + '\n' +
                             'Receiver4: ' + Receiver4_AVG
                             );
-
 
             //Check the status of each Receiver
             let Receiver1_status = rows[2].status;
@@ -212,6 +216,37 @@ app.get('/beacon_locations', function(req, res){
 
 });
 
+app.get('/beacon_locations_average', function(req, res){
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    const url = "http://localhost:4000/beacon_locations";
+    let averageData = [];
+    const getData = async url => {
+        try {
+          const res = await fetch(url);
+          const json = await res.json();
+        
+            averageData.push(json[2])
+            averageData.push(json[5])
+            averageData.push(json[8])
+            averageData.push(json[11])
+        
+        } catch (error) {
+          console.log(error);
+        }
+        await res.json(averageData);
+ 
+        //console.log("average data below")
+        //console.log(averageData.length);
+        console.log(averageData);
+      
+
+      };
+      
+      
+      getData(url);
+});
+
+
     //delete beacon with it's id
     app.get('/delete/:id', function(req, res) {
         let id = req.params.id;
@@ -268,17 +303,9 @@ app.get('/beacon_locations', function(req, res){
                     if(rows[0].AVG_Receiver3_Ranneke1 == null) {
                         rows[0].AVG_Receiver3_Ranneke1 = -999;
                     }
-                    if(rows[0].Time_Receiver1_Ranneke1 == null) {
-                        rows[0].Time_Receiver1_Ranneke1 = 'not seen 24h';
-                    }
 
-                    if(rows[0].Time_Receiver2_Ranneke1 == null) {
-                        rows[0].Time_Receiver2_Ranneke1 = 'not seen in 24h';
-                    }
-
-                    if(rows[0].Time_Receiver3_Ranneke1 == null) {
-                        rows[0].Time_Receiver3_Ranneke1 = 'not seen in 24h';
-                    }
+                    let Timestamp = checkCurrentTime.CurrentTime()
+                    //console.log(rows)
 
                 //check which signal is strongest and print the receiver which had the highest value
                     if (rows[0].AVG_Receiver1_Ranneke1 > rows[0].AVG_Receiver2_Ranneke1 && rows[0].AVG_Receiver1_Ranneke1 > rows[0].AVG_Receiver3_Ranneke1) {
@@ -321,17 +348,6 @@ app.get('/beacon_locations', function(req, res){
                         if(rows[0].AVG_Receiver3_Ranneke2 == null) {
                             rows[0].AVG_Receiver3_Ranneke2 = -999;
                         }
-                        if(rows[0].Time_Receiver1_Ranneke2 == null) {
-                            rows[0].Time_Receiver1_Ranneke2 = 'not seen 24h';
-                        }
-    
-                        if(rows[0].Time_Receiver2_Ranneke2 == null) {
-                            rows[0].Time_Receiver2_Ranneke2 = 'not seen in 24h';
-                        }
-    
-                        if(rows[0].Time_Receiver3_Ranneke2 == null) {
-                            rows[0].Time_Receiver3_Ranneke2 = 'not seen in 24h';
-                        }
 
                         //check which signal is strongest and print the receiver which had the highest value
                         if (rows[0].AVG_Receiver1_Ranneke2 > rows[0].AVG_Receiver2_Ranneke2 && rows[0].AVG_Receiver1_Ranneke2 > rows[0].AVG_Receiver3_Ranneke2) {
@@ -373,17 +389,6 @@ app.get('/beacon_locations', function(req, res){
 
                     if(rows[0].AVG_Receiver3_Ranneke3 == null) {
                         rows[0].AVG_Receiver3_Ranneke3 = -999;
-                    }
-                    if(rows[0].Time_Receiver1_Ranneke3 == null) {
-                        rows[0].Time_Receiver1_Ranneke3 = 'not seen 24h';
-                    }
-
-                    if(rows[0].Time_Receiver2_Ranneke3 == null) {
-                        rows[0].Time_Receiver2_Ranneke3 = 'not seen in 24h';
-                    }
-
-                    if(rows[0].Time_Receiver3_Ranneke3 == null) {
-                        rows[0].Time_Receiver3_Ranneke3 = 'not seen in 24h';
                     }
 
                     //check which signal is strongest and print the receiver which had the highest value
@@ -431,17 +436,9 @@ app.get('/beacon_locations', function(req, res){
                     if(rows[0].AVG_Receiver3_Ranneke4 == null) {
                         rows[0].AVG_Receiver3_Ranneke4 = -999;
                     }
-                    if(rows[0].Time_Receiver1_Ranneke4 == null) {
-                        rows[0].Time_Receiver1_Ranneke4 = 'not seen 24h';
-                    }
 
-                    if(rows[0].Time_Receiver2_Ranneke4 == null) {
-                        rows[0].Time_Receiver2_Ranneke4 = 'not seen in 24h';
-                    }
-
-                    if(rows[0].Time_Receiver3_Ranneke4 == null) {
-                        rows[0].Time_Receiver3_Ranneke4 = 'not seen in 24h';
-                    }
+                    let Timestamp = checkCurrentTime.CurrentTime()
+                    console.log(rows)
                       
                         //check which signal is strongest and print the receiver which had the highest value
                         if (rows[0].AVG_Receiver1_Ranneke4 > rows[0].AVG_Receiver2_Ranneke4 && rows[0].AVG_Receiver1_Ranneke4 > rows[0].AVG_Receiver3_Ranneke4) {
