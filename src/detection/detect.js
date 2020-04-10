@@ -64,7 +64,7 @@ var server = app.listen(expressPort,()=>console.log('Express is running at port 
             res.setHeader('Access-Control-Allow-Origin', '*');
             res.send(rows)
 
-            checkCurrentTime.CurrentTime()
+         
 
         }
     
