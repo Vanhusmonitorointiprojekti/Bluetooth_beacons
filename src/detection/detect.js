@@ -156,12 +156,15 @@ app.get('/beacon_locations', function(req, res){
             if(Receiver1_seconds >= 600) {
                 if(rows[2].location_type == 'green') {
                     Receiver1_status = 'Alarm'
+                    Receiver1_seconds = 'Not seen in 10 minutes'
                 }
                 if(rows[2].location_type == 'yellow') {
                     Receiver1_status = 'Alarm'
+                    Receiver1_seconds = 'Not seen in 10 minutes'
                 }
                 if(rows[2].location_type == 'red') {
                     Receiver1_status = 'Alarm'
+                    Receiver1_seconds = 'Not seen in 10 minutes'
                 }
             }
         
@@ -191,12 +194,15 @@ app.get('/beacon_locations', function(req, res){
             if(Receiver2_seconds >= 600) {
                 if(rows[5].location_type == 'green') {
                     Receiver2_status = 'Alarm'
+                    Receiver2_seconds = 'Not seen in 10 minutes'
                 }
                 if(rows[5].location_type == 'yellow') {
                     Receiver2_status = 'Alarm'
+                    Receiver2_seconds = 'Not seen in 10 minutes'
                 }
                 if(rows[5].location_type == 'red') {
                     Receiver2_status = 'Alarm'
+                    Receiver2_seconds = 'Not seen in 10 minutes'
                 }
             }
 
@@ -226,12 +232,15 @@ app.get('/beacon_locations', function(req, res){
             if(Receiver3_seconds >= 600) {
                 if(rows[8].location_type == 'green') {
                     Receiver3_status = 'Alarm'
+                    Receiver3_seconds = 'Not seen in 10 minutes'
                 }
                 if(rows[8].location_type == 'yellow') {
                     Receiver3_status = 'Alarm'
+                    Receiver3_seconds = 'Not seen in 10 minutes'
                 }
                 if(rows[8].location_type == 'red') {
                     Receiver3_status = 'Alarm'
+                    Receiver3_seconds = 'Not seen in 10 minutes'
                 }
             }
 
@@ -261,12 +270,15 @@ app.get('/beacon_locations', function(req, res){
             if(Receiver4_seconds >= 600) {
                 if(rows[11].location_type == 'green') {
                     Receiver4_status = 'Alarm'
+                    Receiver4_seconds = 'Not seen in 10 minutes'
                 }
                 if(rows[11].location_type == 'yellow') {
                     Receiver4_status = 'Alarm'
+                    Receiver4_seconds = 'Not seen in 10 minutes'
                 }
                 if(rows[11].location_type == 'red') {
                     Receiver4_status = 'Alarm'
+                    Receiver4_seconds = 'Not seen in 10 minutes'
                 }
             }
                 
