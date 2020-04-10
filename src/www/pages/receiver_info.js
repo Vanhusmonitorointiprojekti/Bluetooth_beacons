@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Paper, Table, TableRow, TableHead, TableCell, TableBody } from '@material-ui/core';
+import { withTranslation } from 'react-i18next';
 
 class Receiver_info extends Component {
     constructor(props) {
@@ -22,6 +23,7 @@ class Receiver_info extends Component {
         }
 
 render() {
+    const { t, i18n } = this.props;
         return (
             <div>
                
@@ -29,9 +31,9 @@ render() {
                <Table>
                     <TableHead>
                         <TableRow>
-                            <TableCell>Receiver ID</TableCell>
-                            <TableCell>Receiver Location</TableCell>
-                            <TableCell>Location type</TableCell>
+                            <TableCell>{t("Receiver ID")}</TableCell>
+                            <TableCell>{t("Receiver Location")}</TableCell>
+                            <TableCell>{t("Location Type")}</TableCell>
                             
                         </TableRow>
                     </TableHead>
@@ -65,4 +67,4 @@ render() {
 
 }
 
-export default Receiver_info;
+export default (withTranslation("translation"))(Receiver_info);

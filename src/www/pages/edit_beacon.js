@@ -3,6 +3,7 @@ import Button from '@material-ui/core/Button';
 import { TextField } from '@material-ui/core';
 import axios from 'axios';
 
+import { withTranslation } from "react-i18next";
 
 
 
@@ -42,15 +43,15 @@ class EditBeacon extends Component
 
     render()
     {
+        const { t, i18n } = this.props;
         return (
             <div>
 
-                <TextField label='Beacon user' name='user' value={this.state.user} onChange = {this.changeData}/>
-                
-                <Button onClick={this.edit_beacon}>Muuta</Button>
+                <TextField label={t('Beacon User')} name='user' value={this.state.user} onChange = {this.changeData}/>
+                <Button onClick={this.edit_beacon}>{t("Edit")}</Button>
             </div>
         );
     }
 }
 
-export default EditBeacon;
+export default (withTranslation("translation"))(EditBeacon);

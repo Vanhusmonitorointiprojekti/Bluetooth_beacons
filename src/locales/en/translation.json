@@ -1,0 +1,20 @@
+{
+    "kieli" : "englanniksi",
+    "Beacon info" : "Beacon Info",
+    "Receiver info" : "Receiver Info",
+    "Beacon locations" : "Beacon Locations",
+
+    "Beacon User" : "Beacon User",
+    "Beacon ID" : "Beacon ID",
+    "Receiver ID" : "Receiver ID",
+    "Receiver Location" : "Receiver Location",
+    "Location Type" : "Location Type",
+    "Signal DB" : "Signal DB",
+    "Time" : "Measurement Time (seconds)",
+    "Status" : "Status",
+
+    "Edit" : "Edit",
+    "Delete" : "Delete",
+    "Add New" : "Add New"
+    
+}
