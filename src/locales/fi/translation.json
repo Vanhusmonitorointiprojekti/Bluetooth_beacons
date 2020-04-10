@@ -11,6 +11,7 @@
     "Location Type" : "Sijaintityyppi",
     "Signal DB" : "Signaalin vahvuus",
     "Time" : "Mittausaika (sekunneissa)",
+    "Status" : "Tilanne",
    
     "Edit" : "Muokkaa",
     "Delete" : "Poista",

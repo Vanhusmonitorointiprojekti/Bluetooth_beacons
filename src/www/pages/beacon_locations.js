@@ -78,6 +78,7 @@ render() {
                             <TableCell>{t("Signal DB")}</TableCell>
                             <TableCell>{t("Time")}</TableCell>
                             <TableCell>{t("Location Type")}</TableCell>
+                            <TableCell>{t("Status")}</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
