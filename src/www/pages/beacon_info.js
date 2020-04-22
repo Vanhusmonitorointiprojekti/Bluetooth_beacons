@@ -44,7 +44,7 @@ class Beacon_info extends Component {
     render() {
         const { t, i18n } = this.props;
         return (
-            <div>
+            <div style={{paddingLeft: '20%', paddingRight: '20%', paddingTop:'1%'}}>
                 <BrowserRouter>
                     <Paper>
                         <Table>

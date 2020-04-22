@@ -59,14 +59,15 @@ render(){
   return(
   <div>
     <BrowserRouter>
-      <div>
+    <div style={{paddingLeft: '20%', paddingRight: '20%'}}>
           <AppBar position="static">
             <Tabs value={this.state.activeTab} onChange={this.handleActiveTabChange}>
               <Tab label={t("Beacon info")} component={Link} to="/"/>
               <Tab label={t("Receiver info")} component={Link} to="/ReceiverInfo" />
               <Tab label={t("Beacon locations")} component={Link} to="/BeaconLocations" />
-              <Button onClick={this.switchEn}><img src= {flag_UK} alt="FlagOfUK" height='30' width='50' /></Button>
-              <Button onClick={this.switchFi}><img src= {flag_FI} alt="FlagOfFI" height='30' width='50' /></Button>
+              <Tab xs/>
+              <Button onClick={this.switchEn}><img src= {flag_UK} alt="FlagOfUK" height='25' width='40' /></Button>
+              <Button onClick={this.switchFi}><img src= {flag_FI} alt="FlagOfFI" height='25' width='40' /></Button>
               
             </Tabs>
             

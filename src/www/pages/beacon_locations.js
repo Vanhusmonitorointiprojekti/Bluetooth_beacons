@@ -69,16 +69,14 @@ class Beacon_locations extends Component {
 render() {
     const { t, i18n } = this.props;
         return (
-            <div>
+            <div style={{paddingLeft: '20%', paddingRight: '20%', paddingTop:'1%'}}>
                 <Paper>
                <Table>
                     <TableHead>
                         <TableRow>
                             <TableCell>{t("Beacon ID")}</TableCell>
                             <TableCell>{t("Receiver ID")}</TableCell>
-                            <TableCell>{t("Signal DB")}</TableCell>
                             <TableCell>{t("Time")}</TableCell>
-                            <TableCell>{t("Location Type")}</TableCell>
                             <TableCell>{t("Status")}</TableCell>
                         </TableRow>
                     </TableHead>
@@ -106,15 +104,6 @@ render() {
                                 <TableCell style={{backgroundColor: 'green'}}>{member.receiver_location} </TableCell>
                                 }
 
-                                {member.status === 'Alarm' &&
-                                <TableCell style={{backgroundColor: 'red'}}>{member.signal_db}</TableCell>
-                                }
-                                {member.status === 'Unsure' &&
-                                <TableCell style={{backgroundColor: 'yellow'}}>{member.signal_db}</TableCell>
-                                }
-                                {member.status === 'OK' &&
-                                <TableCell style={{backgroundColor: 'green'}}>{member.signal_db} </TableCell>
-                                }
 
                                 {member.status === 'Alarm' &&
                                 <TableCell style={{backgroundColor: 'red'}}>{member.timediff_in_seconds}</TableCell>
@@ -127,15 +116,7 @@ render() {
                                 }
 
 
-                            {member.status === 'Alarm' &&
-                            <TableCell style={{backgroundColor: 'red'}}>{member.location_type}</TableCell>
-                            }
-                            {member.status === 'Unsure' &&
-                            <TableCell style={{backgroundColor: 'yellow'}}>{member.location_type}</TableCell>
-                            }
-                            {member.status === 'OK' &&
-                            <TableCell style={{backgroundColor: 'green'}}>{member.location_type }</TableCell>
-                            }
+                        
 
                             {member.status === 'Alarm' &&
                             <TableCell style={{backgroundColor: 'red'}}>{member.status}</TableCell>
