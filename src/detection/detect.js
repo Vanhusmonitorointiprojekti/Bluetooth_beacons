@@ -102,18 +102,30 @@ app.get('/beacon_locations', function(req, res){
 
             //Get latest packet's timediff and use it as "seconds ago"
             let rawTimeDiff1 = rows[2].Timediff
+                if (rawTimeDiff1 == undefined) {
+                    rawTimeDiff1 = '00:00:00'
+                }
             let Receiver1_timediff = rawTimeDiff1.split(':');
             let Receiver1_seconds = (+Receiver1_timediff[0]) * 60 * 60 + (Receiver1_timediff[1]) * 60 + (+Receiver1_timediff[2]);
 
             let rawTimeDiff2 = rows[5].Timediff
+                if(rawTimeDiff2 == undefined) {
+                    rawTimeDiff2 = '00:00:00'
+                }
             let Receiver2_timediff = rawTimeDiff2.split(':');
             let Receiver2_seconds = (+Receiver2_timediff[0]) * 60 * 60 + (Receiver2_timediff[1]) * 60 + (+Receiver2_timediff[2]);
 
             let rawTimeDiff3 = rows[8].Timediff
+                if(rawTimeDiff3 == undefined) {
+                    rawTimeDiff3 = '00:00:00'
+                }
             let Receiver3_timediff = rawTimeDiff3.split(':');
             let Receiver3_seconds = (+Receiver3_timediff[0]) * 60 * 60 + (Receiver3_timediff[1]) * 60 + (+Receiver3_timediff[2])
 
             let rawTimeDiff4 = rows[11].Timediff
+                if(rawTimeDiff4 == undefined) {
+                    rawTimeDiff4 = '00:00:00'
+                }
             let Receiver4_timediff = rawTimeDiff4.split(':');
             let Receiver4_seconds = (+Receiver4_timediff[0]) * 60 * 60 + (Receiver4_timediff[1]) * 60 + (+Receiver4_timediff[2]);
 
