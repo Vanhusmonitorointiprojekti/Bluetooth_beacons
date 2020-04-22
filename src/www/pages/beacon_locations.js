@@ -65,6 +65,7 @@ class Beacon_locations extends Component {
         }
     }*/
 
+
 render() {
     const { t, i18n } = this.props;
         return (
@@ -116,13 +117,13 @@ render() {
                                 }
 
                                 {member.status === 'Alarm' &&
-                                <TableCell style={{backgroundColor: 'red'}}>{member.timediff_in_seconds} seconds ago</TableCell>
+                                <TableCell style={{backgroundColor: 'red'}}>{member.timediff_in_seconds}</TableCell>
                                 }
                                 {member.status === 'Unsure' &&
-                                <TableCell style={{backgroundColor: 'yellow'}}>{member.timediff_in_seconds} seconds ago</TableCell>
+                                <TableCell style={{backgroundColor: 'yellow'}}>{member.timediff_in_seconds}</TableCell>
                                 }
                                 {member.status === 'OK' &&
-                                <TableCell style={{backgroundColor: 'green'}}>{member.timediff_in_seconds} seconds ago</TableCell>
+                                <TableCell style={{backgroundColor: 'green'}}>{member.timediff_in_seconds}</TableCell>
                                 }
 
 
