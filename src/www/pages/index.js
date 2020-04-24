@@ -65,8 +65,7 @@ render(){
               <Tab label={t("Beacon info")} component={Link} to="/"/>
               <Tab label={t("Receiver info")} component={Link} to="/ReceiverInfo" />
               <Tab label={t("Beacon locations")} component={Link} to="/BeaconLocations" />
-              <Tab xs/>
-              <Button onClick={this.switchEn}><img src= {flag_UK} alt="FlagOfUK" height='25' width='40' /></Button>
+              <Button style={{marginLeft: "auto"}} onClick={this.switchEn}><img src= {flag_UK} alt="FlagOfUK" height='25' width='40' /></Button>
               <Button onClick={this.switchFi}><img src= {flag_FI} alt="FlagOfFI" height='25' width='40' /></Button>
               
             </Tabs>
