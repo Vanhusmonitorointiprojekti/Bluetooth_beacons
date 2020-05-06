@@ -7,6 +7,7 @@
   * [Prerequisites](#prerequisites)
   * [Installation](#installation)
 * [Known issues](#Known-issues)
+* [Licence](#Licence)
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
@@ -65,6 +66,9 @@ npm start
 
 See the [open issues](https://github.com/Marski96/Bluetooth_beacons/issues) for a list of proposed features (and known issues).
 
+<!-- License -->
+Licensed under MIT -license.
+https://opensource.org/licenses/MIT
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
