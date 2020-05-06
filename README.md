@@ -45,9 +45,14 @@ Make sure that you have node.js installed. You can install it from here: https:/
 2. node detect.js`
 ```
 3. If program starts with infotext "Socket.io is running on port 4001"... your installation is succesful.
-4. If there is problem with some libary (for example mysql, install the required libary: `npm install mysql`)
-5. Start front-end by opening another instance of Powershell and navigating to application folder: 
-`pushd ..\Bluetooth_beacons` and running start:
+4. If there is problem with some libary (for example mysql, install the required libary: `npm install mysql`
+5. Start front-end by opening another instance of Powershell and navigating to application folder:
+```sh
+pushd ..\Bluetooth_beacons
+```
+
+& run start
+
 ```sh
 npm start
 ```
