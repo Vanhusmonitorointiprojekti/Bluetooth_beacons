@@ -1,28 +1,3 @@
-<!-- PROJECT LOGO -->
-<br />
-<p align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
-  </a>
-
-  <h3 align="center">Best-README-Template</h3>
-
-  <p align="center">
-    An awesome README template to jumpstart your projects!
-    <br />
-    <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
-    <br />
-    <br />
-    <a href="https://github.com/othneildrew/Best-README-Template">View Demo</a>
-    ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Request Feature</a>
-  </p>
-</p>
-
-
-
 <!-- TABLE OF CONTENTS -->
 ## Table of Contents
 
@@ -60,22 +35,24 @@ This project is directed towards helping people that are suffering from memory d
 
 Make sure that you have node.js installed. You can install it from here:
 ```sh
-[https://nodejs.org/en/]
+https://nodejs.org/en/
 ```
 
 ### Prerequisites
 
-1. Download the application .zip [https://github.com/Marski96/Bluetooth_beacons/releases]
+1. Download the application .zip https://github.com/Marski96/Bluetooth_beacons/releases
 2. Unzip the file to destination you like
-3. With Powershell, navigate to unzipped application folder (`pushd ..\Bluetooth_beacons`)
+3. With Powershell, navigate to unzipped application folder `pushd ..\Bluetooth_beacons`
 
 ### Installation
 
-1. Using Powershell install all required libraries (`npm install`)
+1. Using Powershell install all required libraries `npm install`
 2. Make sure that all libariries are installed by navigating with Powershell to detect folder and running application's backend.
-(`pushd ..\Bluetooth_beacons\src\detection`) & (`node detect.js`)
+```sh
+`pushd ..\Bluetooth_beacons\src\detection` & `node detect.js`
+```
 3. If program starts with infotext "Socket.io is running on port 4001"... your installation is succesful.
-4. If there is problem with some libary (for example mysql, install the required libary: (`npm install mysql`))
+4. If there is problem with some libary (for example mysql, install the required libary: `npm install mysql`)
 
 
 <!-- USAGE EXAMPLES -->
