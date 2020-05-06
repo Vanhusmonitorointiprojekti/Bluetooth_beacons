@@ -42,7 +42,7 @@ Make sure that you have node.js installed. You can install it from here: https:/
 1. pushd ..\Bluetooth_beacons\src\detection
 ```
 ```sh
-2. node detect.js`
+2. node detect.js
 ```
 3. If program starts with infotext "Socket.io is running on port 4001"... your installation is succesful.
 4. If there is problem with some libary (for example mysql, install the required libary: `npm install mysql`
@@ -51,12 +51,12 @@ Make sure that you have node.js installed. You can install it from here: https:/
 pushd ..\Bluetooth_beacons
 ```
 
-& run start
+& run start:
 
 ```sh
 npm start
 ```
-6. Both backend and frontend should be running in order to application to work.
+6. Both backend and frontend should be running, in order to application to work.
 
 
 
