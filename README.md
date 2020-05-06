@@ -7,7 +7,7 @@
   * [Prerequisites](#prerequisites)
   * [Installation](#installation)
 * [Known issues](#Known-issues)
-* [License](#Licence)
+* [License](#License)
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
