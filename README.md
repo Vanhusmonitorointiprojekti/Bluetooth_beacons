@@ -7,7 +7,7 @@
   * [Prerequisites](#prerequisites)
   * [Installation](#installation)
 * [Usage](#usage)
-* [Roadmap](#roadmap)
+* [Known issues](#Known-issues)
 * [Contact](#contact)
 * [Acknowledgements](#acknowledgements)
 
@@ -15,7 +15,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+Bluetooth beacons
 
 This project is directed towards helping people that are suffering from memory disorders. One of the ways this project accomplishes that is by tracking the patients, granting them some freedom from nursing staff. Patients are tracked via bluetooth wristlet that they wear and it is tracked by Rasperry Pies installed inside the nursing facility. System is programmed to allow them freedom of movement inside the areas they are permitted to access and then send alarms if they leave the designated areas.
 
@@ -41,19 +41,25 @@ Make sure that you have node.js installed. You can install it from here: https:/
 ### Installation
 
 1. Using Powershell install all required libraries `npm install`
-2. Make sure that all libariries are installed by navigating with Powershell to detect folder and running application's backend.
+2. Make sure that all libariries are installed by navigating to detect folder using Powershell and running application's backend.
 ```sh
-pushd ..\Bluetooth_beacons\src\detection
+1. pushd ..\Bluetooth_beacons\src\detection
 ```
 ```sh
-node detect.js`
+2. node detect.js`
 ```
 3. If program starts with infotext "Socket.io is running on port 4001"... your installation is succesful.
 4. If there is problem with some libary (for example mysql, install the required libary: `npm install mysql`)
+5. Start front-end by opening another instance of Powershell and navigating to application folder: `pushd ..\Bluetooth_beacons` and running start:
+```sh
+npm start
+```
+6. Both backend and frontend should be running in order to application to work.
 
 
-<!-- ROADMAP -->
-## Roadmap
+
+<!-- Known issues -->
+## Known issues
 
 See the [open issues](https://github.com/Marski96/Bluetooth_beacons/issues) for a list of proposed features (and known issues).
 
