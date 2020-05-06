@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import { Paper, Table, TableRow, TableHead, TableCell, TableBody, Avatar } from '@material-ui/core';
 import socketIOClient from "socket.io-client";
 import { withTranslation } from 'react-i18next';
-import Photo from './beacon_user1.PNG';
+import user1 from './jokutyyppixd.jpeg';
+import user2 from './jokutyyppixd2.jpeg';
+import user3 from './jokutyyppixd3.jpeg';
+import user4 from './jokutyyppixd4.JPG';
 
 class Beacon_locations extends Component {
     constructor(props) {
@@ -85,7 +88,16 @@ render() {
                     <TableBody>
                         {this.state.tieto.map(member =>
                             <TableRow key={member.beacon_user}>
-                                <TableCell><Avatar src={Photo}/></TableCell>
+
+                                {member.beacon_user === 'Ranneke1' &&
+                                <TableCell><Avatar src={user1}/></TableCell>}
+                                {member.beacon_user === 'Ranneke2' &&
+                                <TableCell><Avatar src={user2}/></TableCell>}
+                                {member.beacon_user === 'Ranneke3' &&
+                                <TableCell><Avatar src={user3}/></TableCell>}
+                                {member.beacon_user === 'Ranneke4' &&
+                                <TableCell><Avatar src={user4}/></TableCell>}
+
                                 {member.status === 'Alarm' &&
                                 <TableCell style={{backgroundColor: 'red'}}>{member.beacon_user}</TableCell>
                                 }

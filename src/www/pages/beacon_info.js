@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
-import { Paper, Table, TableRow, TableHead, TableCell, TableBody, Button } from '@material-ui/core';
+import { Paper, Table, TableRow, TableHead, TableCell, TableBody, Button, Avatar } from '@material-ui/core';
 import { Link, Router, BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
 import AddBeacon from './addnew_beacon';
 import EditBeacon from "./edit_beacon";
 import { withTranslation } from 'react-i18next';
+import user1 from './jokutyyppixd.jpeg';
+import user2 from './jokutyyppixd2.jpeg';
+import user3 from './jokutyyppixd3.jpeg';
+import user4 from './jokutyyppixd4.JPG';
 
 class Beacon_info extends Component {
     constructor(props) {
@@ -50,6 +54,7 @@ class Beacon_info extends Component {
                         <Table>
                             <TableHead>
                                 <TableRow>
+                                    <TableCell></TableCell>
                                     <TableCell>{t("Beacon User")}</TableCell>
                                     <TableCell>{t("Beacon ID")}</TableCell>
 
@@ -58,6 +63,16 @@ class Beacon_info extends Component {
                             <TableBody>
                                 {this.state.tieto.map(member =>
                                     <TableRow key={member.beacon_id}>
+
+                                {member.beacon_id === 'e2:e3:23:d1:b0:54' &&
+                                <TableCell><Avatar src={user1}/></TableCell>}
+                                {member.beacon_id === 'd6:2c:ca:c0:d4:9c' &&
+                                <TableCell><Avatar src={user2}/></TableCell>}
+                                {member.beacon_id === 'f2:36:00:21:c0:50' &&
+                                <TableCell><Avatar src={user3}/></TableCell>}
+                                {member.beacon_id === 'e2:18:ef:c9:66:f4' &&
+                                <TableCell><Avatar src={user4}/></TableCell>}
+
                                         <TableCell>{member.beacon_user}</TableCell>
                                         <TableCell>{member.beacon_id}</TableCell>
                                         <Button style={{backgroundColor: 'khaki'}}><Link to={"/beacon/one/"+member.beacon_id}>Edit</Link></Button>
