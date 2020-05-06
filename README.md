@@ -67,6 +67,7 @@ npm start
 See the [open issues](https://github.com/Marski96/Bluetooth_beacons/issues) for a list of proposed features (and known issues).
 
 <!-- License -->
+## License
 Licensed under MIT -license.
 https://opensource.org/licenses/MIT
 
