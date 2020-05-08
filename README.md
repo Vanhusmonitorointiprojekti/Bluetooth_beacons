@@ -9,7 +9,7 @@
   * [Installation](#installation)
   * [Mobile](#Mobile)
 * [How to use](#How-to-use)
-  * [Webclient](#weblient)
+  * [Webclient](#Weblient)
   * [Logic](#Logic)
 * [Known issues](#Known-issues)
 * [License](#License)
@@ -81,13 +81,13 @@ Mobile version of the app can be found here: https://github.com/Marski96/Bluetoo
 ### Webclient
 
 
-#### Beacon info -page contains information about the users
+  #### Beacon info -page contains information about the users
 ![beacon info](https://raw.githubusercontent.com/Marski96/Bluetooth_beacons/development/img/beaconinfo.JPG)
 
-#### Receiver info -page contains information about the receiver
+  #### Receiver info -page contains information about the receiver
 ![receiver info](https://raw.githubusercontent.com/Marski96/Bluetooth_beacons/development/img/receiverinfo.JPG)
 
-#### Beacon locations -page contains the main info about locations of the beacons
+  #### Beacon locations -page contains the main info about locations of the beacons
 ![beacon locations](https://raw.githubusercontent.com/Marski96/Bluetooth_beacons/development/img/beaconlocations.JPG)
 
 
