@@ -113,7 +113,26 @@ Receives new data and sends it forward. Interval is decided in earlier section i
                 console.error('Error: ${error.code}');
               }
             };
-    
+
+
+Alarms are caused by room colors which are in the database, for example if location type = "red" -> alarm.
+In addition, if person is not seen over 300 seconds and under 600 -> change status to "Unsure",
+If person is not seen over 600 seconds, cause an alarm.
+
+            if(Receiver1_seconds >= 600) {
+                if(rows[2].location_type == 'green') {
+                    Receiver1_status = 'Alarm'
+                    Receiver1_seconds = 'Not seen in 10 minutes'
+                }
+                if(rows[2].location_type == 'yellow') {
+                    Receiver1_status = 'Alarm'
+                    Receiver1_seconds = 'Not seen in 10 minutes'
+                }
+                if(rows[2].location_type == 'red') {
+                    Receiver1_status = 'Alarm'
+                    Receiver1_seconds = 'Not seen in 10 minutes'
+                }
+            }
  
 Calculates timedifference and includes it always in the third package we send. detect.js:
 
