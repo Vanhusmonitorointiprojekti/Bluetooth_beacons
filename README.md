@@ -16,6 +16,8 @@ Bluetooth beacons
 
 This project is directed towards helping people that are suffering from memory disorders. One of the ways this project accomplishes that is by tracking the patients, granting them some freedom from nursing staff. Patients are tracked via bluetooth wristlet that they wear and it is tracked by Rasperry Pies installed inside the nursing facility. System is programmed to allow them freedom of movement inside the areas they are permitted to access and then send alarms if they leave the designated areas.
 
+(https://github.com/Marski96/Bluetooth_beacons/blob/development/img/ADBC_areas.PNG)
+
 ### Built With
 * [MySQL](https://www.mysql.com/)
 * [Socket.io](https://socket.io/)
