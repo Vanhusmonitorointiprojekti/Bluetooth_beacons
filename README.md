@@ -7,6 +7,7 @@
   * [Prerequisites](#prerequisites)
   * [Installation](#installation)
 * [Known issues](#Known-issues)
+* [License](#License)
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
@@ -37,26 +38,26 @@ Make sure that you have node.js installed. You can install it from here: https:/
 ### Installation
 
 1. Using Powershell install all required libraries `npm install`
-2. Make sure that all libariries are installed by navigating to detect folder using Powershell and running application's backend.
+2. Make sure that all libraries are installed by navigating to detect folder using Powershell and running application's backend.
 ```sh
-1. pushd ..\Bluetooth_beacons\src\detection
+pushd ..\Bluetooth_beacons\src\detection
 ```
 ```sh
-2. node detect.js`
+node detect.js
 ```
 3. If program starts with infotext "Socket.io is running on port 4001"... your installation is succesful.
-4. If there is problem with some libary (for example mysql, install the required libary: `npm install mysql`
+4. If there is problem with some libary for example mysql, install the required libary: `npm install mysql`
 5. Start front-end by opening another instance of Powershell and navigating to application folder:
 ```sh
 pushd ..\Bluetooth_beacons
 ```
 
-& run start
+& run start:
 
 ```sh
 npm start
 ```
-6. Both backend and frontend should be running in order to application to work.
+6. Both backend and frontend should be running, in order to application to work.
 
 
 
@@ -65,6 +66,10 @@ npm start
 
 See the [open issues](https://github.com/Marski96/Bluetooth_beacons/issues) for a list of proposed features (and known issues).
 
+<!-- License -->
+## License
+Licensed under MIT -license.
+https://opensource.org/licenses/MIT
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
