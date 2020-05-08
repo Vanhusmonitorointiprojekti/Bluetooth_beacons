@@ -79,8 +79,8 @@ render() {
                     <TableHead>
                         <TableRow>
                             <TableCell></TableCell>
-                            <TableCell>{t("Beacon ID")}</TableCell>
-                            <TableCell>{t("Receiver ID")}</TableCell>
+                            <TableCell>{t("Beacon User")}</TableCell>
+                            <TableCell>{t("Location")}</TableCell>
                             <TableCell>{t("Time")}</TableCell>
                             <TableCell>{t("Status")}</TableCell>
                         </TableRow>
