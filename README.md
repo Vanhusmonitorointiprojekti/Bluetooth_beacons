@@ -11,7 +11,7 @@
 * [How to use](#How-to-use)
   * [Webclient](#Webclient)
   * [Logic](#Logic)
-* [Known issues](#Known-issues)
+* [Known issues and future developments](#Known-issues-and-future-developments)
 * [License](#License)
 
 <!-- ABOUT THE PROJECT -->
@@ -48,7 +48,7 @@ Make sure that you have node.js installed. You can install it from here: https:/
 
 ### Installation
 
-1. Using Powershell install all required libraries `npm install`
+1. Using Powershell, install all required libraries `npm install`
 2. Make sure that all libraries are installed by navigating to detect folder using Powershell and running application's backend.
 ```sh
 pushd ..\Bluetooth_beacons\src\detection
@@ -57,7 +57,7 @@ pushd ..\Bluetooth_beacons\src\detection
 node detect.js
 ```
 3. If program starts with infotext "Socket.io is running on port 4001"... your installation is succesful.
-4. If there is problem with some libary for example mysql, install the required libary: `npm install mysql`
+4. If there is problem with some library for example mysql, install the required library: `npm install mysql`
 5. Start front-end by opening another instance of Powershell and navigating to application folder:
 ```sh
 pushd ..\Bluetooth_beacons
@@ -68,7 +68,7 @@ pushd ..\Bluetooth_beacons
 ```sh
 npm start
 ```
-6. Both backend and frontend should be running, in order to application to work.
+6. Both backend and frontend should be running in order for the application to work.
 
 ### Mobile
 Mobile version of the app can be found here: https://github.com/Marski96/Bluetooth_beacons_mobile
@@ -84,7 +84,7 @@ Mobile version of the app can be found here: https://github.com/Marski96/Bluetoo
 #### Beacon info -page contains information about the users
 ![beacon info](https://raw.githubusercontent.com/Marski96/Bluetooth_beacons/development/img/beaconinfo.JPG)
 
-#### Receiver info -page contains information about the receiver
+#### Receiver info -page contains information about the receivers
 ![receiver info](https://raw.githubusercontent.com/Marski96/Bluetooth_beacons/development/img/receiverinfo.JPG)
 
 #### Beacon locations -page contains the main info about locations of the beacons
@@ -134,6 +134,7 @@ If person is not seen over 600 seconds, cause an alarm.
                 }
             }
  
+ 
 Calculates timedifference and includes it always in the third package we send. detect.js:
 
             //Get latest packet's timediff and use it as "seconds ago"
@@ -145,7 +146,6 @@ Calculates timedifference and includes it always in the third package we send. d
             let Receiver1_seconds = (+Receiver1_timediff[0]) * 60 * 60 + (Receiver1_timediff[1]) * 60 + (+Receiver1_timediff[2]);
 
 
-
  Add the data to JSON which we send. detect.js
  
             rows[0].average_signal_db = Receiver1_AVG;
@@ -155,8 +155,28 @@ Calculates timedifference and includes it always in the third package we send. d
             rows[2].status = Receiver1_status
  
  
- 
-fetches beacon_locations and adds only relevant data to json packages.
+Fetches beacon_locations and adds only relevant data to json packages.
+
+            const url = "http://localhost:4000/beacon_locations";
+                let averageData = [];
+                const getData = async url => {
+                    try {
+                      const res = await fetch(url);
+                      const json = await res.json();
+
+
+                        averageData.push(json[2])
+                        averageData.push(json[5])
+                        averageData.push(json[8])
+                        averageData.push(json[11])
+
+                    } catch (error) {
+                      console.log(error);
+                    }
+                    await res.json(averageData);
+
+
+Frontend fetches the socketio data add it to state tieto:
 
     componentDidMount() {
         fetch("http://localhost:4000/beacon_locations_average")
@@ -170,11 +190,11 @@ fetches beacon_locations and adds only relevant data to json packages.
             });
     }
  
-Frontend fetches the socketio data add it to state tieto.
 
 
-<!-- Known issues -->
-## Known issues
+
+<!-- Known issues and future developments -->
+## Known issues and future developments
 
 See the [open issues](https://github.com/Marski96/Bluetooth_beacons/issues) for a list of proposed features (and known issues).
 
