@@ -74,18 +74,16 @@ Mobile version of the app can be found here: https://github.com/Marski96/Bluetoo
 <!-- Logic -->
 ## Logic
 
-`
-const emit = async socket => {
-  try {
-    const res = await axios.get(
-      "http://localhost:4000/beacon_locations_average"
-    );
-    socket.emit("emitSocket", res.data);
-  } catch (error) {
-    console.error('Error: ${error.code}');
-  }
-};
-`
+            const emit = async socket => {
+              try {
+                const res = await axios.get(
+                  "http://localhost:4000/beacon_locations_average"
+                );
+                socket.emit("emitSocket", res.data);
+              } catch (error) {
+                console.error('Error: ${error.code}');
+              }
+            };
  
 Receives new data and sends it forward. Interval is decided in earlier section in where we create the actual connection. socketio.js
  
@@ -119,10 +117,9 @@ maintenance.txt clears db every night and creates fake data to display.
  
 app.get('/beacon_locations_average', function(req, res){
  
-    fetches beacon_locations and adds to json only relevant packages only.
- 
- 
- 
+fetches beacon_locations and adds to json only relevant packages only.
+
+
     componentDidMount() {
         fetch("http://localhost:4000/beacon_locations_average")
             .then(response => response.json())
@@ -136,7 +133,7 @@ app.get('/beacon_locations_average', function(req, res){
  
     }
  
-    most important in react pages. Fetches the socketio data add it to state tieto
+most important in react pages. Fetches the socketio data add it to state tieto
 
 
 
