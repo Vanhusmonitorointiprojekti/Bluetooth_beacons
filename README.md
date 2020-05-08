@@ -30,7 +30,7 @@ This project is directed towards helping people that are suffering from memory d
 ### Built With
 * [MySQL](https://www.mysql.com/)
 * [Socket.io](https://socket.io/)
-* [React](https://reactjs.org/)
+* [React Native](https://reactjs.org/)
 * [Node.js](https://nodejs.org/en/)
 * [MQTT](http://mqtt.org/)
 
@@ -115,9 +115,7 @@ Receives new data and sends it forward. Interval is decided in earlier section i
             };
 
 
-Alarms are caused by room colors which are in the database, for example if location type = "red" -> alarm.
-In addition, if person is not seen over 300 seconds and under 600 -> change status to "Unsure",
-If person is not seen over 600 seconds, cause an alarm.
+Alarms are set off by room colors which are in the database, for example if the location type is "red" -> the status changes to "Alarm". In addition, if the person is not detected for over 300 seconds and under 600 -> the status changes to "Unsure". If the person has not been detected for over 600 seconds, the status changes to "Alarm" and the measurement time will display "Not seen in 10 minutes".
 
             if(Receiver1_seconds >= 600) {
                 if(rows[2].location_type == 'green') {
@@ -134,7 +132,7 @@ If person is not seen over 600 seconds, cause an alarm.
                 }
             }
  
- 
+
 Calculates timedifference and includes it always in the third package we send. detect.js:
 
             //Get latest packet's timediff and use it as "seconds ago"
