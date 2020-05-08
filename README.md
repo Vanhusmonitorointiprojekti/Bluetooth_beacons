@@ -8,7 +8,9 @@
   * [Prerequisites](#prerequisites)
   * [Installation](#installation)
   * [Mobile](#Mobile)
-* [Logic](#Logic)
+* [How to use](#How-to-use)
+  * [Webclient](#weblient)
+  * [Logic](#Logic)
 * [Known issues](#Known-issues)
 * [License](#License)
 
@@ -71,8 +73,26 @@ npm start
 ### Mobile
 Mobile version of the app can be found here: https://github.com/Marski96/Bluetooth_beacons_mobile
 
+<!-- How to use -->
+## How to use
+
+
+<!-- Webclient -->
+### Webclient
+
+
+#### Beacon info -page contains information about the users
+![beacon info](https://raw.githubusercontent.com/Marski96/Bluetooth_beacons/development/img/beaconinfo.JPG)
+
+#### Receiver info -page contains information about the receiver
+![receiver info](https://raw.githubusercontent.com/Marski96/Bluetooth_beacons/development/img/receiverinfo.JPG)
+
+#### Beacon locations -page contains the main info about locations of the beacons
+![beacon locations](https://raw.githubusercontent.com/Marski96/Bluetooth_beacons/development/img/beaconlocations.JPG)
+
+
 <!-- Logic -->
-## Logic
+### Logic
 
 - MQTT_connect gets info from the wristlets and pushes it to the database.
  
