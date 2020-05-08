@@ -74,6 +74,15 @@ Mobile version of the app can be found here: https://github.com/Marski96/Bluetoo
 <!-- Logic -->
 ## Logic
 
+- MQTT_connect gets info from the wristlets and pushes it to the database.
+ 
+- queries.js contain all the SQL queries we use.
+ 
+- maintenance.txt contains database scripts which clears db every night and creates fake data to every wristlet to display (so database is never empty).
+
+
+Receives new data and sends it forward. Interval is decided in earlier section in where we create the actual connection. socketio.js:
+
             const emit = async socket => {
               try {
                 const res = await axios.get(
@@ -84,9 +93,10 @@ Mobile version of the app can be found here: https://github.com/Marski96/Bluetoo
                 console.error('Error: ${error.code}');
               }
             };
+    
  
-Receives new data and sends it forward. Interval is decided in earlier section in where we create the actual connection. socketio.js
- 
+Calculates timedifference and includes it always in the third package we send. detect.js:
+
  //Get latest packet's timediff and use it as "seconds ago"
             let rawTimeDiff1 = rows[2].Timediff
                 if (rawTimeDiff1 == undefined) {
@@ -94,10 +104,10 @@ Receives new data and sends it forward. Interval is decided in earlier section i
                 }
             let Receiver1_timediff = rawTimeDiff1.split(':');
             let Receiver1_seconds = (+Receiver1_timediff[0]) * 60 * 60 + (Receiver1_timediff[1]) * 60 + (+Receiver1_timediff[2]);
- 
-Calculates time difference and includes it always in the third package we sent. detect.js
- 
- 
+
+
+
+ Add the data to JSON which we send. detect.js
  
             rows[0].average_signal_db = Receiver1_AVG;
             rows[1].average_signal_db = Receiver1_AVG;
@@ -106,19 +116,8 @@ Calculates time difference and includes it always in the third package we sent. 
             rows[2].status = Receiver1_status
  
  
-Add more data to JSON which we sent. detect.js
  
- 
-MQTT_connect gets info from the wristlets and pushes it to the database.
- 
-queries.js contain all the SQL queries we use.
- 
-maintenance.txt clears db every night and creates fake data to display.
- 
-app.get('/beacon_locations_average', function(req, res){
- 
-fetches beacon_locations and adds to json only relevant packages only.
-
+fetches beacon_locations and adds only relevant data to json packages.
 
     componentDidMount() {
         fetch("http://localhost:4000/beacon_locations_average")
@@ -130,11 +129,9 @@ fetches beacon_locations and adds to json only relevant packages only.
                 const socket = socketIOClient(endpoint);
                 socket.on("emitSocket", data => this.setState({ tieto: data }));
             });
- 
     }
  
-most important in react pages. Fetches the socketio data add it to state tieto
-
+Frontend fetches the socketio data add it to state tieto.
 
 
 <!-- Known issues -->
