@@ -7,6 +7,8 @@
 * [Getting Started](#getting-started)
   * [Prerequisites](#prerequisites)
   * [Installation](#installation)
+  * [Mobile](#Mobile)
+* [Logic](#Logic)
 * [Known issues](#Known-issues)
 * [License](#License)
 
@@ -65,6 +67,76 @@ pushd ..\Bluetooth_beacons
 npm start
 ```
 6. Both backend and frontend should be running, in order to application to work.
+
+### Mobile
+Mobile version of the app can be found here: https://github.com/Marski96/Bluetooth_beacons_mobile
+
+<!-- Logic -->
+## Logic
+
+`
+const emit = async socket => {
+  try {
+    const res = await axios.get(
+      "http://localhost:4000/beacon_locations_average"
+    );
+    socket.emit("emitSocket", res.data);
+  } catch (error) {
+    console.error('Error: ${error.code}');
+  }
+};
+`
+ 
+Receives new data and sends it forward. Interval is decided in earlier section in where we create the actual connection. socketio.js
+ 
+ //Get latest packet's timediff and use it as "seconds ago"
+            let rawTimeDiff1 = rows[2].Timediff
+                if (rawTimeDiff1 == undefined) {
+                    rawTimeDiff1 = '00:00:00'
+                }
+            let Receiver1_timediff = rawTimeDiff1.split(':');
+            let Receiver1_seconds = (+Receiver1_timediff[0]) * 60 * 60 + (Receiver1_timediff[1]) * 60 + (+Receiver1_timediff[2]);
+ 
+Calculates time difference and includes it always in the third package we sent. detect.js
+ 
+ 
+ 
+            rows[0].average_signal_db = Receiver1_AVG;
+            rows[1].average_signal_db = Receiver1_AVG;
+            rows[2].average_signal_db = Receiver1_AVG;
+            rows[2].timediff_in_seconds = Receiver1_seconds;
+            rows[2].status = Receiver1_status
+ 
+ 
+Add more data to JSON which we sent. detect.js
+ 
+ 
+MQTT_connect gets info from the wristlets and pushes it to the database.
+ 
+queries.js contain all the SQL queries we use.
+ 
+maintenance.txt clears db every night and creates fake data to display.
+ 
+app.get('/beacon_locations_average', function(req, res){
+ 
+    fetches beacon_locations and adds to json only relevant packages only.
+ 
+ 
+ 
+    componentDidMount() {
+        fetch("http://localhost:4000/beacon_locations_average")
+            .then(response => response.json())
+            .then(responseJson => {
+                this.setState({ tieto: responseJson });
+ 
+                const { endpoint } = this.state;
+                const socket = socketIOClient(endpoint);
+                socket.on("emitSocket", data => this.setState({ tieto: data }));
+            });
+ 
+    }
+ 
+    most important in react pages. Fetches the socketio data add it to state tieto
 
 
 
