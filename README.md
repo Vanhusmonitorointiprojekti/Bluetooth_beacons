@@ -97,7 +97,7 @@ Receives new data and sends it forward. Interval is decided in earlier section i
  
 Calculates timedifference and includes it always in the third package we send. detect.js:
 
- //Get latest packet's timediff and use it as "seconds ago"
+            //Get latest packet's timediff and use it as "seconds ago"
             let rawTimeDiff1 = rows[2].Timediff
                 if (rawTimeDiff1 == undefined) {
                     rawTimeDiff1 = '00:00:00'
