@@ -11,7 +11,8 @@ global.db = mysql.createConnection({
 //Connect to database
   db.connect((err) => {
     if(err){
-        throw err;
+        //throw err;
+        console.log('error')
     }
     console.log('Connection established with the database');
 });

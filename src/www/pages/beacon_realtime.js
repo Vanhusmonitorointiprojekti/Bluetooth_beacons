@@ -6,7 +6,7 @@ class Beacon_realtime extends Component {
     constructor() {
         super();
         this.state = {
-            response: {},
+            response: [],
             endpoint: "http://127.0.0.1:4000"
         };
     }
@@ -20,16 +20,18 @@ class Beacon_realtime extends Component {
     }
 
     render() {
-        const {response} = this.state;
+        //const {response} = this.state;
+        const beacons = this.state.response.map((r) =>
+            <ul>
+                <li key={r.id}>
+                    {r.beaconuser}
+                </li>
+            
+        </ul>
+        )
         return (
             <div style={{textAlign: "center"}}>
-                      <ul>
-                        {response.map(r => 
-                        <li key={r.id}>
-                            {r.beaconuser}
-                        </li>
-                        )}
-                    </ul>
+                      {beacons}
             </div>
         )
     }
