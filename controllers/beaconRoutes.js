@@ -5,6 +5,7 @@ const router = express.Router()
 
     router.get('/', function (req, res) {
         model.getBeacons(function (result) {
+            console.log('Getting results', result)
             res.send({
                 result
             });
