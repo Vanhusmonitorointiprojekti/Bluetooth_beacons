@@ -10,12 +10,16 @@ const multer = require('multer');
 const socketServer = require('../socketio/socketio');
 const moment = require('moment');
 const fetch = require("node-fetch");
+
+const realtimeRoutes = require('../../controllers/beaconRoutes')
+
 //This is the backend -code which is required to run with front-end.
 //Component handles all the end-point requests and database queries.
 
 //App, listen this port
 socketServer.start()
 expressPort = 4000;
+app.use('/test', realtimeRoutes);
 var server = app.listen(expressPort,()=>console.log('Express is running at port no : ' + expressPort));
 
     //Write instructions to '/' -page

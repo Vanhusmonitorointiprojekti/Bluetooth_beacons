@@ -1,0 +1,45 @@
+2020-09-07T10:05:56.239142180 0.022036s notice: Recursively removing directory /home/marja/Documents/softala/Bluetooth_beacons/rethinkdb_data/tmp
+2020-09-07T10:05:56.242925713 0.025821s notice: Initializing directory /home/marja/Documents/softala/Bluetooth_beacons/rethinkdb_data
+2020-09-07T10:05:56.242979700 0.025873s info: Creating a default database for your convenience. (This is because you ran 'rethinkdb' without 'create', 'serve', or '--join', and the directory '/home/marja/Documents/softala/Bluetooth_beacons/rethinkdb_data' did not already exist or is empty.)
+2020-09-07T10:05:56.243001047 0.025895s notice: Running rethinkdb 2.4.1~0focal (CLANG 10.0.0 )...
+2020-09-07T10:05:56.244075613 0.026969s notice: Running on Linux 5.4.0-45-generic x86_64
+2020-09-07T10:05:56.244096869 0.026990s notice: Loading data from directory /home/marja/Documents/softala/Bluetooth_beacons/rethinkdb_data
+2020-09-07T10:05:56.271082146 0.053976s info: Automatically using cache size of 1628 MB
+2020-09-07T10:05:56.271767966 0.054662s notice: Listening for intracluster connections on port 29015
+2020-09-07T10:05:56.273886427 0.056780s notice: Listening for client driver connections on port 28015
+2020-09-07T10:05:56.273942432 0.056836s notice: Listening for administrative HTTP connections on port 8080
+2020-09-07T10:05:56.273946172 0.056840s notice: Listening on cluster addresses: 127.0.0.1, ::1
+2020-09-07T10:05:56.273949523 0.056843s notice: Listening on driver addresses: 127.0.0.1, ::1
+2020-09-07T10:05:56.273957652 0.056851s notice: Listening on http addresses: 127.0.0.1, ::1
+2020-09-07T10:05:56.273964520 0.056858s notice: To fully expose RethinkDB on the network, bind to all addresses by running rethinkdb with the `--bind all` command line option.
+2020-09-07T10:05:56.273970310 0.056864s notice: Server ready, "marja_e03" 25a90dff-61e5-45a5-a952-6ca778b408ba
+2020-09-07T10:09:44.249888595 228.032783s info: Table 15fa70ab-be46-4f91-8340-d26a07478445: Starting a new Raft election for term 1.
+2020-09-07T10:09:44.250528572 228.033423s info: Table 15fa70ab-be46-4f91-8340-d26a07478445: Added replica on this server.
+2020-09-07T10:09:44.254564088 228.037458s info: Table 15fa70ab-be46-4f91-8340-d26a07478445: This server is Raft leader for term 1. Latest log index is 0.
+2020-09-07T10:13:32.423324621 456.206219s notice: Server got SIGINT from pid 0, uid 0; shutting down...
+2020-09-07T10:13:32.423624508 456.206519s notice: Shutting down client connections...
+2020-09-07T10:13:32.423777670 456.206672s notice: All client connections closed.
+2020-09-07T10:13:32.423786884 456.206681s notice: Shutting down storage engine... (This may take a while if you had a lot of unflushed data in the writeback cache.)
+2020-09-07T10:13:32.429361105 456.212255s notice: Storage engine shut down.
+2020-09-07T10:13:55.219683788 0.016693s notice: Running rethinkdb 2.4.1~0focal (CLANG 10.0.0 )...
+2020-09-07T10:13:55.220957821 0.017966s notice: Running on Linux 5.4.0-45-generic x86_64
+2020-09-07T10:13:55.220985842 0.017993s notice: Loading data from directory /home/marja/Documents/softala/Bluetooth_beacons/rethinkdb_data
+2020-09-07T10:13:55.231391618 0.028399s info: Automatically using cache size of 1595 MB
+2020-09-07T10:13:55.231848939 0.028857s notice: Listening for intracluster connections on port 29015
+2020-09-07T10:13:55.241272439 0.038280s notice: Listening for client driver connections on port 28015
+2020-09-07T10:13:55.241337055 0.038345s notice: Listening for administrative HTTP connections on port 8080
+2020-09-07T10:13:55.241346036 0.038354s notice: Listening on cluster addresses: 127.0.0.1, ::1
+2020-09-07T10:13:55.241350294 0.038358s notice: Listening on driver addresses: 127.0.0.1, ::1
+2020-09-07T10:13:55.241355037 0.038363s notice: Listening on http addresses: 127.0.0.1, ::1
+2020-09-07T10:13:55.241356988 0.038365s notice: To fully expose RethinkDB on the network, bind to all addresses by running rethinkdb with the `--bind all` command line option.
+2020-09-07T10:13:55.241364275 0.038372s notice: Server ready, "marja_e03" 25a90dff-61e5-45a5-a952-6ca778b408ba
+2020-09-07T10:13:56.701553216 1.498561s info: Table 15fa70ab-be46-4f91-8340-d26a07478445: Starting a new Raft election for term 2.
+2020-09-07T10:13:56.711680403 1.508689s info: Table 15fa70ab-be46-4f91-8340-d26a07478445: This server is Raft leader for term 2. Latest log index is 3.
+2020-09-07T10:27:21.460145901 806.257154s info: Table 387b34b6-7035-460a-8c9f-37ea82bb6c24: Starting a new Raft election for term 1.
+2020-09-07T10:27:21.460693174 806.257701s info: Table 387b34b6-7035-460a-8c9f-37ea82bb6c24: Added replica on this server.
+2020-09-07T10:27:21.465189757 806.262198s info: Table 387b34b6-7035-460a-8c9f-37ea82bb6c24: This server is Raft leader for term 1. Latest log index is 0.
+2020-09-07T10:30:26.161885258 990.958894s notice: Server got SIGINT from pid 0, uid 0; shutting down...
+2020-09-07T10:30:26.162160334 990.959168s notice: Shutting down client connections...
+2020-09-07T10:30:26.163496466 990.960505s notice: All client connections closed.
+2020-09-07T10:30:26.163523265 990.960531s notice: Shutting down storage engine... (This may take a while if you had a lot of unflushed data in the writeback cache.)
+2020-09-07T10:30:26.169156791 990.966164s notice: Storage engine shut down.
