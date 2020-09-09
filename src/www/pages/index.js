@@ -7,6 +7,7 @@ import Receiver_info from './receiver_info.js';
 import Beacon_info from './beacon_info.js';
 import Beacon_locations from "./beacon_locations";
 import Beacon_realtime from "./beacon_realtime";
+import Clients from "./clients";
 import flag_UK from '../../locales/en/flag_UK.png'
 import flag_FI from '../../locales/fi/flag_FI.png'
 
@@ -67,6 +68,7 @@ render(){
               <Tab label={t("Receiver info")} component={Link} to="/ReceiverInfo" />
               <Tab label={t("Beacon locations")} component={Link} to="/BeaconLocations" />
               <Tab label={"Beacon realtime"} component={Link} to="/BeaconRealtime" />
+              <Tab label={"Clients"} component={Link} to="/Clients" />
               <Button style={{marginLeft: "auto"}} onClick={this.switchEn}><img src= {flag_UK} alt="FlagOfUK" height='25' width='40' /></Button>
               <Button onClick={this.switchFi}><img src= {flag_FI} alt="FlagOfFI" height='25' width='40' /></Button>
               
@@ -80,6 +82,7 @@ render(){
                               <Route path="/ReceiverInfo" component={Receiver_info}></Route>
                               <Route path="/BeaconLocations" component={Beacon_locations}></Route>
                               <Route path="/BeaconRealtime" component={Beacon_realtime}></Route>
+                              <Route path="/Clients" component={Clients}></Route>
                           </Switch>
                       </div>
         </BrowserRouter>

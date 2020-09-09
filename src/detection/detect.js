@@ -8,7 +8,7 @@ const queries = require('../database/queries');
 const alerting = require('../detection/alerts');
 const multer = require('multer');
 const socketServer = require('../socketio/socketio');
-//const socketServer2 = require('../socketio/socketio_realtime')
+const socketServer2 = require('../socketio/socketio_test')
 const moment = require('moment');
 const fetch = require("node-fetch");
 
@@ -21,7 +21,7 @@ const io = require('socket.io')(server);
 
 //App, listen this port
 socketServer.start()
-//socketServer2.start()
+socketServer2.start()
 expressPort = 4000;
 app.use('/test', realtimeRoutes);
 //var server = app.listen(expressPort,()=>console.log('Express is running at port no : ' + expressPort));
