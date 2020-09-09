@@ -21,17 +21,10 @@ class Beacon_realtime extends Component {
 
     render() {
         //const {response} = this.state;
-        const beacons = this.state.response.map((r) =>
-            <ul>
-                <li key={r.id}>
-                    {r.beaconuser}
-                </li>
-            
-        </ul>
-        )
+        const vastaus = this.state.response
         return (
             <div style={{textAlign: "center"}}>
-                      {beacons}
+                      {vastaus}
             </div>
         )
     }
