@@ -2,7 +2,7 @@ var model = module.exports;
 var r = require('rethinkdb');
 var config = require('../config');
 
-var BEACONS_TABLE = 'beacons';
+var BEACONS_TABLE = 'beacon_info';
 
 model.setup = function (callback) {
     console.log("Setting up RethinkDB...");

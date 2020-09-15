@@ -7,7 +7,7 @@ class Beacon_realtime extends Component {
         super();
         this.state = {
             response: "",
-            beacons: {},
+            beacons: "",
             endpoint: "http://127.0.0.1:4002",
         };
     }
@@ -28,7 +28,7 @@ class Beacon_realtime extends Component {
         return (
             <div style={{textAlign: "center"}}>
                       Number of clients: {response}
-                      Beaconresponse: { beacons.beaconuser }
+                      Beaconresponse: { beacons.beacon_user }
             </div>
         )
     }
