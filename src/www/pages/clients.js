@@ -6,6 +6,7 @@ class Beacon_realtime extends Component {
     constructor() {
         super();
         this.state = {
+            tieto: [],
             response: "",
             beacons: "",
             endpoint: "http://127.0.0.1:4002",
@@ -13,6 +14,13 @@ class Beacon_realtime extends Component {
     }
 
     componentDidMount() {
+        fetch('http://localhost:4000/test')
+        .then((response) => response.json())
+        .then(responseJson => {
+            console.log('tieto', responseJson.result)
+            this.setState({tieto: responseJson.result})
+
+        })
         const { endpoint } = this.state;
         //Very simply connect to the socket
         const socket = socketIOClient(endpoint);
@@ -27,8 +35,15 @@ class Beacon_realtime extends Component {
 
         return (
             <div style={{textAlign: "center"}}>
-                      Number of clients: {response}
-                      Beaconresponse: { beacons.beacon_user }
+                      <p>Number of socketio clients: {response} </p>
+                      <p>The newest beacon_user value, if db changes: { beacons.beacon_user } </p>
+                      <ul>
+                          { this.state.tieto.map(member => 
+                              <li key={member.beacon_id}>
+                                  {member.beacon_user}
+                              </li>
+                        )}
+                      </ul>
             </div>
         )
     }

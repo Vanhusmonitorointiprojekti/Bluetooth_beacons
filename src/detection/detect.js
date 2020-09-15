@@ -12,8 +12,9 @@ const socketServer2 = require('../socketio/socketio_test')
 const moment = require('moment');
 const fetch = require("node-fetch");
 
-//const server = require('http').createServer(app);
-const io = require('socket.io')(server);
+const realtimeRoutes = require('../../controllers/beaconRoutes')
+
+
 //This is the backend -code which is required to run with front-end.
 //Component handles all the end-point requests and database queries.
 
@@ -21,6 +22,7 @@ const io = require('socket.io')(server);
 socketServer.start()
 socketServer2.start()
 expressPort = 4000;
+app.use('/test', realtimeRoutes);
 
 var server = app.listen(expressPort,()=>console.log('Express is running at port no : ' + expressPort));
 

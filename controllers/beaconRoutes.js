@@ -6,6 +6,7 @@ const router = express.Router()
     router.get('/', function (req, res) {
         model.getBeacons(function (result) {
             console.log('Getting results', result)
+            res.setHeader('Access-Control-Allow-Origin', '*');
             res.send({
                 result
             });
