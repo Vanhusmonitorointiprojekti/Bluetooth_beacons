@@ -15,8 +15,10 @@ const router = express.Router()
 
     router.post('/', function (req, res) {
         var beacon = {
-            number:req.body.number,
-            beaconuser: req.body.beaconuser
+            receiver_id:req.body.receiver_id,
+            beacon_id: req.body.beacon_id,
+            signal_db: req.body.signal_db,
+            measurement_time: req.body.measurement_time
         };
         model.saveBeacon(beacon, function (success, result) {
             if (success) res.json({

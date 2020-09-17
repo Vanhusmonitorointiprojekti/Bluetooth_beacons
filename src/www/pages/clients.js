@@ -8,7 +8,7 @@ class Beacon_realtime extends Component {
         this.state = {
             tieto: [],
             response: "",
-            beacons: "",
+            beacon: "",
             endpoint: "http://127.0.0.1:4002",
         };
     }
@@ -26,21 +26,21 @@ class Beacon_realtime extends Component {
         const socket = socketIOClient(endpoint);
         //Listen for data on the "outgoing data" namespace and supply a callback for what to do when we get one. In this case, we set a state variable
         socket.on("broadcast", data => this.setState({ response: data.description }));
-        socket.on("test", data => this.setState({ beacons: data }));
+        socket.on("test", data => this.setState({ beacon: data }));
     }
 
     render() {
         const { response } = this.state;
-        const beacons = this.state.beacons;
+        const beacon = this.state.beacon;
 
         return (
             <div style={{textAlign: "center"}}>
                       <p>Number of socketio clients: {response} </p>
-                      <p>The newest beacon_user value, if db changes: { beacons.beacon_user } </p>
+                        <p>The newest beacon_user value, if db changes: { beacon.receiver_id } {beacon.beacon_id} {beacon.signal_db} {beacon.measurement_time} </p>
                       <ul>
                           { this.state.tieto.map(member => 
-                              <li key={member.beacon_id}>
-                                  {member.beacon_user}
+                              <li key={member.measurement_time}>
+                                  { member.receiver_id } {member.beacon_id} {member.signal_db} {member.measurement_time}
                               </li>
                         )}
                       </ul>
