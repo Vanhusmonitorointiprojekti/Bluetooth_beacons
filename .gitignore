@@ -19,6 +19,7 @@
 .env.production.local
 .idea
 .log
+.env
 
 /rethinkdb_data
 
