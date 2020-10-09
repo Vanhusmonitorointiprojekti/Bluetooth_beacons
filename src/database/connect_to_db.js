@@ -13,6 +13,7 @@ global.db = mysql.createConnection({
     if(err){
         //throw err;
         console.log('error')
+        return
     }
     console.log('Connection established with the database');
 });

@@ -34,16 +34,6 @@ function writeValues(msg) {
       }
   })
 
-
-  /*r.db('rt_beacons').table('beacon_detections').insert( {
-    receiver_id: msg[0],
-    beacon_id: msg[1],
-    signal_db: msg[2],
-    measurement_time: Date.now()
-  }).run(connection, function(err, result) {
-    if (err) throw err;
-    console.log(JSON.stringify(result, null, 2))
-  })*/
 }
 
 //https://gist.github.com/smching/ff414e868e80a6ee2fbc8261f8aebb8f#file-app_mqtt_mysql_completed-js
