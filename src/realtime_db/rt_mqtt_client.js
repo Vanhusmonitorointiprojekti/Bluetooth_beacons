@@ -33,8 +33,8 @@ function writeValues(msg) {
   r.db('rt_beacons').table('beacon_detections').insert( {
     receiver_id: msg[0],
     beacon_id: msg[1],
-    signal_db: msg[2],
-    measurement_time: Date.now()
+    signal_db: Number(msg[2]),
+    measurement_time: r.now()
   }).run(connection, function(err, result) {
     if (err) throw err;
     console.log(JSON.stringify(result, null, 2))

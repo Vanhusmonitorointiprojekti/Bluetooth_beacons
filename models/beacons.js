@@ -42,7 +42,7 @@ model.setup = function (callback) {
     });
 }
 
-model.getBeacons = function (callback) {
+model.getDetections = function (callback) {
     r.connect(config.database).then(function(conn) {
         r.table(BEACONS_TABLE).run(conn).then(function(cursor) {
             cursor.toArray(function(error, results) {
@@ -57,30 +57,21 @@ model.getBeacons = function (callback) {
     });
 }
 
-model.saveBeacon = function (beacon, callback) {
+model.getGroups = (callback) => {
     r.connect(config.database).then(function(conn) {
-        r.table(BEACONSS_TABLE).insert(beacon).run(conn).then(function(results) {
-            callback(true, results);
+        // huom todo datan määrän rajoittaminen
+        r.table(BEACONS_TABLE).group('beacon_id', 'receiver_id').avg('signal_db').ungroup().run(conn).then(function(cursor) {
+            cursor.toArray(function(error, results) {
+                if (error) throw error;
+                callback(results);
+            });
         }).error(function(error) {
-            callback(false, error);
+            throw error;
         });
     }).error(function(error) {
-        callback(false, error);
+        throw error;
     });
 }
 
-model.updateBeacon = function (beacon, field, callback) {
-    r.connect(config.database).then(function(conn) {
-        r.table(BEACONS_TABLE).get(beacon.id).update(function(beacon) {
-            return r.object(field, beacon(field).add(1)); 
-        }).run(conn).then(function(results) {
-           callback(true, results);
-        }).error(function(error) {
-            callback(false, error);
-        });
-    }).error(function(error) {
-        callback(false, error);
-    });
-}
 
 //https://github.com/eh3rrera/rethinkdb-example
