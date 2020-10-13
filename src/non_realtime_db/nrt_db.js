@@ -3,8 +3,8 @@ const mysql = require('mysql');
 
 let connection = mysql.createConnection({
   host     : 'localhost' || process.env.NRT_HOST,
-  user     : 'insert_user' || process.env.NRT_USER,
-  password : 'insert_password' || process.env.NRT_PASSWORD,
+  user     : 'user' || process.env.NRT_USER,
+  password : 'password' || process.env.NRT_PASSWORD,
   database: 'senior_monitoring'
 });
 

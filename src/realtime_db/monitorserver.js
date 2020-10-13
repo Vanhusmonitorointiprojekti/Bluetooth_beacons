@@ -2,8 +2,8 @@ const express = require('express')
 const cors = require('cors')
 const bodyparser = require('body-parser')
 const socketServer2 = require('../socketio/socketio_test')
-const model = require('../../models/beacons')
 const detections = require('../../controllers/beaconRoutes')
+const mariadb = require('../non_realtime_db/mariadb_queries')
 
 const app = express()
 
@@ -20,4 +20,20 @@ app.use('/detections', detections);
 
 app.get('/', (req, res) => {
     res.send('Monitor app')
+})
+
+app.get('/tenants', (req, res) => {
+    mariadb.getTenants((result) => {
+        res.send(
+            result
+        )
+    })
+})
+
+app.get('/receivers', (req, res) => {
+    mariadb.getReceivers((result) => {
+        res.send(
+            result
+        )
+    })
 })
