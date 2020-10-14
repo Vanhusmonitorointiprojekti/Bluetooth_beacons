@@ -57,7 +57,7 @@ model.getDetections = function (callback) {
     });
 }
 
-model.getGroups = (callback) => {
+model.getLocations = (callback) => {
     r.connect(config.database).then(function(conn) {
         // huom todo datan määrän rajoittaminen
         r.table(BEACONS_TABLE).group('beacon_id', 'receiver_id').avg('signal_db').ungroup().run(conn).then(function(cursor) {

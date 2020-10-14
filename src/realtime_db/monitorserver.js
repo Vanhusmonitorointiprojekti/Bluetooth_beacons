@@ -4,6 +4,7 @@ const bodyparser = require('body-parser')
 const socketServer2 = require('../socketio/socketio_test')
 const detections = require('../../controllers/beaconRoutes')
 const mariadb = require('../non_realtime_db/mariadb_queries')
+const logic = require('./monitor_tenants')
 
 const app = express()
 
@@ -15,6 +16,7 @@ socketServer2.start()
 expressPort = 4000;
 
 app.listen(expressPort,() => console.log('Monitoring App is listening at port : ' + expressPort))
+logic()
 
 app.use('/detections', detections);
 
