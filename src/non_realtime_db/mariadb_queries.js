@@ -26,7 +26,7 @@ db.getReceivers = (callback) => {
 
 db.getTenants = (callback) => {
 
-    const sql = 'SELECT t.tenant_firstname, t.tenant_lastname, s.space_name, t.beacon_id, p.profile_type \
+    const sql = 'SELECT t.tenant_id, t.tenant_firstname, t.tenant_lastname, s.space_name, t.beacon_id, p.profile_type \
     FROM tenants as t, spaces as s, profiles as p \
     WHERE t.space_id=s.space_id AND t.profile_id=p.profile_id \
     ORDER BY t.tenant_lastname;'

@@ -2,7 +2,7 @@ var model = module.exports;
 var r = require('rethinkdb');
 var config = require('../config');
 
-var BEACONS_TABLE = 'beacon_detections';
+var DB_TABLE = 'tenant_statuses';
 
 model.setup = function (callback) {
     console.log("Setting up RethinkDB...");
@@ -15,11 +15,11 @@ model.setup = function (callback) {
             console.log("Database already created...");
         }).finally(function() {
             // Does the table exist?
-            r.table(BEACONS_TABLE).limit(1).run(conn, function(error, cursor) {
+            r.table(DB_TABLE).limit(1).run(conn, function(error, cursor) {
                 var promise;
                 if (error) {
                     console.log("Creating table...");
-                    promise = r.tableCreate(BEACONS_TABLE).run(conn);
+                    promise = r.tableCreate(DB_TABLE).run(conn);
                 } else {    
                     promise = cursor.toArray();
                 }
@@ -27,7 +27,7 @@ model.setup = function (callback) {
                 // The table exists, setup the update listener
                 promise.then(function(result) {
                     console.log("Setting up update listener...");
-                    r.table(BEACONS_TABLE).changes().run(conn).then(function(cursor) {
+                    r.table(DB_TABLE).changes().run(conn).then(function(cursor) {
                         cursor.each(function(error, row) {
                             callback(row);
                         });
@@ -42,9 +42,9 @@ model.setup = function (callback) {
     });
 }
 
-model.getDetections = function (callback) {
+model.getStatuses = function (callback) {
     r.connect(config.database).then(function(conn) {
-        r.table(BEACONS_TABLE).run(conn).then(function(cursor) {
+        r.table(DB_TABLE).run(conn).then(function(cursor) {
             cursor.toArray(function(error, results) {
                 if (error) throw error;
                 callback(results);
@@ -57,9 +57,9 @@ model.getDetections = function (callback) {
     });
 }
 
-model.deleteDetections = function (callback) {
+model.getTenant = function (id, callback) {
     r.connect(config.database).then(function(conn) {
-        r.table(BEACONS_TABLE).delete().run(conn).then(function(result) {
+        r.table(DB_TABLE).get(id).run(conn).then(function(result) {
             callback(result);
         }).error(function(error) {
             callback(error);
@@ -69,19 +69,28 @@ model.deleteDetections = function (callback) {
     });
 }
 
-model.getLocations = (callback) => {
+model.saveTenant = function (tenant, callback) {
     r.connect(config.database).then(function(conn) {
-        // huom todo datan määrän rajoittaminen
-        r.table(BEACONS_TABLE).group('beacon_id', 'receiver_id').avg('signal_db').ungroup().run(conn).then(function(cursor) {
-            cursor.toArray(function(error, results) {
-                if (error) throw error;
-                callback(results);
-            });
+        r.table(DB_TABLE).insert(tenant).run(conn).then(function(results) {
+            callback(true, results);
         }).error(function(error) {
-            throw error;
+            callback(false, error);
         });
     }).error(function(error) {
-        throw error;
+        callback(false, error);
+    });
+}
+
+model.updateTenantStatus = function (id, new_status, callback) {
+    r.connect(config.database).then(function(conn) {
+        r.table(DB_TABLE).get(id).update({status: new_status, last_updated: r.now()})
+        .run(conn).then(function(results) {
+           callback(true, results);
+        }).error(function(error) {
+            callback(false, error);
+        });
+    }).error(function(error) {
+        callback(false, error);
     });
 }
 

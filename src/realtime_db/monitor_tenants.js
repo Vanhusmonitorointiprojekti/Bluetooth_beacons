@@ -2,7 +2,7 @@ const axios = require("axios")
 const _ = require('lodash')
 
 const monitor_tenants = async () => {
-    let delay = 5000
+    let delay = 6000
     let interval
 
     const tenants = await getData('http://localhost:4000/tenants')
@@ -20,7 +20,9 @@ module.exports = monitor_tenants
 const getLocations = async (tenants, receivers) => {
     const locations = await getData('http://localhost:4000/detections/locations')
     const locationsData = await combineData(locations, tenants, receivers)
-    // todo logic continues
+    await getStatusForTenants(locationsData)
+    await clearDetections('http://localhost:4000/detections')
+    console.log('cleared data')
 }
 
 const getData = async (url) => {
@@ -32,6 +34,29 @@ const getData = async (url) => {
         console.log('axios getData error')
         return
     }
+}
+
+const clearDetections = async (url) => {
+    try {
+        const result = await axios.delete(url)
+        return result.data;
+    }
+    catch(error){
+        console.log('axios delete error')
+        return
+    }
+}
+
+
+/*const postData = async (url, newObject) => {  
+    const response = await axios.post(url, newObject)
+    return response.data
+}*/
+
+
+const updateData = async (url, newObj) => {
+    const response = await axios.put(`${url}/${newObj.id}`, newObj)
+    return response.data
 }
 
 const getTenant = async (beacon_id, tenants) => {
@@ -64,11 +89,67 @@ const combineData = async (obj, tenants, receivers) => {
                 array.push({tenant: tenant, receiver: receiver})
             }
         }
-        console.log('array', array)
+        //console.log('array', array)
         return array
     } catch(error) {
         console.log(error)
     }
-    
-    
+       
 }
+
+const getStatusForTenants = async (tenantData) => {
+    try {
+        _.forEach( tenantData, t =>  defineStatus(t))
+      
+    } catch(error) {
+        console.log(error)
+    }
+} 
+
+const defineStatus = (obj) => {
+    let pair = obj.tenant.profile_type + '.' + obj.receiver.location_type
+    let status = ''
+    let newObj = { 
+        id: obj.tenant.tenant_id,
+        firstname: obj.tenant.tenant_firstname,
+        lastname: obj.tenant.tenant_lastname
+    }
+    console.log(obj.tenant.space_name + ' ' + obj.receiver.space_name)
+    console.log('pair', pair)
+
+    // check if tenant is in his/her own home or someone else's home
+    if (pair === '1.1' || pair === '3.1') {
+        if (obj.tenant.space_name === obj.receiver.space_name) {
+            // tenant's own home, status ok
+            status = statusMap.get(pair)[0]
+            //console.log(status)
+        } else {
+            status = statusMap.get(pair)[1]
+            //console.log(status)
+        }
+    } else {
+        status = statusMap.get(pair)
+        //console.log(status)
+    }
+    newObj.status = status
+    console.log('objStatus', newObj.status+newObj.firstname)
+    updateData('http://localhost:4000/statuses', newObj)
+}
+
+let statusMap = new Map([
+    // first number profile_type, second location_type, eq. 1.1 = tenant_profile_type 1 and location_type 1
+    ['1.1', ['ok', 'alarm']],
+    ['1.2', 'alarm'],
+    ['1.3', 'alarm'],
+    ['1.4', 'alarm'],
+    ['2.1', 'ok'],
+    ['2.2', 'ok'],
+    ['2.3', 'go check'],
+    ['2.4', 'alarm'],
+    ['3.1', ['ok', 'alarm']],
+    ['3.2', 'ok'],
+    ['3.3', 'go check'],
+    ['3.4', 'alarm']
+  ])
+
+  // https://medium.com/@martin.crabtree/javascript-tracking-key-value-pairs-using-hashmaps-7de6df598257

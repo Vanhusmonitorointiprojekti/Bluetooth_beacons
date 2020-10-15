@@ -23,6 +23,11 @@ const router = express.Router()
         })
     })
 
+    router.delete('/', (req, res) => {
+        model.deleteDetections((result) => {
+            res.send(result)
+        })
+    })
 
 module.exports = router
 
