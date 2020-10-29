@@ -18,8 +18,10 @@ io.on('connection', function(socket) {
 
     model.setup(function(data) {
         if((data.new_val != null) && (data.old_val != null)) {
-            // status update
-            io.emit('updates', data.new_val);
+            // status update only, if status changes
+            if (data.new_val.status !== data.old_val.status) {
+                io.emit('updates', data.new_val)
+            }           
         } else if((data.new_val != null) && (data.old_val == null)) {
             // new tenant
             io.emit('new', data.new_val);

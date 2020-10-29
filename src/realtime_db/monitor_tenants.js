@@ -12,7 +12,7 @@ const monitor_tenants = async () => {
     } else {
         console.log('cannot get tenant or receiver data, app will not work')
     }
-    
+    setInterval(() => clearDetections('http://localhost:4000/detections'), 30000)
 }
 
 module.exports = monitor_tenants
@@ -21,8 +21,6 @@ const getLocations = async (tenants, receivers) => {
     const locations = await getData('http://localhost:4000/detections/locations')
     const locationsData = await combineData(locations, tenants, receivers)
     await getStatusForTenants(locationsData)
-    await clearDetections('http://localhost:4000/detections')
-    console.log('cleared data')
 }
 
 const getData = async (url) => {
@@ -39,6 +37,7 @@ const getData = async (url) => {
 const clearDetections = async (url) => {
     try {
         const result = await axios.delete(url)
+        console.log('clear detections')
         return result.data;
     }
     catch(error){
@@ -89,7 +88,7 @@ const combineData = async (obj, tenants, receivers) => {
                 array.push({tenant: tenant, receiver: receiver, measurement_time: obj[key].measurement_time})
             }
         }
-        console.log('array', array)
+        //console.log('array', array)
         return array
     } catch(error) {
         console.log(error)

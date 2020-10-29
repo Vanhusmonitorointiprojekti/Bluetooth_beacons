@@ -71,7 +71,7 @@ model.deleteDetections = function (callback) {
 
 model.getLocations = (callback) => {
     r.connect(config.database).then(function(conn) {
-        r.table(BEACONS_TABLE).orderBy({index: r.desc('measurement_time')}).limit(30).group('beacon_id', 'receiver_id').run(conn).then(function(cursor) {
+        r.table(BEACONS_TABLE).orderBy({index: r.desc('measurement_time')}).limit(20).group('beacon_id', 'receiver_id').run(conn).then(function(cursor) {
             cursor.toArray(function(error, results) {
                 if (error) throw error;
                 callback(results);

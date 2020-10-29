@@ -8,7 +8,7 @@ class Beacon_realtime extends Component {
         this.state = {
             tieto: [],
             response: "",
-            beacon: "",
+            tenant: "",
             endpoint: "http://127.0.0.1:4002",
         };
     }
@@ -29,19 +29,23 @@ class Beacon_realtime extends Component {
             let newArray = this.state.tieto.concat(data)
             this.setState({ tieto: newArray })
         })
-        socket.on("updates", data => this.setState({ beacon: data }))
+        socket.on("updates", data => {
+            let newArray = this.state.tieto.filter(t => t.tenant_id !== data.tenant_id).concat(data)
+            this.setState({ tenant: data })
+            this.setState({ tieto: newArray })
+        })
     }
 
     render() {
-        const beacon = this.state.beacon;
+        const tenant = this.state.tenant;
 
         return (
             <div style={{textAlign: "center"}}>
-                <p>The newest status change: { beacon.firstname } {beacon.lastname} {beacon.status} {beacon.last_updated} </p>
+                <p>The newest status change: { tenant.firstname } {tenant.lastname} <b>{tenant.status}</b> {tenant.last_updated} </p>
                     <ul>
-                    { this.state.tieto.map(member => 
-                        <li key={ member.lastname + Math.random(10) }>
-                        { member.firstname } {member.lastname} {member.status} {member.last_updated}
+                    { this.state.tieto.map(t => 
+                        <li key={ Math.floor(Math.random() * (10000 - 1) ) + 1 }>
+                        { t.firstname } {t.lastname} <b>{t.status}</b> {t.last_updated}
                         </li>
                     )}
                     </ul>
