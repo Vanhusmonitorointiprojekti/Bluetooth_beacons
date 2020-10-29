@@ -1,7 +1,7 @@
 const express = require("express");
 const http = require("http");
 const socketIo = require("socket.io");
-const model = require('../../models/beacons');
+const model = require('../../models/tenants');
 
 function start(){
 
@@ -18,11 +18,11 @@ io.on('connection', function(socket) {
 
     model.setup(function(data) {
         if((data.new_val != null) && (data.old_val != null)) {
-            // TODO update
+            // status update
             io.emit('updates', data.new_val);
         } else if((data.new_val != null) && (data.old_val == null)) {
-            // new beacon
-            io.emit('test', data.new_val);
+            // new tenant
+            io.emit('new', data.new_val);
             console.log('Emitting from realtimedb:', data.new_val)
         }
     });

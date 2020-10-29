@@ -4,6 +4,7 @@ const router = express.Router()
 
 router.get('/', (req, res) => {
     model.getStatuses((result) => {
+        console.log('statuses', result)
         res.send(
             result
         )
@@ -40,7 +41,8 @@ router.post('/', function (req, res) {
 router.put('/:id', function (req, res) {
     let id = req.params.id
     let status = req.body.status
-    model.updateTenantStatus(id, status, function (success, result) {
+    let time = req.body.measurement_time
+    model.updateTenantStatus(id, status, time, function (success, result) {
         if (success) res.json({
            result
         });

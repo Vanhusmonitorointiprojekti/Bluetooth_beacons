@@ -14,11 +14,13 @@ const router = express.Router()
     })
 
     router.get('/locations', (req, res) => {
-        // get averaged signal strengths from all receivers grouped by beacon and receiver:
+        
         model.getLocations((groups) => {
             //console.log('groups', groups)
-            let data = getStrongestSignalPerBeacon( groupByBeacon(groups) )
-            //console.log('testi', data)
+            // get averaged signal strengths from all receivers grouped by beacon and receiver:
+            const avgData = getAverageSignalStrengthAndLatestMeasurement_time(groups)
+            let data = getStrongestSignalPerBeacon( groupByBeacon(avgData) )
+            console.log('data', data)
             res.send(data)
         })
     })
@@ -30,6 +32,20 @@ const router = express.Router()
     })
 
 module.exports = router
+
+const getAverageSignalStrengthAndLatestMeasurement_time = (data) => {
+
+    const reducer = (accumulator, currentValue) => accumulator + currentValue.signal_db
+
+    let newArray = data.map(d => {
+        let avg = d.reduction.reduce(reducer, 0)/d.reduction.length
+        let times = d.reduction[0].measurement_time
+        let group = d.group
+        return {group, reduction: avg, measurement_time: times}
+    })
+    //console.log('huipennus', newArray)
+    return newArray
+}
 
 const groupByBeacon = (data) => {
     //[ { group: [ 'd6:2c:ca:c0:d4:9c', 'receiver2' ],reduction: -15.8 },
@@ -53,8 +69,7 @@ const getStrongestSignalPerBeacon = (obj) => {
     for (var key in obj) {
         if (obj.hasOwnProperty(key)) {
             let newObj = obj[key].reduce(reducer, {})
-            obj[key] = { closest_receiver: newObj.group[1], signal_avg: newObj.reduction }
-            //obj[key] = obj[key].reduce(reducer, {})
+            obj[key] = { closest_receiver: newObj.group[1], signal_avg: newObj.reduction, measurement_time: newObj.measurement_time }
         }
       }
 

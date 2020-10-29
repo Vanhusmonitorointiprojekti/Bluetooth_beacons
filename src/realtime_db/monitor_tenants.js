@@ -86,10 +86,10 @@ const combineData = async (obj, tenants, receivers) => {
             if (obj.hasOwnProperty(key)) {
                 let tenant = await getTenant(key, tenants)
                 let receiver = await getReceiver(obj[key].closest_receiver, receivers)
-                array.push({tenant: tenant, receiver: receiver})
+                array.push({tenant: tenant, receiver: receiver, measurement_time: obj[key].measurement_time})
             }
         }
-        //console.log('array', array)
+        console.log('array', array)
         return array
     } catch(error) {
         console.log(error)
@@ -112,13 +112,16 @@ const defineStatus = (obj) => {
     let newObj = { 
         id: obj.tenant.tenant_id,
         firstname: obj.tenant.tenant_firstname,
-        lastname: obj.tenant.tenant_lastname
+        lastname: obj.tenant.tenant_lastname,
+        measurement_time: obj.measurement_time
     }
     console.log(obj.tenant.space_name + ' ' + obj.receiver.space_name)
     console.log('pair', pair)
 
+    const restricted = '1.1'
+    const restrictedVisiting = '3.1'
     // check if tenant is in his/her own home or someone else's home
-    if (pair === '1.1' || pair === '3.1') {
+    if (pair === restricted || pair === restrictedVisiting) {
         if (obj.tenant.space_name === obj.receiver.space_name) {
             // tenant's own home, status ok
             status = statusMap.get(pair)[0]
@@ -132,6 +135,7 @@ const defineStatus = (obj) => {
         //console.log(status)
     }
     newObj.status = status
+    //console.log('newObj', newObj)
     console.log('objStatus', newObj.status+newObj.firstname)
     updateData('http://localhost:4000/statuses', newObj)
 }

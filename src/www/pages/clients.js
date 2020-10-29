@@ -14,36 +14,37 @@ class Beacon_realtime extends Component {
     }
 
     componentDidMount() {
-        fetch('http://localhost:4000/test')
+        fetch('http://localhost:4000/statuses')
         .then((response) => response.json())
         .then(responseJson => {
-            console.log('tieto', responseJson.result)
-            this.setState({tieto: responseJson.result})
+            console.log('tieto', responseJson)
+            this.setState({tieto: responseJson})
 
         })
         const { endpoint } = this.state;
         //Very simply connect to the socket
         const socket = socketIOClient(endpoint);
         //Listen for data on the "outgoing data" namespace and supply a callback for what to do when we get one. In this case, we set a state variable
-        socket.on("broadcast", data => this.setState({ response: data.description }));
-        socket.on("test", data => this.setState({ beacon: data }));
+        socket.on("new", data => {
+            let newArray = this.state.tieto.concat(data)
+            this.setState({ tieto: newArray })
+        })
+        socket.on("updates", data => this.setState({ beacon: data }))
     }
 
     render() {
-        const { response } = this.state;
         const beacon = this.state.beacon;
 
         return (
             <div style={{textAlign: "center"}}>
-                      <p>Number of socketio clients: {response} </p>
-                        <p>The newest beacon_user value, if db changes: { beacon.receiver_id } {beacon.beacon_id} {beacon.signal_db} {beacon.measurement_time} </p>
-                      <ul>
-                          { this.state.tieto.map(member => 
-                              <li key={member.measurement_time}>
-                                  { member.receiver_id } {member.beacon_id} {member.signal_db} {member.measurement_time}
-                              </li>
-                        )}
-                      </ul>
+                <p>The newest status change: { beacon.firstname } {beacon.lastname} {beacon.status} {beacon.last_updated} </p>
+                    <ul>
+                    { this.state.tieto.map(member => 
+                        <li key={ member.lastname + Math.random(10) }>
+                        { member.firstname } {member.lastname} {member.status} {member.last_updated}
+                        </li>
+                    )}
+                    </ul>
             </div>
         )
     }
