@@ -39,10 +39,11 @@ router.post('/', function (req, res) {
 })
 
 router.put('/:id', function (req, res) {
-    let id = req.params.id
-    let status = req.body.status
-    let time = req.body.measurement_time
-    model.updateTenantStatus(id, status, time, function (success, result) {
+    const id = req.params.id
+    const status = req.body.status
+    const time = req.body.measurement_time
+    const location = req.body.location
+    model.updateTenantStatus(id, status, time, location, function (success, result) {
         if (success) res.json({
            result
         });

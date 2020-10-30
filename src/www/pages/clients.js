@@ -41,11 +41,12 @@ class Beacon_realtime extends Component {
 
         return (
             <div style={{textAlign: "center"}}>
-                <p>The newest status change: { tenant.firstname } {tenant.lastname} <b>{tenant.status}</b> {tenant.last_updated} </p>
+                <p>The most recent status change: 
+                    { tenant.firstname } {tenant.lastname}  <b>{tenant.status}</b> <b>{tenant.location}</b>  {tenant.last_updated} </p>
                     <ul>
                     { this.state.tieto.map(t => 
                         <li key={ Math.floor(Math.random() * (10000 - 1) ) + 1 }>
-                        { t.firstname } {t.lastname} <b>{t.status}</b> {t.last_updated}
+                        { t.firstname } {t.lastname} <b>{t.status} </b> <b>{t.location }</b> {new Date(t.measurement_time).toLocaleString()}
                         </li>
                     )}
                     </ul>

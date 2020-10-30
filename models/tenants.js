@@ -81,9 +81,14 @@ model.saveTenant = function (tenant, callback) {
     });
 }
 
-model.updateTenantStatus = function (id, new_status, measurement_time, callback) {
+model.updateTenantStatus = function (id, new_status, measurement_time, location, callback) {
     r.connect(config.database).then(function(conn) {
-        r.table(DB_TABLE).get(id).update({status: new_status, measurement_time: measurement_time, last_updated: r.now()})
+        r.table(DB_TABLE).get(id).update({
+            status: new_status,
+            measurement_time: measurement_time,
+            location: location,
+            last_updated: r.now()
+        })
         .run(conn).then(function(results) {
            callback(true, results);
         }).error(function(error) {

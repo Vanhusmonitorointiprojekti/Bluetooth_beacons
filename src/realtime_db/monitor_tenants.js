@@ -112,7 +112,8 @@ const defineStatus = (obj) => {
         id: obj.tenant.tenant_id,
         firstname: obj.tenant.tenant_firstname,
         lastname: obj.tenant.tenant_lastname,
-        measurement_time: obj.measurement_time
+        measurement_time: obj.measurement_time,
+        location: obj.receiver.space_name
     }
     console.log(obj.tenant.space_name + ' ' + obj.receiver.space_name)
     console.log('pair', pair)
