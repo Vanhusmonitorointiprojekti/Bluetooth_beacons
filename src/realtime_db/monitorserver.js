@@ -10,12 +10,12 @@ const client = require('./rt_mqtt_client')
 
 const app = express()
 
-app.use(bodyparser.json());
+app.use(bodyparser.json())
  
 app.use(cors())
 
 socketServer2.start()
-expressPort = 4000;
+expressPort = 4000
 
 app.listen(expressPort,() => console.log('Monitoring App is listening at port : ' + expressPort))
 

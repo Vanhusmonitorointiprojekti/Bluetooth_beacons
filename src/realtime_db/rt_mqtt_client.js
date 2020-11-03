@@ -1,5 +1,6 @@
 const mqtt = require('mqtt')
 const client  = mqtt.connect('mqtt://195.148.21.81')
+const config = require('../../config')
 
 const client_function = () => {
   client.on('connect', function () {
@@ -23,8 +24,9 @@ const client_function = () => {
   r.connect({ 
     db: 'rt_beacons',
     host: 'localhost',
-    port: '28015'
-   // user: 'mqtt_client'
+    port: '28015',
+    user: config.mqtt_user,
+    password: config.mqtt_password
   }, function(err, conn) {
     if (err) throw err;
     connection = conn;

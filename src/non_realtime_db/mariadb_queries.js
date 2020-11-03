@@ -1,19 +1,20 @@
-const mysql = require('mysql');
+const mysql = require('mysql')
+const config = require('../../config')
 
 let db = mysql.createConnection({
-  host     : 'localhost' || process.env.NRT_HOST,
-  user     : 'user' || process.env.NRT_USER,
-  password : 'password' || process.env.NRT_PASSWORD,
+  host     : 'localhost' || config.nrt_host,
+  user     : config.nrt_user,
+  password : config.nrt_password,
   database: 'senior_monitoring'
-});
+})
 
 db.connect(function(err) {
   if (err) {
-    console.error('error connecting: ' + err.stack);
-    return;
+    console.error('error connecting: ' + err.stack)
+    return
   }
-  console.log('connected to non-realtimedb as id ' + db.threadId);
-});
+  console.log('connected to non-realtimedb as id ' + db.threadId)
+})
 
 db.getReceivers = (callback) => {
     const sql = 'SELECT r.receiver_id, s.space_name, l.location_type \
