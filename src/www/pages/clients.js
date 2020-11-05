@@ -31,6 +31,7 @@ class Beacon_realtime extends Component {
         })
         socket.on("updates", data => {
             let newArray = this.state.tieto.filter(t => t.tenant_id !== data.tenant_id).concat(data)
+            console.log('tenant', data)
             this.setState({ tenant: data })
             this.setState({ tieto: newArray })
         })
@@ -41,7 +42,7 @@ class Beacon_realtime extends Component {
 
         return (
             <div style={{textAlign: "center"}}>
-                <p>The most recent status change: 
+                <p>The most recent change: 
                     { tenant.firstname } {tenant.lastname}  <b>{tenant.status}</b> <b>{tenant.location}</b>  {tenant.last_updated} </p>
                     <ul>
                     { this.state.tieto.map(t => 

@@ -18,8 +18,11 @@ io.on('connection', function(socket) {
 
     model.setup(function(data) {
         if((data.new_val != null) && (data.old_val != null)) {
-            // status update only, if status changes
-            if (data.new_val.status !== data.old_val.status) {
+            // status update only, if status or location changes
+            let locationChanged = data.new_val.location !== data.old_val.location
+            let statusChanged = data.new_val.status !== data.old_val.status
+            if (locationChanged || statusChanged) {
+                console.log('location', data.new_val.location)
                 io.emit('updates', data.new_val)
             }           
         } else if((data.new_val != null) && (data.old_val == null)) {
@@ -27,7 +30,7 @@ io.on('connection', function(socket) {
             io.emit('new', data.new_val);
             console.log('Emitting from realtimedb:', data.new_val)
         }
-    });
+    })
 
    clients++
    io.sockets.emit('broadcast',{ description: clients + ' clients connected!'})
