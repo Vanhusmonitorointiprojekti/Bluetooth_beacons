@@ -2,11 +2,12 @@ var mqtt = require('mqtt')
 var client  = mqtt.connect('mqtt://195.148.21.81')
 const config = require('../../config')
 
+const client_function = () => {
 client.on('connect', function () {
   //publish every 5 secs
   var timer_id = setInterval(function(){
       publish();
-  },1000)
+  },5000)
 
   client.subscribe('emulator', function (err) {
     if (!err) {
@@ -99,8 +100,11 @@ function publish(){
     var msg = signalFunction.value();
     signalFunction.increment()
     var topic="emulator";
-    console.log("publishing", msg);
+    // console.log("publishing", msg);
     if (client.connected == true){
         client.publish(topic,msg);
     }
 }
+}
+
+module.exports = client_function
