@@ -6,7 +6,7 @@ const detections = require('../../controllers/beaconRoutes')
 const tenant_statuses = require('../../controllers/tenantRoutes')
 const mariadb = require('../non_realtime_db/mariadb_queries')
 const logic = require('./monitor_tenants')
-const client = require('./rt_mqtt_client')
+const client = require('./emulator_client')
 
 const app = express()
 

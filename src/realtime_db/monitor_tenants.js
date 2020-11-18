@@ -12,7 +12,7 @@ const monitor_tenants = async () => {
     } else {
         console.log('cannot get tenant or receiver data, app will not work')
     }
-    setInterval(() => clearDetections('http://localhost:4000/detections'), 30000)
+    setInterval(() => clearDetections('http://localhost:4000/detections'), 60000)
 }
 
 module.exports = monitor_tenants
