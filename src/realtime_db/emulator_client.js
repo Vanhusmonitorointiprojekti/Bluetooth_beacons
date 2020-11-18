@@ -1,6 +1,7 @@
 var mqtt = require('mqtt')
 var client  = mqtt.connect('mqtt://195.148.21.81')
 const config = require('../../config')
+const giveSignal = require('./emulator')
 
 const client_function = () => {
 client.on('connect', function () {
@@ -49,57 +50,14 @@ function writeValues(msg) {
   })
 }
 
-const signals = ['receiver1 e2:e3:23:d1:b0:54 -23',
-'receiver2 e2:e3:23:d1:b0:54 -61',
-'receiver2 f2:36:00:21:c0:50 -20',
-'receiver3 f2:36:00:21:c0:50 -54',
-'receiver2 d6:2c:ca:c0:d4:9c -18',
-'receiver3 d6:2c:ca:c0:d4:9c -77',
-'receiver1 e2:e3:23:d1:b0:54 -17',
-'receiver2 e2:e3:23:d1:b0:54 -78',
-'receiver2 f2:36:00:21:c0:50 -35',
-'receiver3 f2:36:00:21:c0:50 -19',
-'receiver2 d6:2c:ca:c0:d4:9c -37',
-'receiver1 d6:2c:ca:c0:d4:9c -28',
-'receiver2 e2:e3:23:d1:b0:54 -61',
-'receiver1 e2:e3:23:d1:b0:54 -17',
-'receiver2 f2:36:00:21:c0:50 -70',
-'receiver3 f2:36:00:21:c0:50 -29',
-'receiver2 f2:36:00:21:c0:50 -25',
-'receiver2 d6:2c:ca:c0:d4:9c -64',
-'receiver1 d6:2c:ca:c0:d4:9c -19']
-
-// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures
-
-var giveSignal = function() {
-    var privateCounter = 0;
-    var signal = signals[privateCounter]
-    function changeNumber() {      
-      if (privateCounter === signals.length-1) {
-          privateCounter = 0
-      } else {
-        privateCounter += 1;
-      }
-      signal = signals[privateCounter]
-    }
-    return {
-      increment: function() {
-        changeNumber();
-      },
-      value: function() {
-        return signal;
-      }
-    }
-  };
-
-var signalFunction = giveSignal()
+let signalFunction = giveSignal()
 
 //publish function
+// http://www.steves-internet-guide.com/using-node-mqtt-client/
 function publish(){
-
-    var msg = signalFunction.value();
+    let msg = signalFunction.value();
     signalFunction.increment()
-    var topic="emulator";
+    let topic="emulator";
     // console.log("publishing", msg);
     if (client.connected == true){
         client.publish(topic,msg);
