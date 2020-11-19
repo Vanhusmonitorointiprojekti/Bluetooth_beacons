@@ -1,0 +1,44 @@
+# how to create rethinkdb database locally
+
+r.dbCreate('rt_beacons')
+
+r.db('rt_beacons').tableCreate('beacon_detections')
+
+r.db('rt_beacons').tableCreate('tenant_statuses', {primaryKey: "tenant_id"})
+
+r.db('rt_beacons').table("tenant_statuses").insert([
+    {
+        tenant_id: "2020TNT1",
+        firstname: "Albert",
+        lastname: "Einstein",
+        status: null,
+        measurement_time: null,
+        last_updated: null
+    },
+    {
+        tenant_id: "2020TNT2",
+        firstname: "Marie",
+        lastname: "Curie",
+        status: null,
+        measurement_time: null,
+        last_updated: null
+    },
+    {
+        tenant_id: "2020TNT3",
+        firstname: "Charles",
+        lastname: "Darwin",
+        status: null,
+        measurement_time: null,
+        last_updated: null
+    },
+    {
+        tenant_id: "2020TNT4",
+        firstname: "Maria",
+        lastname: "Goeppert-Mayer",
+        status: null,
+        measurement_time: null,
+        last_updated: null
+    }
+])
+
+r.db('rt_beacons').table('beacon_detections').indexCreate('measurement_time')
