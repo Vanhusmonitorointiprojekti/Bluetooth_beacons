@@ -40,7 +40,7 @@ db.getTokens = (callback) => {
 }
 
 db.saveToken = (token, callback) => {
-  const sql = 'INSERT INTO ?? (??) VALUES (?)'
+  let sql = 'INSERT INTO ?? (??) VALUES (?)'
     const params = ['tokens', 'token', token]
     sql = mysql.format(sql, params)
     executeQuery(sql, callback)

@@ -6,11 +6,11 @@ const db = require('../src/non_realtime_db/mariadb_queries')
 const mysql = require('mysql')
 
 const saveToken = token => {
-    console.log(token)
+    console.log('saveToken function:', token)
     db.getTokens((result) => {
         const exists = result.find(t => t === token)
         if (!exists) {
-            db.saveToken(expotoken, (result) => {
+            db.saveToken(token, (result) => {
                 console.log('Saved!', result)
             })
         }
@@ -26,7 +26,7 @@ const handlePushTokens = ({ title, body }) => {
       //console.log('result', result)
       savedPushTokens = result
       //console.log('expotokenarray', savedPushTokens)
-      let tokens = savedPushTokens.map(t => t.expotoken)
+      let tokens = savedPushTokens.map(t => t.token)
       console.log('tokens', tokens)
       for (let pushToken of tokens) {
           // Each push token looks like ExponentPushToken[xxxxxxxxxxxxxxxxxxxxxx]
