@@ -8,7 +8,9 @@ const mysql = require('mysql')
 const saveToken = token => {
     console.log('saveToken function:', token)
     db.getTokens((result) => {
-        const exists = result.find(t => t === token)
+        console.log('result', result)
+        const exists = result.find(t => t.token === token)
+        console.log('exists?', exists)
         if (!exists) {
             db.saveToken(token, (result) => {
                 console.log('Saved!', result)

@@ -106,6 +106,7 @@ const getStatusForTenants = async (tenantData) => {
 } 
 
 const defineStatus = (obj) => {
+    let alarmStatus = 'alarm'
     let pair = obj.tenant.profile_type + '.' + obj.receiver.location_type
     let status = ''
     let newObj = { 
@@ -136,8 +137,11 @@ const defineStatus = (obj) => {
     }
     newObj.status = status
     //console.log('newObj', newObj)
-    console.log('objStatus', newObj.status+newObj.firstname)
+    console.log('objStatus', `${newObj.status} ${newObj.firstname} ${newObj.lastname}`)
     updateData('http://localhost:4000/statuses', newObj)
+    if (newObj.status === alarmStatus) {
+        sendNotification(newObj)
+    }    
 }
 
 let statusMap = new Map([
@@ -157,3 +161,12 @@ let statusMap = new Map([
   ])
 
   // https://medium.com/@martin.crabtree/javascript-tracking-key-value-pairs-using-hashmaps-7de6df598257
+
+  const sendNotification = async (tenant) => {
+    const title = `${tenant.firstname} ${tenant.lastname} at ${tenant.location}`
+    const body = `Alarm! ${tenant.firstname} ${tenant.lastname} at ${tenant.location}`
+    const req = await axios.post("http://localhost:4000/api/push_notification/message", {
+      title,
+      body
+    })
+  }

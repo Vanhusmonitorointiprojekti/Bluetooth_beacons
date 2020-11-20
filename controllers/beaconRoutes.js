@@ -20,7 +20,7 @@ const router = express.Router()
             // get averaged signal strengths from all receivers grouped by beacon and receiver:
             const avgData = getAverageSignalStrengthAndLatestMeasurement_time(groups)
             let data = getStrongestSignalPerBeacon( groupByBeacon(avgData) )
-            console.log('data', data)
+            // console.log('data', data)
             res.send(data)
         })
     })
