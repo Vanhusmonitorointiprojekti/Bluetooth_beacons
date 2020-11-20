@@ -12,6 +12,7 @@ r.db('rt_beacons').table("tenant_statuses").insert([
         firstname: "Albert",
         lastname: "Einstein",
         status: null,
+        checked: false
         measurement_time: null,
         last_updated: null
     },
@@ -20,6 +21,7 @@ r.db('rt_beacons').table("tenant_statuses").insert([
         firstname: "Marie",
         lastname: "Curie",
         status: null,
+        checked: false,
         measurement_time: null,
         last_updated: null
     },
@@ -28,6 +30,7 @@ r.db('rt_beacons').table("tenant_statuses").insert([
         firstname: "Charles",
         lastname: "Darwin",
         status: null,
+        checked: false,
         measurement_time: null,
         last_updated: null
     },
@@ -36,6 +39,7 @@ r.db('rt_beacons').table("tenant_statuses").insert([
         firstname: "Maria",
         lastname: "Goeppert-Mayer",
         status: null,
+        checked: false,
         measurement_time: null,
         last_updated: null
     }

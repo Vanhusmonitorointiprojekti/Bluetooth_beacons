@@ -140,7 +140,7 @@ const defineStatus = (obj) => {
     console.log('objStatus', `${newObj.status} ${newObj.firstname} ${newObj.lastname}`)
     updateData('http://localhost:4000/statuses', newObj)
     if (newObj.status === alarmStatus) {
-        sendNotification(newObj)
+        checkIfChecked(newObj) 
     }    
 }
 
@@ -161,6 +161,17 @@ let statusMap = new Map([
   ])
 
   // https://medium.com/@martin.crabtree/javascript-tracking-key-value-pairs-using-hashmaps-7de6df598257
+
+  const checkIfChecked = async (newObj) => {
+    const tenant = await getData(`http://localhost:4000/statuses/${newObj.id}`)
+        console.log('checked?', tenant.checked)
+        if (tenant.checked) {
+            // todo add counting logic (how long has it been since checked)
+            console.log(`${newObj.firstname} ${newObj.lastname} already taken care of`)
+        } else {
+            sendNotification(newObj)
+        }
+  }
 
   const sendNotification = async (tenant) => {
     const title = `${tenant.firstname} ${tenant.lastname} at ${tenant.location}`

@@ -53,4 +53,17 @@ router.put('/:id', function (req, res) {
     });
 })
 
+router.put('/checked/:id', function (req, res) {
+    const id = req.params.id
+    const checked = true
+    model.updateTenantChecked(id, checked, function (success, result) {
+        if (success) res.json({
+           result
+        });
+        else res.json({
+            status: 'Error'
+        });
+    });
+})
+
 module.exports = router
