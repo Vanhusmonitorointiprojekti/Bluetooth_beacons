@@ -53,8 +53,8 @@ router.put('/:id', function (req, res) {
     });
 })
 
-router.put('/checked/:id', function (req, res) {
-    const id = req.params.id
+router.put('/checked', function (req, res) {
+    const id = req.body
     const checked = true
     model.updateTenantChecked(id, checked, function (success, result) {
         if (success) res.json({

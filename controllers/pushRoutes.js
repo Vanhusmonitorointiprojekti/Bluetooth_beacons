@@ -45,6 +45,7 @@ const handlePushTokens = ({ title, body }) => {
           sound: "default",
           title: title,
           body: body,
+          url: "https://www.yle.fi/uutiset",
           data: { body }
           });
       }
