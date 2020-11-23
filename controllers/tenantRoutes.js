@@ -40,6 +40,18 @@ router.post('/', function (req, res) {
 
 router.put('/:id', function (req, res) {
     const id = req.params.id
+    if (req.body.checked) {
+        console.log('Checked!')
+        const checked = req.body.checked
+        model.updateTenantChecked(id, checked, function (success, result) {
+            if (success) res.json({
+            result
+            });
+            else res.json({
+                status: 'Error'
+            });
+        });
+    } else {
     const status = req.body.status
     const time = req.body.measurement_time
     const location = req.body.location
@@ -51,19 +63,7 @@ router.put('/:id', function (req, res) {
             status: 'Error'
         });
     });
-})
-
-router.put('/checked', function (req, res) {
-    const id = req.body
-    const checked = true
-    model.updateTenantChecked(id, checked, function (success, result) {
-        if (success) res.json({
-           result
-        });
-        else res.json({
-            status: 'Error'
-        });
-    });
+    }
 })
 
 module.exports = router

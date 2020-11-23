@@ -99,7 +99,7 @@ model.updateTenantStatus = function (id, new_status, measurement_time, location,
     });
 }
 
-model.updateTenantChecked = function (id, checked) {
+model.updateTenantChecked = function (id, checked, callback) {
     r.connect(config.database).then(function(conn) {
         r.table(DB_TABLE).get(id).update({
             checked: checked
