@@ -58,6 +58,13 @@ const updateData = async (url, newObj) => {
     return response.data
 }
 
+const updateChecked = async (url, id, value) => {
+    let checked = value
+    console.log('updateChecked value', value)
+    const response = await axios.put(`${url}/${id}`, {checked})
+    return response.data
+}
+
 const getTenant = async (beacon_id, tenants) => {
     try {
         let result = _.find(tenants, function(t) { return t.beacon_id === beacon_id })
@@ -139,9 +146,8 @@ const defineStatus = (obj) => {
     //console.log('newObj', newObj)
     console.log('objStatus', `${newObj.status} ${newObj.firstname} ${newObj.lastname}`)
     updateData('http://localhost:4000/statuses', newObj)
-    if (newObj.status === alarmStatus) {
-        checkIfChecked(newObj) 
-    }    
+    checkIfChecked(newObj) 
+   
 }
 
 let statusMap = new Map([
@@ -165,11 +171,20 @@ let statusMap = new Map([
   const checkIfChecked = async (newObj) => {
     const tenant = await getData(`http://localhost:4000/statuses/${newObj.id}`)
         console.log('checked?', tenant.checked)
+        let alarmStatus = 'alarm'
         if (tenant.checked) {
             // todo add counting logic (how long has it been since checked)
-            console.log(`${newObj.firstname} ${newObj.lastname} already taken care of`)
+            if (newObj.status !== alarmStatus) {
+                console.log('status has changed, no need to keep checked')
+                updateChecked('http://localhost:4000/statuses', newObj.id, false)
+            } else {
+                console.log(`${newObj.firstname} ${newObj.lastname} already taken care of`)
+            }
+            
         } else {
-            sendNotification(newObj)
+            if (newObj.status === alarmStatus) {
+                sendNotification(newObj)
+            }
         }
   }
 

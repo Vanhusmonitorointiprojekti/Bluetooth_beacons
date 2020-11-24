@@ -40,7 +40,7 @@ router.post('/', function (req, res) {
 
 router.put('/:id', function (req, res) {
     const id = req.params.id
-    if (req.body.checked) {
+    if (req.body.checked != undefined) {
         console.log('Checked!')
         const checked = req.body.checked
         model.updateTenantChecked(id, checked, function (success, result) {
