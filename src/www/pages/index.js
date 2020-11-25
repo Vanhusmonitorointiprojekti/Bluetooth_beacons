@@ -9,6 +9,8 @@ import Beacon_locations from "./beacon_locations";
 import Clients from "./clients";
 import flag_UK from '../../locales/en/flag_UK.png'
 import flag_FI from '../../locales/fi/flag_FI.png'
+import Nurse_info from './nurse_info';
+import Admin_alarm from './admin_alarm';
 
 class AdminFrontPage extends Component{
   constructor(props){
@@ -60,13 +62,15 @@ render(){
   return(
   <div>
     <BrowserRouter>
-    <div style={{paddingLeft: '20%', paddingRight: '20%'}}>
+    <div style={{paddingLeft: '0%', paddingRight: '0%'}}>
           <AppBar position="static">
             <Tabs value={this.state.activeTab} onChange={this.handleActiveTabChange}>
               <Tab label={t("Beacon info")} component={Link} to="/"/>
               <Tab label={t("Receiver info")} component={Link} to="/ReceiverInfo" />
               <Tab label={t("Beacon locations")} component={Link} to="/BeaconLocations" />
               <Tab label={"Clients"} component={Link} to="/Clients" />
+              <Tab label={t("Nurse info")} component={Link} to="/Nurse"/>
+              <Tab label={t("Alarm")} component={Link} to="/Admin_alarm"/>
               <Button style={{marginLeft: "auto"}} onClick={this.switchEn}><img src= {flag_UK} alt="FlagOfUK" height='25' width='40' /></Button>
               <Button onClick={this.switchFi}><img src= {flag_FI} alt="FlagOfFI" height='25' width='40' /></Button>
               
@@ -80,6 +84,8 @@ render(){
                               <Route path="/ReceiverInfo" component={Receiver_info}></Route>
                               <Route path="/BeaconLocations" component={Beacon_locations}></Route>
                               <Route path="/Clients" component={Clients}></Route>
+                              <Route path="/Nurse" component={Nurse_info}></Route>
+                              <Route path="/Admin_alarm" component={Admin_alarm}></Route>
                           </Switch>
                       </div>
         </BrowserRouter>

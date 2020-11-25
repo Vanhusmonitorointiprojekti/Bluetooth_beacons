@@ -13,6 +13,8 @@
     "Time" : "Measurement Time (seconds)",
     "Status" : "Status",
     "Location" : "Location",
+    "Nurse info" : "Nurse info",
+    "Alarm" : "Alarm",
 
     "Edit" : "Edit",
     "Delete" : "Delete",

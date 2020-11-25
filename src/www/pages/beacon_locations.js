@@ -12,7 +12,7 @@ class Beacon_locations extends Component {
         super(props)
         this.state = {
             tieto: [],
-            endpoint: "http://127.0.0.1:4001",
+            endpoint: "http://195.148.21.28:4002",
 
             warning: [],
             newWarning: ''

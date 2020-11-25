@@ -9,7 +9,7 @@ class Beacon_realtime extends Component {
             tieto: [],
             response: "",
             tenant: "",
-            endpoint: "http://127.0.0.1:4002",
+            endpoint: "http://195.148.21.28:4002",
         };
     }
 
