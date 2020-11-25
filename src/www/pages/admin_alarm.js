@@ -9,7 +9,7 @@ class Admin_Alarm extends Component {
 
         return (
             <div style={{textAlign: "center"}}>
-                <Paper>
+                <Paper style={{paddingLeft: '7%', paddingRight: '7%'}}>
                <Table>
                     <TableHead>
                         <TableRow>

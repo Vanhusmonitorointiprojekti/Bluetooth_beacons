@@ -3,7 +3,7 @@ import React, {Component} from "react";
 import socketIOClient from "socket.io-client";
 
 
-class Beacon_realtime extends Component {
+class Location extends Component {
     constructor() {
         super();
         this.state = {
@@ -43,21 +43,38 @@ class Beacon_realtime extends Component {
 
         return (
             <div style={{textAlign: "center"}}>
-            <Paper>
+            <Paper style={{paddingLeft: '7%', paddingRight: '7%'}}>
                 <Table>
                     <TableHead>
                         <TableRow>
-                            <TableCell>Asukas</TableCell>
-                            <TableCell>Sijainti</TableCell>
-                            <TableCell>Tila</TableCell>
+                            <TableCell style={{fontSize: "18px"}}>Asukas</TableCell>
+                            <TableCell style={{fontSize: "18px"}}>Sijainti</TableCell>
+                            <TableCell style={{fontSize: "18px"}}>Tila</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        <TableRow>
-        <TableCell>{ tenant.firstname } { tenant.lastname }</TableCell>
-                            <TableCell>{ tenant.location }</TableCell>
-                            <TableCell>{ tenant.status }</TableCell>
-                        </TableRow>
+                            { this.state.tieto.map(t => 
+                                <TableRow key={ Math.floor(Math.random() * (10000 - 1) ) + 1 }>
+                                    <TableCell>{ tenant.firstname } { tenant.lastname }</TableCell>
+                                    <TableCell>{ tenant.location }</TableCell>
+                                    <TableCell>{tenant.status}</TableCell>
+                                </TableRow>
+                            )}
+                    <TableRow>
+                        <TableCell>Charles Darwin</TableCell>
+                        <TableCell>A2</TableCell>
+                        <TableCell>ok</TableCell>
+                    </TableRow>
+                    <TableRow>
+                        <TableCell>Marie Curie</TableCell>
+                        <TableCell>A2</TableCell>
+                        <TableCell>ok</TableCell>
+                    </TableRow>
+                    <TableRow>
+                        <TableCell>Albert Einstein</TableCell>
+                        <TableCell>Aula</TableCell>
+                        <TableCell>ok</TableCell>
+                    </TableRow>
                     </TableBody>
                 </Table>
             </Paper>
@@ -66,4 +83,4 @@ class Beacon_realtime extends Component {
     }
 }
 
-export default Beacon_realtime;
+export default Location;

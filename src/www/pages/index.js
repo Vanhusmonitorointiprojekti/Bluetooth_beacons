@@ -66,13 +66,10 @@ render(){
     <div style={{paddingLeft: '0%', paddingRight: '0%'}}>
           <AppBar position="static">
             <Tabs value={this.state.activeTab} onChange={this.handleActiveTabChange}>
-              <Tab label={t("Beacon info")} component={Link} to="/"/>
-              <Tab label={t("Receiver info")} component={Link} to="/ReceiverInfo" />
-              <Tab label={t("Beacon locations")} component={Link} to="/BeaconLocations" />
-              <Tab label={"Clients"} component={Link} to="/Clients" />
-              <Tab label={t("Nurse info")} component={Link} to="/Nurse"/>
-              <Tab label={t("Alarm")} component={Link} to="/Admin_alarm"/>
-              <Tab label={t("Locations")} component={Link} to="/Locations"/>
+              
+              <Tab style={{fontSize: '20px', marginLeft: '5%'}} label={t("Nurse info")} component={Link} to="/Nurse"/>
+              <Tab style={{fontSize: '20px', marginLeft: '5%'}} label={t("Alarm")} component={Link} to="/Admin_alarm"/>
+              <Tab style={{fontSize: '20px', marginLeft: '5%'}} label={t("Locations")} component={Link} to="/Locations"/>
               <Button style={{marginLeft: "auto"}} onClick={this.switchEn}><img src= {flag_UK} alt="FlagOfUK" height='25' width='40' /></Button>
               <Button onClick={this.switchFi}><img src= {flag_FI} alt="FlagOfFI" height='25' width='40' /></Button>
               
@@ -82,10 +79,7 @@ render(){
         </div>
         <div>
                           <Switch>
-                              <Route exact path="/" component={Beacon_info}></Route>
-                              <Route path="/ReceiverInfo" component={Receiver_info}></Route>
-                              <Route path="/BeaconLocations" component={Beacon_locations}></Route>
-                              <Route path="/Clients" component={Clients}></Route>
+                              
                               <Route path="/Nurse" component={Nurse_info}></Route>
                               <Route path="/Admin_alarm" component={Admin_alarm}></Route>
                               <Route path="/Locations" component={Locations}></Route>
@@ -96,5 +90,19 @@ render(){
   )
 }
 }
+
+/* Kommentoitu pois riviltä 69
+              <Tab label={t("Beacon info")} component={Link} to="/"/>
+              <Tab label={t("Receiver info")} component={Link} to="/ReceiverInfo" />
+              <Tab label={t("Beacon locations")} component={Link} to="/BeaconLocations" />
+              <Tab label={"Clients"} component={Link} to="/Clients" />
+
+  Kommentoitu pois riviltä 82
+              <Route exact path="/" component={Beacon_info}></Route>
+              <Route path="/ReceiverInfo" component={Receiver_info}></Route>
+              <Route path="/BeaconLocations" component={Beacon_locations}></Route>
+              <Route path="/Clients" component={Clients}></Route>
+
+*/
 
 export default (withTranslation("translation"))(AdminFrontPage);
