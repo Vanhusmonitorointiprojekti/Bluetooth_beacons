@@ -1,4 +1,4 @@
-import { Paper, Table, TableBody, TableCell, TableRow } from "@material-ui/core";
+import { Paper, Table,TableHead, TableBody, TableCell, TableRow } from "@material-ui/core";
 import React, {Component} from "react";
 import socketIOClient from "socket.io-client";
 
@@ -43,15 +43,24 @@ class Beacon_realtime extends Component {
 
         return (
             <div style={{textAlign: "center"}}>
-                <p>The most recent change: 
-                    { tenant.firstname } {tenant.lastname}  <b>{tenant.status}</b> <b>{tenant.location}</b>  {tenant.last_updated} </p>
-                    <ul>
-                    { this.state.tieto.map(t => 
-                        <li key={ Math.floor(Math.random() * (10000 - 1) ) + 1 }>
-                        { t.firstname } {t.lastname} <b>{t.status} </b> <b>{t.location }</b> {new Date(t.measurement_time).toLocaleString()}
-                        </li>
-                    )}
-                    </ul>
+            <Paper>
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Asukas</TableCell>
+                            <TableCell>Sijainti</TableCell>
+                            <TableCell>Tila</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        <TableRow>
+        <TableCell>{ tenant.firstname } { tenant.lastname }</TableCell>
+                            <TableCell>{ tenant.location }</TableCell>
+                            <TableCell>{ tenant.status }</TableCell>
+                        </TableRow>
+                    </TableBody>
+                </Table>
+            </Paper>
             </div>
         )
     }
