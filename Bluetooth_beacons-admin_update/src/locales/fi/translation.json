@@ -1,0 +1,33 @@
+{
+    "kieli": "suomeksi",
+    "Beacon info" : "Ranneketiedot",
+    "Receiver info" : "Vastaanotintiedot",
+    "Beacon locations" : "Rannekkeiden Sijainnit",
+
+    "Beacon User" : "Rannekkeen nimi",
+    "Beacon ID" : "Ranneke ID",
+    "Receiver ID" : "Vastaanotin ID",
+    "Receiver Location" : "Vastaanottimen sijainti",
+    "Location Type" : "Sijaintityyppi",
+    "Signal DB" : "Signaalin vahvuus",
+    "Time" : "Mittausaika (sekunneissa)",
+    "Status" : "Tila",
+    "Location" : "Sijainti",
+    "Nurse info" : "Hoitaja info",
+    "Alarm" : "Hälytykset",
+    "Locations" : "Sijainnit",
+    "Nurse name" : "Hoitaja nimi",
+    "Working" : "Vuorossa",
+    "Area" : "Alue",
+    "Tenants" : "Asukkaat",
+    "Picture" : "Kuva",
+    "Tenant" : "Asukas",
+    "Checked" : "Kuittaus", 
+    "Nurse" : "Hoitaja",
+    "TimeStamp" : "Aika",
+
+   
+    "Edit" : "Muokkaa",
+    "Delete" : "Poista",
+    "Add New" : "Lisää Uusi"
+}
