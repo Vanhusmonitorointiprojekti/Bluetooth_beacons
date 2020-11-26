@@ -3,6 +3,7 @@ import React, {Component} from "react";
 import socketIOClient from "socket.io-client";
 
 
+
 class Location extends Component {
     constructor() {
         super();
@@ -47,9 +48,10 @@ class Location extends Component {
                 <Table>
                     <TableHead>
                         <TableRow>
-                            <TableCell style={{fontSize: "18px"}}>Asukas</TableCell>
-                            <TableCell style={{fontSize: "18px"}}>Sijainti</TableCell>
-                            <TableCell style={{fontSize: "18px"}}>Tila</TableCell>
+                            <TableCell style={{fontSize: "18px"}}>{("Asukas")}</TableCell>
+                            <TableCell style={{fontSize: "18px"}}>{("Sijainti")}</TableCell>
+                            <TableCell style={{fontSize: "18px"}}>{("Tila")}</TableCell>
+                            <TableCell style={{fontSize: "18px"}}>{("Aika")}</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -58,23 +60,9 @@ class Location extends Component {
                                     <TableCell>{ tenant.firstname } { tenant.lastname }</TableCell>
                                     <TableCell>{ tenant.location }</TableCell>
                                     <TableCell>{tenant.status}</TableCell>
+                                    <TableCell>{tenant.last_updated}</TableCell>
                                 </TableRow>
                             )}
-                    <TableRow>
-                        <TableCell>Charles Darwin</TableCell>
-                        <TableCell>A2</TableCell>
-                        <TableCell>ok</TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell>Marie Curie</TableCell>
-                        <TableCell>A2</TableCell>
-                        <TableCell>ok</TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell>Albert Einstein</TableCell>
-                        <TableCell>Aula</TableCell>
-                        <TableCell>ok</TableCell>
-                    </TableRow>
                     </TableBody>
                 </Table>
             </Paper>
