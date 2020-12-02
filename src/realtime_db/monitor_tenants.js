@@ -58,6 +58,13 @@ const updateData = async (url, newObj) => {
     return response.data
 }
 
+const updateChecked = async (url, id, value) => {
+    let checked = value
+    console.log('updateChecked value', value)
+    const response = await axios.put(`${url}/${id}`, {checked})
+    return response.data
+}
+
 const getTenant = async (beacon_id, tenants) => {
     try {
         let result = _.find(tenants, function(t) { return t.beacon_id === beacon_id })
@@ -106,6 +113,7 @@ const getStatusForTenants = async (tenantData) => {
 } 
 
 const defineStatus = (obj) => {
+    let alarmStatus = 'alarm'
     let pair = obj.tenant.profile_type + '.' + obj.receiver.location_type
     let status = ''
     let newObj = { 
@@ -136,8 +144,10 @@ const defineStatus = (obj) => {
     }
     newObj.status = status
     //console.log('newObj', newObj)
-    console.log('objStatus', newObj.status+newObj.firstname)
+    console.log('objStatus', `${newObj.status} ${newObj.firstname} ${newObj.lastname}`)
     updateData('http://localhost:4000/statuses', newObj)
+    checkIfChecked(newObj) 
+   
 }
 
 let statusMap = new Map([
@@ -157,3 +167,32 @@ let statusMap = new Map([
   ])
 
   // https://medium.com/@martin.crabtree/javascript-tracking-key-value-pairs-using-hashmaps-7de6df598257
+
+  const checkIfChecked = async (newObj) => {
+    const tenant = await getData(`http://localhost:4000/statuses/${newObj.id}`)
+        console.log('checked?', tenant.checked)
+        let alarmStatus = 'alarm'
+        if (tenant.checked) {
+            // todo add counting logic (how long has it been since checked)
+            if (newObj.status !== alarmStatus) {
+                console.log('status has changed, no need to keep checked')
+                updateChecked('http://localhost:4000/statuses', newObj.id, false)
+            } else {
+                console.log(`${newObj.firstname} ${newObj.lastname} already taken care of`)
+            }
+            
+        } else {
+            if (newObj.status === alarmStatus) {
+                sendNotification(newObj)
+            }
+        }
+  }
+
+  const sendNotification = async (tenant) => {
+    const title = `${tenant.firstname} ${tenant.lastname} at ${tenant.location}`
+    const body = `Alarm! ${tenant.firstname} ${tenant.lastname} at ${tenant.location}`
+    const req = await axios.post("http://localhost:4000/api/push_notification/message", {
+      title,
+      body
+    })
+  }

@@ -4,6 +4,7 @@ const bodyparser = require('body-parser')
 const socketServer2 = require('../socketio/socketio_test')
 const detections = require('../../controllers/beaconRoutes')
 const tenant_statuses = require('../../controllers/tenantRoutes')
+const push_notifications = require('../../controllers/pushRoutes')
 const mariadb = require('../non_realtime_db/mariadb_queries')
 const logic = require('./monitor_tenants')
 const client = require('./emulator_client')
@@ -26,6 +27,7 @@ logic()
 
 app.use('/detections', detections)
 app.use('/statuses', tenant_statuses)
+app.use('/api/push_notification', push_notifications)
 
 app.get('/', (req, res) => {
     res.send('Monitor app')

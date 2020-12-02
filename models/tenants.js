@@ -99,5 +99,19 @@ model.updateTenantStatus = function (id, new_status, measurement_time, location,
     });
 }
 
+model.updateTenantChecked = function (id, checked, callback) {
+    r.connect(config.database).then(function(conn) {
+        r.table(DB_TABLE).get(id).update({
+            checked: checked
+        })
+        .run(conn).then(function(results) {
+           callback(true, results);
+        }).error(function(error) {
+            callback(false, error);
+        });
+    }).error(function(error) {
+        callback(false, error);
+    });
+}
 
 //https://github.com/eh3rrera/rethinkdb-example

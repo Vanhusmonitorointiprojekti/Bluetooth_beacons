@@ -34,6 +34,18 @@ db.getTenants = (callback) => {
     executeQuery(sql, callback)
 }
 
+db.getTokens = (callback) => {
+  const sql = 'SELECT token FROM tokens;'
+  executeQuery(sql, callback)
+}
+
+db.saveToken = (token, callback) => {
+  let sql = 'INSERT INTO ?? (??) VALUES (?)'
+    const params = ['tokens', 'token', token]
+    sql = mysql.format(sql, params)
+    executeQuery(sql, callback)
+}
+
 const executeQuery = (sql, callback) => {
     db.query(sql, function(error, rows) {
         if (error) {
