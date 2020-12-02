@@ -1,7 +1,7 @@
 const express = require('express')
 const cors = require('cors')
 const bodyparser = require('body-parser')
-const socketServer2 = require('../socketio/socketio_test')
+const socketServer = require('../socketio/socketio')
 const detections = require('../../controllers/beaconRoutes')
 const tenant_statuses = require('../../controllers/tenantRoutes')
 const push_notifications = require('../../controllers/pushRoutes')
@@ -15,7 +15,7 @@ app.use(bodyparser.json())
  
 app.use(cors())
 
-socketServer2.start()
+socketServer.start()
 expressPort = 4000
 
 app.listen(expressPort,() => console.log('Monitoring App is listening at port : ' + expressPort))
