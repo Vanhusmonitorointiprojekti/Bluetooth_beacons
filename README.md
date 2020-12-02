@@ -19,18 +19,22 @@
 
 Bluetooth beacons
 
-This project is directed towards helping people that are suffering from memory disorders. One of the ways this project accomplishes that is by tracking the patients, granting them some freedom from nursing staff. Patients are tracked via bluetooth wristlet that they wear and it is tracked by Raspberry Pis installed inside the nursing facility. System is programmed to allow them freedom of movement inside the areas they are permitted to access and then send alarms if they leave the designated areas.
+The purpose of this project is to help nursing staff at a nursing home to monitor their patients who are suffering from memory disorders. The patients would like to walk freely in the premises, but if they reach an area where they shouldn't be, they need to be guided back to the allowed space. One of the ways this project accomplishes that is by tracking the patients via a bluetooth wristlet that they wear. This wristlet is tracked by Raspberry Pis installed inside the nursing facility. The system is programmed to allow the patients freedom of movement inside the areas they are permitted to access. However, the system will send an alarm if a patient leaves the designated areas. The areas that are allowed to the patients depend on their profile (free to move, restricted to one's own home, now allowed to visit others quarters etc.). The nurses can see where the patients move via a mobile application and a desktop application, and they can check out the alarms.
 
 <!-- Architecture -->
 ### Architecture
 
 ![ABCD](https://raw.githubusercontent.com/Marski96/Bluetooth_beacons/development/img/ADBC_areas.PNG)
-![architecture](https://raw.githubusercontent.com/Marski96/Bluetooth_beacons/development/img/architecture.PNG)
+This picture is a model of the new nursing home that will be build in the near future.
+![architecture](img/phase2.PNG)
+This picture shows the monitoring system. The Raspberry Pis in different locations send MQTT data of the beacon wristles. The backend server determines the locations of the patients according to this data, and notifies the changes in real time to the mobile and desktop clients.
 
 ### Built With
-* [MySQL](https://www.mysql.com/)
+* [MariaDB](https://mariadb.org/)
+* [RethinkDB](https://rethinkdb.com/)
 * [Socket.io](https://socket.io/)
-* [React Native](https://reactjs.org/)
+* [React](https://reactjs.org/)
+* [Expo](https://docs.expo.io/)
 * [Node.js](https://nodejs.org/en/)
 * [MQTT](http://mqtt.org/)
 
