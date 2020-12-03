@@ -1,35 +1,39 @@
 <!-- TABLE OF CONTENTS -->
+# Project Bluetooth Beacons
 ## Table of Contents
-
-* [About the Project](#about-the-project)
-  * [Architecture](#Architecture)
-  * [Built With](#built-with)
+* [Introduction](#introduction)
+* [Architecture and Technical Description](#architecture-and-technical-description)
+  * [The Database systems](#the-database-systems)
 * [Getting Started](#getting-started)
   * [Prerequisites](#prerequisites)
   * [Installation](#installation)
   * [Mobile](#Mobile)
 * [How to use](#How-to-use)
   * [Webclient](#Webclient)
-  * [Logic](#Logic)
 * [Known issues and future developments](#Known-issues-and-future-developments)
 * [License](#License)
 
-<!-- ABOUT THE PROJECT -->
-## About The Project
+<!-- INTRODUCTION -->
+# Introduction
 
-Bluetooth beacons
+The purpose of this project is to help nursing staff in a new nursing home (that will be completed in the near future) to monitor their patients who are suffering from memory disorders. Picture 1 represents the areas in the new nursing facility. The patients would like to walk freely in the premises, but if they reach an area where they shouldn't be, they need to be guided back to the allowed space. One of the ways this project accomplishes that is by tracking the patients via a bluetooth wristlet that they wear. This wristlet is tracked by Raspberry Pis installed inside the nursing facility. The system is programmed to allow the patients freedom of movement inside the areas they are permitted to access. However, the system will send an alarm if a patient leaves the designated areas. The areas that are allowed to the patients depend on their profile (free to move, restricted to one's own home, now allowed to visit others quarters etc.). The nurses can see where the patients move via a mobile application and a desktop application, and they can check out the alarms.
 
-The purpose of this project is to help nursing staff at a nursing home to monitor their patients who are suffering from memory disorders. The patients would like to walk freely in the premises, but if they reach an area where they shouldn't be, they need to be guided back to the allowed space. One of the ways this project accomplishes that is by tracking the patients via a bluetooth wristlet that they wear. This wristlet is tracked by Raspberry Pis installed inside the nursing facility. The system is programmed to allow the patients freedom of movement inside the areas they are permitted to access. However, the system will send an alarm if a patient leaves the designated areas. The areas that are allowed to the patients depend on their profile (free to move, restricted to one's own home, now allowed to visit others quarters etc.). The nurses can see where the patients move via a mobile application and a desktop application, and they can check out the alarms.
-
-<!-- Architecture -->
-### Architecture
+The system's backend server is built with Node.js + Express framework and the front end client is made with React framework. The mobile application is built with Expo platform for universal React applications. The system has two databases: a non-realtime database using MariaDB database system and a real-time database using RethinkDB database system.
 
 ![ABCD](https://raw.githubusercontent.com/Marski96/Bluetooth_beacons/development/img/ADBC_areas.PNG)
-This picture is a model of the new nursing home that will be build in the near future.
-![architecture](img/phase2.PNG)
-This picture shows the monitoring system. The Raspberry Pis in different locations send MQTT data of the beacon wristles. The backend server determines the locations of the patients according to this data, and notifies the changes in real time to the mobile and desktop clients.
+Picture 1. This picture is a model of the new nursing home that will be built in the near future.
 
-### Built With
+<!-- Architecture -->
+# Architecture and Technical Description
+
+Picture 2 shows the monitoring system. The Raspberry Pis in different locations send MQTT data of the beacon wristlets to the MQTT server. The backend server listens to this data from the MQTT server, determines the locations of the patients according to this data, and notifies the changes in real-time to the mobile and desktop clients. The non-realtime database is used to get information of the tenants, locations, profiles etc.
+
+![architecture](img/phase2.PNG)
+Picture 2. The system architecture.
+
+Technical description of the system here. TODO!!!
+
+## Built With
 * [MariaDB](https://mariadb.org/)
 * [RethinkDB](https://rethinkdb.com/)
 * [Socket.io](https://socket.io/)
@@ -37,6 +41,140 @@ This picture shows the monitoring system. The Raspberry Pis in different locatio
 * [Expo](https://docs.expo.io/)
 * [Node.js](https://nodejs.org/en/)
 * [MQTT](http://mqtt.org/)
+
+## The development environment:
+<!-- TODO ADD PICTURE HERE -->
+
+## The production environment:
+<!-- TODO ADD PICTURE HERE -->
+
+## The Description of the API
+
+> Method | Url | Action
+> ------ | ------ | ------
+> GET | /tenants | Gets all the tenants
+> GET | /receivers | Gets all the receivers
+> GET | /detections | Gets all the MQTT detections
+> GET | /detections/locations | Gets the current locations of the beacons
+> DELETE | /detections | Deletes all the MQTT detections
+> GET | /statuses | Gets the current tenant statuses
+> GET | /statuses/:id | Gets the status of a tenant with id
+> POST | /statuses | Adds a tenant with status info
+> PUT | /statuses/:id | Updates the record of a tenant with id
+> POST | /api/push_notification/push_token | Adds a new token
+> POST | /api/push_notification/message | Adds a message and sends it as a push notification
+
+# The Database Systems
+## Non-realtime Database (MariaDB)
+The non-realtime database uses the [MariaDB](https://mariadb.org/) database system and is used for holding information of the patients (tenants), beacons, receivers and other details related to these. Picture 3 shows the database model.
+
+<!-- TODO ADD PICTURE HERE -->
+Picture 3. The non-realtime database.
+
+> ### _location_types_
+> _The location_types table contains the location types of the spaces in the facility._
+> 
+> Field | Type | Description
+> ------ | ------ | ------
+> location_type_id | char(20) PK | The id of the location type
+> location_type | int |  The type of the location as a number
+> description | char(30) | The description of the location type (home, lounge, lobby etc.)
+
+> ### _spaces_
+> _The spaces table contains the spaces in the facility._
+> 
+> Field | Type | Description
+> ------ | ------ | ------
+> space_id | char(20) PK | The id of the location type
+> space_name | char(20) |  The name of the space
+> location_type_id | char(20) FK | The location type of the space, reference to the [location_types](#location_types) table
+
+> ### _receivers_
+> _The receivers table contains the receivers in the facility._
+> 
+> Field | Type | Description
+> ------ | ------ | ------
+> receiver_id | char(20) PK | The id of the receiver
+> receiver_name | char(20) |  The name of the receiver
+> space_id | char(20) FK | The space where the receiver is, reference to the [spaces](#spaces) table
+
+> ### _beacons_
+> _The beacons table contains the beacons of the tenants (patients to be monitored)._
+> 
+> Field | Type | Description
+> ------ | ------ | ------
+> beacon_id | char(20) PK | The id of the beacon
+> beacon_name | char(20) |  The name of the beacon
+
+> ### _profiles_
+> _The profiles table contains the profiles of the tenants._
+> 
+> Field | Type | Description
+> ------ | ------ | ------
+> profile_id | char(20) PK | The id of the profile
+> profile_type | int |  The type of the profile as a number
+> description | char(30) | The description of the profile
+
+> ### _beacon_detections_
+> _The beacon_detections table contains the MQTT data received from the MQTT server._
+> 
+> Field | Type | Description
+> ------ | ------ | ------
+> receiver_id | char(20) FK | The id of the receiver, reference to the [receivers](#receivers) table
+> beacon_id | char(20) FK |  The id of the beacon, reference to the [beacons](#beacons) table
+> signal_db | int | The strength of the measurement signal in decibels
+> measurement_time | timestamp | The timestamp of the measurement
+
+> ### _tenants_
+> _The tenants table contains the tenants of the nursing home._
+> 
+> Field | Type | Description
+> ------ | ------ | ------
+> tenant_id | char(20) PK | The id of the tenant
+> space_id | char(20) FK |  The space where the tenant lives, reference to the [spaces](#spaces) table
+> beacon_id | char(20) FK |  The beacon (wristlet) of the tenant, reference to the [beacons](#beacons) table
+> profile_id | char(20) FK |  The profile of the tenant, reference to the [profiles](#profiles) table
+> tenant_firstname | char(50) | The first name of the tenant
+> tenant_lastname | char(50) | The last name of the tenant
+
+> ### _tokens_
+> _The tokens table contains the Expo tokens needed for sending push notifications to the mobile phones of the nurses._
+> 
+> Field | Type | Description
+> ------ | ------ | ------
+> id | char(20) PK | The id of the token
+> token | char(30) |  The Expo token of the mobile phone
+
+## Real-time Database (RethinkDB)
+The real-time database uses the [RethinkDB](https://rethinkdb.com/) database system and is used for the location information and detection data. The detection data on this database is deleted on regular intervals, where as the detection data stored in MariaDB non-realtime database is preserved. Picture 4 shows the real-time database model.
+
+<!-- TODO ADD PICTURE HERE -->
+Picture 4. The real-time database.
+
+> ### _beacon_detections_
+> _The beacon_detections table contains the MQTT data received from the MQTT server._
+> 
+> Field | Type | Description
+> ------ | ------ | ------
+> detection_id | char(20) PK | The id of the detection measurement
+> receiver_id | char(20) FK | The receiver of the measurement
+> beacon_id | char(20) FK |  The beacon of the measurement
+> signal_db | int | The strength of the measurement signal in decibels
+> measurement_time | timestamp | The timestamp of the measurement
+
+> ### _tenant_statuses_
+> _The tenants table contains the tenants of the nursing home._
+> 
+> Field | Type | Description
+> ------ | ------ | ------
+> tenant_id | char(20) PK | The id of the tenant
+> firstname | char(50) | The first name of the tenant
+> lastname | char(50) | The last name of the tenant
+> status | char(10) | The monitoring status of the tenant (ok, go check, alarm)
+> checked | bool | The boolean value, if the tenant's alarm is checked or not
+> location | char(10) | The space where the tenant currently is
+> measurement_time | timestamp | The timestamp of the measurement
+> last_updated | timestamp | The timestamp when the tenant status was updated
 
 
 <!-- GETTING STARTED -->
@@ -95,106 +233,6 @@ Mobile version of the app can be found here: https://github.com/Marski96/Bluetoo
 ![beacon locations](https://raw.githubusercontent.com/Marski96/Bluetooth_beacons/development/img/beaconlocations.JPG)
 
 
-<!-- Logic -->
-### Logic
-
-- MQTT_connect gets info from the wristlets and pushes it to the database.
- 
-- queries.js contain all the SQL queries we use.
- 
-- maintenance.txt contains database scripts which clears db every night and creates fake data to every wristlet to display (so database is never empty).
-
-
-Receives new data and sends it forward. Interval is decided in earlier section in where we create the actual connection. socketio.js:
-
-            const emit = async socket => {
-              try {
-                const res = await axios.get(
-                  "http://localhost:4000/beacon_locations_average"
-                );
-                socket.emit("emitSocket", res.data);
-              } catch (error) {
-                console.error('Error: ${error.code}');
-              }
-            };
-
-
-Alarms are set off by room colors which are in the database, for example if the location type is "red" -> the status changes to "Alarm". In addition, if the person is not detected for over 300 seconds and under 600 -> the status changes to "Unsure". If the person has not been detected for over 600 seconds, the status changes to "Alarm" and the measurement time will display "Not seen in 10 minutes".
-
-            if(Receiver1_seconds >= 600) {
-                if(rows[2].location_type == 'green') {
-                    Receiver1_status = 'Alarm'
-                    Receiver1_seconds = 'Not seen in 10 minutes'
-                }
-                if(rows[2].location_type == 'yellow') {
-                    Receiver1_status = 'Alarm'
-                    Receiver1_seconds = 'Not seen in 10 minutes'
-                }
-                if(rows[2].location_type == 'red') {
-                    Receiver1_status = 'Alarm'
-                    Receiver1_seconds = 'Not seen in 10 minutes'
-                }
-            }
- 
-
-Calculates timedifference and includes it always in the third package we send. detect.js:
-
-            //Get latest packet's timediff and use it as "seconds ago"
-            let rawTimeDiff1 = rows[2].Timediff
-                if (rawTimeDiff1 == undefined) {
-                    rawTimeDiff1 = '00:00:00'
-                }
-            let Receiver1_timediff = rawTimeDiff1.split(':');
-            let Receiver1_seconds = (+Receiver1_timediff[0]) * 60 * 60 + (Receiver1_timediff[1]) * 60 + (+Receiver1_timediff[2]);
-
-
- Add the data to JSON which we send. detect.js
- 
-            rows[0].average_signal_db = Receiver1_AVG;
-            rows[1].average_signal_db = Receiver1_AVG;
-            rows[2].average_signal_db = Receiver1_AVG;
-            rows[2].timediff_in_seconds = Receiver1_seconds;
-            rows[2].status = Receiver1_status
- 
- 
-Fetches beacon_locations and adds only relevant data to json packages.
-
-            const url = "http://localhost:4000/beacon_locations";
-                let averageData = [];
-                const getData = async url => {
-                    try {
-                      const res = await fetch(url);
-                      const json = await res.json();
-
-
-                        averageData.push(json[2])
-                        averageData.push(json[5])
-                        averageData.push(json[8])
-                        averageData.push(json[11])
-
-                    } catch (error) {
-                      console.log(error);
-                    }
-                    await res.json(averageData);
-
-
-Frontend fetches the socketio data add it to state tieto:
-
-    componentDidMount() {
-        fetch("http://localhost:4000/beacon_locations_average")
-            .then(response => response.json())
-            .then(responseJson => {
-                this.setState({ tieto: responseJson });
- 
-                const { endpoint } = this.state;
-                const socket = socketIOClient(endpoint);
-                socket.on("emitSocket", data => this.setState({ tieto: data }));
-            });
-    }
- 
-
-
-
 <!-- Known issues and future developments -->
 ## Known issues and future developments
 
@@ -205,19 +243,3 @@ See the [open issues](https://github.com/Marski96/Bluetooth_beacons/issues) for 
 Licensed under MIT -license.
 https://opensource.org/licenses/MIT
 
-
-<!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=flat-square
-[contributors-url]: https://github.com/othneildrew/Best-README-Template/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/othneildrew/Best-README-Template.svg?style=flat-square
-[forks-url]: https://github.com/othneildrew/Best-README-Template/network/members
-[stars-shield]: https://img.shields.io/github/stars/othneildrew/Best-README-Template.svg?style=flat-square
-[stars-url]: https://github.com/othneildrew/Best-README-Template/stargazers
-[issues-shield]: https://img.shields.io/github/issues/othneildrew/Best-README-Template.svg?style=flat-square
-[issues-url]: https://github.com/othneildrew/Best-README-Template/issues
-[license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=flat-square
-[license-url]: https://github.com/othneildrew/Best-README-Template/blob/master/LICENSE.txt
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=flat-square&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/othneildrew
-[product-screenshot]: images/screenshot.png
