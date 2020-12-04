@@ -3,11 +3,13 @@
 ## Table of Contents
 * [Introduction](#introduction)
 * [Architecture and Technical Description](#architecture-and-technical-description)
-  * [The Database systems](#the-database-systems)
-* [Getting Started](#getting-started)
-  * [Prerequisites](#prerequisites)
-  * [Installation](#installation)
-  * [Mobile](#Mobile)
+  * [The Description of the API](#the-description-of-the-api)
+* [The Database systems](#the-database-systems)
+  * [Non-realtime Database (MariaDB)](#non-realtime-database-(mariadb))
+  * [Real-time Database (RethinkDB)](#real-time-database-(rethinkdb))
+* [Installation](#installation)
+  * [Development environment](#development-environment)
+  * [Production environment](#production-environment)
 * [How to use](#How-to-use)
   * [Webclient](#Webclient)
 * [Known issues and future developments](#Known-issues-and-future-developments)
@@ -31,22 +33,25 @@ Picture 2 shows the monitoring system. The Raspberry Pis in different locations 
 ![architecture](img/phase2.PNG)
 Picture 2. The system architecture.
 
-Technical description of the system here. TODO!!!
-
-## Built With
+The system is built with these technologies:
 * [MariaDB](https://mariadb.org/)
 * [RethinkDB](https://rethinkdb.com/)
 * [Socket.io](https://socket.io/)
 * [React](https://reactjs.org/)
-* [Expo](https://docs.expo.io/)
+* [Expo/React Native](https://docs.expo.io/)
 * [Node.js](https://nodejs.org/en/)
 * [MQTT](http://mqtt.org/)
 
-## The development environment:
-<!-- TODO ADD PICTURE HERE -->
+MariaDB database holds information related to the nursing home, its tenants and the monitoring system equipments. The MQTT data stored in this database is meant for future Big Data analysis. The RethinkDB database is used for its ability to push updated query results with changefeeds to other applications in realtime. This reduces the need for polling changes, and with the help of socket.io library that establishes a WebSocket communication channel between the client and the server, the changes in tenant locations and statuses are sent in realtime to the client. The front-end client in the browser is built with React. The mobile client uses the Expo-platform and its managed workflow for React Native, and the repository of the mobile version is linked [here](https://github.com/Vanhusmonitorointiprojekti/Bluetooth_beacons_mobile).
 
-## The production environment:
-<!-- TODO ADD PICTURE HERE -->
+The backend servers use the Express framework for Node.js. The MQTT client listens to the MQTT data transmission of the MQTT server, and writes data to the realtime database (RethinDB). Another MQTT client writes MQTT data to the non-realtime database (MariaDB) The API server gets the MQTT data from realtime database and checks the locations of each beacon in the interval of 6 seconds by calculating the average signal strenght of the three latest detection measurements per beacon and determines the closest receiver for all the beacons. After this, the server checks if it's alright for the tenant holding the beacon wristlet to be in the location where the receiver is, and updates the tenant's status to the realtime database. If the tenant is not allowed in the area, the server sends a push notification to the mobile phone of the nurse. The server also updates the tenant statuses and locations to the realtime database. These changes are sent via a socket.io connection from the http-server with socket.io-instance attached to it to client applications. 
+
+In the mobile application the nurse can check the alarm, and if the tenant's alarm state is checked, the server will not send new notifications. When the tenant returns to the allowed space, the server determines that the alarm situtation is over and returns the tenant's state to unchecked. If the tenant moves again to the restricted area, there will be a new notification.  
+
+Picture 3 shows the main components and connections of the system in the production environment. The difference to the development environment is that both databases are located on the same server. The mobile system is depicted [here](https://github.com/Vanhusmonitorointiprojekti/Bluetooth_beacons_mobile).
+
+![architecture](img/technical_description.PNG)
+Picture 3. The main components and connections.
 
 ## The Description of the API
 
@@ -66,10 +71,10 @@ Technical description of the system here. TODO!!!
 
 # The Database Systems
 ## Non-realtime Database (MariaDB)
-The non-realtime database uses the [MariaDB](https://mariadb.org/) database system and is used for holding information of the patients (tenants), beacons, receivers and other details related to these. Picture 3 shows the database model.
+The non-realtime database uses the [MariaDB](https://mariadb.org/) database system and is used for holding information of the patients (tenants), beacons, receivers and other details related to these. Picture 4 shows the database model.
 
 <!-- TODO ADD PICTURE HERE -->
-Picture 3. The non-realtime database.
+Picture 4. The non-realtime database.
 
 > ### _location_types_
 > _The location_types table contains the location types of the spaces in the facility._
@@ -142,14 +147,14 @@ Picture 3. The non-realtime database.
 > 
 > Field | Type | Description
 > ------ | ------ | ------
-> id | char(20) PK | The id of the token
+> id | int PK | The id of the token
 > token | char(30) |  The Expo token of the mobile phone
 
 ## Real-time Database (RethinkDB)
-The real-time database uses the [RethinkDB](https://rethinkdb.com/) database system and is used for the location information and detection data. The detection data on this database is deleted on regular intervals, where as the detection data stored in MariaDB non-realtime database is preserved. Picture 4 shows the real-time database model.
+The real-time database uses the [RethinkDB](https://rethinkdb.com/) database system and is used for the location information and detection data. The detection data on this database is deleted on regular intervals, where as the detection data stored in MariaDB non-realtime database is preserved. Picture 5 shows the real-time database model.
 
 <!-- TODO ADD PICTURE HERE -->
-Picture 4. The real-time database.
+Picture 5. The real-time database.
 
 > ### _beacon_detections_
 > _The beacon_detections table contains the MQTT data received from the MQTT server._
@@ -177,42 +182,67 @@ Picture 4. The real-time database.
 > last_updated | timestamp | The timestamp when the tenant status was updated
 
 
-<!-- GETTING STARTED -->
-## Getting Started
+<!-- INSTALLATION -->
+## Installation
 
-Make sure that you have node.js installed. You can install it from here: https://nodejs.org/en/
+### Development environment
 
-### Prerequisites
+Load and install 
+ [Visual Studio Code](https://code.visualstudio.com/download), [Node](https://nodejs.org/en/download/), [Git](https://git-scm.com/downloads), [RethinkDB](https://rethinkdb.com/docs/install/) and [MariaDB](https://mariadb.com/downloads/).
 
-1. Download the application .zip https://github.com/Marski96/Bluetooth_beacons/releases
-2. Unzip the file to destination you like
-3. With Powershell, navigate to unzipped application folder `pushd ..\Bluetooth_beacons`
-
-### Installation
-
-1. Using Powershell, install all required libraries `npm install`
-2. Make sure that all libraries are installed by navigating to detect folder using Powershell and running application's backend.
-```sh
-pushd ..\Bluetooth_beacons\src\detection
+ The schema.sql file for the non-realtime MariaDB database can be found in the folder src/non_realtime_db. After installation of MariaDB you should create a user with root privileges and password-based access:
 ```
-```sh
-node detect.js
+sudo mariadb
+GRANT ALL ON *.* TO 'admin'@'localhost' IDENTIFIED BY 'admin_password' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+exit
 ```
-3. If program starts with infotext "Socket.io is running on port 4001"... your installation is succesful.
-4. If there is problem with some library for example mysql, install the required library: `npm install mysql`
-5. Start front-end by opening another instance of Powershell and navigating to application folder:
-```sh
-pushd ..\Bluetooth_beacons
+After this, you can log in to mariaDB as admin with password:
+```
+mysql -u admin -p
+```
+For the project, create these users to the MariaDB database:
+```
+GRANT ALL ON senior_monitoring.* TO 'nrt_user'@'%' IDENTIFIED BY 'nrt_user_password'
+CREATE USER 'mqtt_client' IDENTIFIED BY 'mqtt';
+GRANT USAGE ON *.* TO 'mqtt_client'@'%' IDENTIFIED BY 'mqtt_client_password';
+GRANT ALL PRIVILEGES ON senior_monitoring.* TO 'mqtt_client'@'%';
+FLUSH PRIVILEGES;
+exit
 ```
 
-& run start:
+TODO RETHINKDB!
 
-```sh
-npm start
+ - Clone the project: 
 ```
-6. Both backend and frontend should be running in order for the application to work.
+ git clone https://github.com/Vanhusmonitorointiprojekti/Bluetooth_beacons.git
+ cd Bluetooth_beacons
+ ```
+ - Install the dependencies: 
+  ```
+ npm install
+ ```
+ - Start the monitoring server:
+ ```
+cd src/realtime_db
+node monitorserver.js
+```
+ - Start the React-application in another terminal with this command (in the project's root): 
+  ```sh
+ npm start
+```
+- in your browser, go to [http://localhost:3000](http://localhost:3000) to see the React application
+### Production environment
 
-### Mobile
+TODO
+
+For the MariaDB in the non-realtime server, create another client:
+```
+CREATE USER 'web_server' IDENTIFIED BY 'web';
+GRANT USAGE ON *.* TO 'web_server'@'%' IDENTIFIED BY 'web';
+GRANT SELECT ON senior_monitoring.* TO 'web_server'@'%';
+```
+
 Mobile version of the app can be found here: https://github.com/Marski96/Bluetooth_beacons_mobile
 
 <!-- How to use -->
