@@ -1,3 +1,4 @@
+//Implements what tenant location page could look like
 import { Paper, Table,TableHead, TableBody, TableCell, TableRow } from "@material-ui/core";
 import React, {Component} from "react";
 import socketIOClient from "socket.io-client";
@@ -15,7 +16,7 @@ class Location extends Component {
     }
 
     componentDidMount() {
-        fetch('http://localhost:4000/statuses')
+        fetch('https://www.vanhusmonitorointi.tk/statuses')
         .then((response) => response.json())
         .then(responseJson => {
             console.log('tieto', responseJson)
@@ -47,34 +48,19 @@ class Location extends Component {
                 <Table>
                     <TableHead>
                         <TableRow>
-                            <TableCell style={{fontSize: "18px"}}>Asukas</TableCell>
-                            <TableCell style={{fontSize: "18px"}}>Sijainti</TableCell>
-                            <TableCell style={{fontSize: "18px"}}>Tila</TableCell>
+                            <TableCell style={{fontSize: "20px"}}>Asukas</TableCell>
+                            <TableCell style={{fontSize: "20px"}}>Sijainti</TableCell>
+                            <TableCell style={{fontSize: "20px"}}>Tila</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                             { this.state.tieto.map(t => 
                                 <TableRow key={ Math.floor(Math.random() * (10000 - 1) ) + 1 }>
-                                    <TableCell>{ tenant.firstname } { tenant.lastname }</TableCell>
-                                    <TableCell>{ tenant.location }</TableCell>
-                                    <TableCell>{tenant.status}</TableCell>
+                                    <TableCell>{ t.firstname } { t.lastname }</TableCell>
+                                    <TableCell>{ t.location }</TableCell>
+                                    <TableCell>{t.status}</TableCell>
                                 </TableRow>
                             )}
-                    <TableRow>
-                        <TableCell>Charles Darwin</TableCell>
-                        <TableCell>A2</TableCell>
-                        <TableCell>ok</TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell>Marie Curie</TableCell>
-                        <TableCell>A2</TableCell>
-                        <TableCell>ok</TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell>Albert Einstein</TableCell>
-                        <TableCell>Aula</TableCell>
-                        <TableCell>ok</TableCell>
-                    </TableRow>
                     </TableBody>
                 </Table>
             </Paper>
