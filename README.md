@@ -204,14 +204,44 @@ mysql -u admin -p
 For the project, create these users to the MariaDB database:
 ```
 GRANT ALL ON senior_monitoring.* TO 'nrt_user'@'%' IDENTIFIED BY 'nrt_user_password'
-CREATE USER 'mqtt_client' IDENTIFIED BY 'mqtt';
+CREATE USER 'mqtt_client' IDENTIFIED BY 'mqtt_client_password';
 GRANT USAGE ON *.* TO 'mqtt_client'@'%' IDENTIFIED BY 'mqtt_client_password';
 GRANT ALL PRIVILEGES ON senior_monitoring.* TO 'mqtt_client'@'%';
 FLUSH PRIVILEGES;
 exit
 ```
 
-TODO RETHINKDB!
+After installing RethinkDB you can start the rethinkDB server from a terminal window with the command
+```
+rethinkdb
+```
+This will create a rethinkdb_data folder. When the server is running, you can use the administrative UI by opening your browser and going to localhost:8080. Instructions to create the realtime database for RethinDB are found in the file rethindb.txt in the folder src/realtimd_db. A quick introduction for how to use the RethinkDB can be found [here](https://rethinkdb.com/docs/quickstart/).
+
+You will need to add two users for the realtime database:
+```
+r.db('rethinkdb').table('users').insert({id: 'rt_user', password: 'rt_user_password'})
+r.db('rethinkdb').table('users').insert({id: 'mqtt_user', password: 'mqtt_user_password'})
+r.db('rt_beacons').table('beacon_detections').grant('mqtt_user', {write: true});
+r.db('rt_beacons').grant('rt_user', {read: true, write: true, config: false});
+```
+
+For the application to work, you will need to add this .env file to the root of the project included with your database passwords (and server IP:s):
+
+```
+RDB_HOST=
+RDB_DB=rt_beacons
+RDB_PORT=28105
+
+NRT_HOST=
+NRT_USER=nrt_user
+NRT_PASSWORD=
+
+MQTT_USER=mqtt_user
+MQTT_PASSWORD=
+
+RT_USER=rt_user
+RT_PASSWORD=
+```
 
  - Clone the project: 
 ```
@@ -221,6 +251,10 @@ TODO RETHINKDB!
  - Install the dependencies: 
   ```
  npm install
+ ```
+ - Start RethinkDB server in another terminal window (in the folder where you created the rethinkdb_data folder)
+ ```
+ rethinkdb
  ```
  - Start the monitoring server:
  ```
@@ -234,16 +268,20 @@ node monitorserver.js
 - in your browser, go to [http://localhost:3000](http://localhost:3000) to see the React application
 ### Production environment
 
-TODO
+During this project the backend and databases were installed on Ubuntu 20.04 servers following the aforementioned instructions and [this guide](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-20-04). 
 
-For the MariaDB in the non-realtime server, create another client:
+A free domain name was acquired via [Freenom](https://www.freenom.com/). [Nginx](https://www.nginx.com/) was used as a reverse-proxy server for the backend application and configured with SSL with [Let's Encrypt certificate obtained with Certbot](https://letsencrypt.org/). [PM2 daemon process manager](https://pm2.keymetrics.io/) was used for making the node applications run as services in the background. 
+
+The MariaDB non-realtime database system was running on another server (private IP), whereas the Node.js backend and RethinkDB realtime database system were running on another server (public IP). For the MariaDB in the non-realtime server, in addition to the previous steps, define the nrt_user accordingly:
 ```
-CREATE USER 'web_server' IDENTIFIED BY 'web';
-GRANT USAGE ON *.* TO 'web_server'@'%' IDENTIFIED BY 'web';
-GRANT SELECT ON senior_monitoring.* TO 'web_server'@'%';
+CREATE USER 'nrt_user' IDENTIFIED BY 'nrt_user_password';
+GRANT USAGE ON *.* TO 'nrt_user'@'%' IDENTIFIED BY 'nrt_user_password';
+GRANT SELECT ON senior_monitoring.* TO 'nrt_user'@'%';
 ```
 
-Mobile version of the app can be found here: https://github.com/Marski96/Bluetooth_beacons_mobile
+A couple of tweaks were made in the backend code. The src/realtime_db/rt_mqtt_client was started as separate node processes managed by PM2 (and not inside the monitorserver.js file, for instance). Clearing the detections from the database was handled as a separate service as well, and not in the src/realtime_db_monitor_tenants.js file. 
+
+Mobile version of the app can be found here: https://github.com/Vanhusmonitorointiprojekti/Bluetooth_beacons_mobile
 
 <!-- How to use -->
 ## How to use
