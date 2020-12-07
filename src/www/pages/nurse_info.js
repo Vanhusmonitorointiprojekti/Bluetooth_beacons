@@ -1,3 +1,4 @@
+//implements what nurse info/schedule could look like
 import React, {Component} from "react";
 import { Paper, Table, TableRow, TableHead, TableCell, TableBody } from '@material-ui/core';
 import socketIOClient from "socket.io-client";
