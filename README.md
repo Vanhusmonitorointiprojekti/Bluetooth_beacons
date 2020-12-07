@@ -71,9 +71,9 @@ Picture 3. The main components and connections.
 
 # The Database Systems
 ## Non-realtime Database (MariaDB)
-The non-realtime database uses the [MariaDB](https://mariadb.org/) database system and is used for holding information of the patients (tenants), beacons, receivers and other details related to these. Picture 4 shows the database model.
+The non-realtime database uses the [MariaDB](https://mariadb.org/) database system and is used for holding information of the patients (tenants), beacons, receivers and other details related to these. Picture 4 shows the non-realtime database model.
 
-<!-- TODO ADD PICTURE HERE -->
+![non_realtime_db](img/non_realtime.PNG)
 Picture 4. The non-realtime database.
 
 > ### _location_types_
@@ -153,7 +153,7 @@ Picture 4. The non-realtime database.
 ## Real-time Database (RethinkDB)
 The real-time database uses the [RethinkDB](https://rethinkdb.com/) database system and is used for the location information and detection data. The detection data on this database is deleted on regular intervals, where as the detection data stored in MariaDB non-realtime database is preserved. Picture 5 shows the real-time database model.
 
-<!-- TODO ADD PICTURE HERE -->
+![realtime_db](img/realtime.PNG)
 Picture 5. The real-time database.
 
 > ### _beacon_detections_
