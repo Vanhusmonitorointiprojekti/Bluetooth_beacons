@@ -51,6 +51,7 @@ class Location extends Component {
                             <TableCell style={{fontSize: "20px"}}>Asukas</TableCell>
                             <TableCell style={{fontSize: "20px"}}>Sijainti</TableCell>
                             <TableCell style={{fontSize: "20px"}}>Tila</TableCell>
+                            <TableCell style={{fontSize: "20px"}}>Timestamp</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -59,6 +60,7 @@ class Location extends Component {
                                     <TableCell>{ t.firstname } { t.lastname }</TableCell>
                                     <TableCell>{ t.location }</TableCell>
                                     <TableCell>{t.status}</TableCell>
+                                    <TableCell>{new Date(t.measurement_time).toLocaleString()}</TableCell>
                                 </TableRow>
                             )}
                     </TableBody>
