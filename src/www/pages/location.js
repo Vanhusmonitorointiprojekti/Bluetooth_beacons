@@ -4,6 +4,7 @@ import React, {Component} from "react";
 import socketIOClient from "socket.io-client";
 
 
+
 class Location extends Component {
     constructor() {
         super();
@@ -55,7 +56,7 @@ class Location extends Component {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                            { this.state.tieto.map(t => 
+                            { this.state.tieto.map(t =>
                                 <TableRow key={ Math.floor(Math.random() * (10000 - 1) ) + 1 }>
                                     <TableCell>{ t.firstname } { t.lastname }</TableCell>
                                     <TableCell>{ t.location }</TableCell>

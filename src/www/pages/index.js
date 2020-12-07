@@ -9,6 +9,7 @@ import flag_FI from '../../locales/fi/flag_FI.png'
 import Nurse_info from './nurse_info';
 import Admin_alarm from './admin_alarm';
 import Locations from './location';
+import Tenant from './tenant';
 
 class AdminFrontPage extends Component{
   constructor(props){
@@ -49,11 +50,12 @@ render(){
               <Tab style={{fontSize: '22px', marginLeft: '5%'}} label={t("Nurse info")} component={Link} to="/Nurse"/>
               <Tab style={{fontSize: '22px', marginLeft: '5%'}} label={t("Alarm")} component={Link} to="/Admin_alarm"/>
               <Tab style={{fontSize: '22px', marginLeft: '5%'}} label={t("Locations")} component={Link} to="/Locations"/>
+              <Tab style={{fontSize: '22px', marginLeft: '5%'}} label={t("Tenants")} component={Link} to="/Tenant"/>
               <Button style={{marginLeft: "auto"}} onClick={this.switchEn}><img src= {flag_UK} alt="FlagOfUK" height='25' width='40' /></Button>
               <Button onClick={this.switchFi}><img src= {flag_FI} alt="FlagOfFI" height='25' width='40' /></Button>
-              
+
             </Tabs>
-            
+
           </AppBar>
         </div>
         <div>
@@ -62,6 +64,7 @@ render(){
                               <Route path="/Nurse" component={Nurse_info}></Route>
                               <Route path="/Admin_alarm" component={Admin_alarm}></Route>
                               <Route path="/Locations" component={Locations}></Route>
+                              <Route path="/Tenant" component={Locations}></Route>
                           </Switch>
                       </div>
         </BrowserRouter>
