@@ -64,7 +64,7 @@ render(){
                               <Route path="/Nurse" component={Nurse_info}></Route>
                               <Route path="/Admin_alarm" component={Admin_alarm}></Route>
                               <Route path="/Locations" component={Locations}></Route>
-                              <Route path="/Tenant" component={Locations}></Route>
+                              <Route path="/Tenant" component={Tenant}></Route>
                           </Switch>
                       </div>
         </BrowserRouter>

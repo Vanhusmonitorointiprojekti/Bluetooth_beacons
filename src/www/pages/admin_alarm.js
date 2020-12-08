@@ -21,7 +21,6 @@ class Admin_Alarm extends Component {
                         <TableRow>
                             <TableCell style={{fontSize: '18px'}}>{("Aika")}</TableCell>
                             <TableCell style={{fontSize: '18px'}}>{("Tila")}</TableCell>
-                            <TableCell style={{fontSize: '18px'}}>{("Kuva")}</TableCell>
                             <TableCell style={{fontSize: '18px'}}>{("Asukas")}</TableCell>
                             <TableCell style={{fontSize: '18px'}}>{("Kuva")}</TableCell>
                             <TableCell style={{fontSize: '18px'}}>{("Sijainti")}</TableCell>
@@ -35,7 +34,6 @@ class Admin_Alarm extends Component {
                         <TableRow>
                             <TableCell style={{color: 'red'}}>NYT</TableCell>
                             <TableCell style={{color: 'red'}}>Hälytys</TableCell>
-                            <TableCell><Avatar src={user1}/></TableCell>
                             <TableCell>Charles Darwin</TableCell>
                             <TableCell><Avatar src={user4}/></TableCell>
                             <TableCell>Ulko-ovi</TableCell>
@@ -54,7 +52,6 @@ class Admin_Alarm extends Component {
                         <TableRow>
                             <TableCell style={{color: 'green'}}>12:36</TableCell>
                             <TableCell style={{color: 'green'}}>Hoidettu / OK</TableCell>
-                            <TableCell><Avatar src={user3}/></TableCell>
                             <TableCell>Maria Goeppert-Mayer</TableCell>
                             <TableCell><Avatar src={user5}/></TableCell>
                             <TableCell>A2</TableCell>
