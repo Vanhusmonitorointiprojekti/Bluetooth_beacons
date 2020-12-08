@@ -44,7 +44,13 @@ The system is built with these technologies:
 
 MariaDB database holds information related to the nursing home, its tenants and the monitoring system equipments. The MQTT data stored in this database is meant for future Big Data analysis. The RethinkDB database is used for its ability to push updated query results with changefeeds to other applications in realtime. This reduces the need for polling changes, and with the help of socket.io library that establishes a WebSocket communication channel between the client and the server, the changes in tenant locations and statuses are sent in realtime to the client. The front-end client in the browser is built with React. The mobile client uses the Expo-platform and its managed workflow for React Native, and the repository of the mobile version is linked [here](https://github.com/Vanhusmonitorointiprojekti/Bluetooth_beacons_mobile).
 
-The backend servers use the Express framework for Node.js. The MQTT client listens to the MQTT data transmission of the MQTT server, and writes data to the realtime database (RethinDB). Another MQTT client writes MQTT data to the non-realtime database (MariaDB) The API server gets the MQTT data from realtime database and checks the locations of each beacon in the interval of 6 seconds by calculating the average signal strenght of the three latest detection measurements per beacon and determines the closest receiver for all the beacons. After this, the server checks if it's alright for the tenant holding the beacon wristlet to be in the location where the receiver is, and updates the tenant's status to the realtime database. If the tenant is not allowed in the area, the server sends a push notification to the mobile phone of the nurse. The server also updates the tenant statuses and locations to the realtime database. These changes are sent via a socket.io connection from the http-server with socket.io-instance attached to it to client applications. 
+The backend servers use the Express framework for Node.js. The MQTT client listens to the MQTT data transmission of the MQTT server, and writes data to the realtime database (RethinDB). The MQTT data the MQTT server sends and the monitoring system consumes is in the following form
+(receiver-name mac-address-of-the-beacon signal-strengt):
+```
+receiver2 ff:ff:ff:ff:ff:ff -37
+```
+
+Another MQTT client writes MQTT data to the non-realtime database (MariaDB) The API server gets the MQTT data from realtime database and checks the locations of each beacon in the interval of 6 seconds by calculating the average signal strenght of the three latest detection measurements per beacon and determines the closest receiver for all the beacons. After this, the server checks if it's alright for the tenant holding the beacon wristlet to be in the location where the receiver is, and updates the tenant's status to the realtime database. If the tenant is not allowed in the area, the server sends a push notification to the mobile phone of the nurse. The server also updates the tenant statuses and locations to the realtime database. These changes are sent via a socket.io connection from the http-server with socket.io-instance attached to it to client applications. 
 
 In the mobile application the nurse can check the alarm, and if the tenant's alarm state is checked, the server will not send new notifications. When the tenant returns to the allowed space, the server determines that the alarm situtation is over and returns the tenant's state to unchecked. If the tenant moves again to the restricted area, there will be a new notification.  
 
@@ -68,6 +74,8 @@ Picture 3. The main components and connections.
 > PUT | /statuses/:id | Updates the record of a tenant with id
 > POST | /api/push_notification/push_token | Adds a new token
 > POST | /api/push_notification/message | Adds a message and sends it as a push notification
+
+
 
 # The Database Systems
 ## Non-realtime Database (MariaDB)
