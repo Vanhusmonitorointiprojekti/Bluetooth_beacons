@@ -12,7 +12,7 @@ r.db('rt_beacons').table("tenant_statuses").insert([
         firstname: "Albert",
         lastname: "Einstein",
         status: null,
-        checked: false
+        checked: false,
         measurement_time: null,
         last_updated: null
     },
