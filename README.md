@@ -6,7 +6,7 @@
   * [The Description of the API](#the-description-of-the-api)
 * [The Database systems](#the-database-systems)
   * [Non-realtime Database (MariaDB)](#non-realtime-database-(mariadb))
-  * [Real-time Database (RethinkDB)](#real-time-database-(rethinkdb))
+  * [Realtime Database (RethinkDB)](#real-time-database-(rethinkdb))
 * [Installation](#installation)
   * [Development environment](#development-environment)
   * [Production environment](#production-environment)
@@ -158,7 +158,7 @@ Picture 4. The non-realtime database.
 > id | int PK | The id of the token
 > token | char(30) |  The Expo token of the mobile phone
 
-## Real-time Database (RethinkDB)
+## Realtime Database (RethinkDB)
 The real-time database uses the [RethinkDB](https://rethinkdb.com/) database system and is used for the location information and detection data. The detection data on this database is deleted on regular intervals, where as the detection data stored in MariaDB non-realtime database is preserved. Picture 5 shows the real-time database model.
 
 ![realtime_db](img/realtime.PNG)
