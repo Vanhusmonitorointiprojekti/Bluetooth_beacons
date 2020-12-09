@@ -312,6 +312,7 @@ Other pages were hardcoded examples of beacon, nurse, alarm and tenant informati
 - if the alarm is not checked by a nurse within a certain time limit, escalate to others automatically
 - the system should send a warning, if a tenant is not chosen for monitoring
 - improve and develop further the administrative panel (the webclient)
+- add the functionality to insert and edit beacon owners and get API server notified about changes to database
 
 <!-- License -->
 ## License
