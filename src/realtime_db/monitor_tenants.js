@@ -73,7 +73,7 @@ const getTenant = async (beacon_id, tenants) => {
 const getReceiver = async (receiver_id, receivers) => {
 
     try {
-        let result = _.find(receivers, function(t) { return t.receiver_id.toLowerCase() === receiver_id })
+        let result = _.find(receivers, function(t) { return t.receiver_id.toLowerCase() === receiver_id.toLowerCase() })
         return result
     } catch(error) {
         console.log(error)
