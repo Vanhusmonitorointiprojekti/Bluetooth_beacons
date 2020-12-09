@@ -1,3 +1,4 @@
+// Routes that are linked to beacon locations
 const model = require('../models/beacons')
 const express = require('express')
 const router = express.Router()
@@ -75,5 +76,3 @@ const getStrongestSignalPerBeacon = (obj) => {
 
     return obj;
 }
-
-

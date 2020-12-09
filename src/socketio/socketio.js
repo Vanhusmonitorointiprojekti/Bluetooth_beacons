@@ -1,50 +1,50 @@
-const express = require("express");
-const http = require("http");
-const socketIo = require("socket.io");
-const axios = require("axios");
+const express = require("express")
+const http = require("http")
+const socketIo = require("socket.io")
+const model = require('../../models/tenants')
 
 function start(){
 
-const port = 4001;
-const app = express();
+const port = 4002
+const app = express()
 
-const httpServer = http.createServer(app);
-const io = socketIo(httpServer);
+const httpServer = http.createServer(app)
+const io = socketIo(httpServer)
 
-let interval;
 
-//not so many connections
-io.on("connection", socket => {
-  console.log("New client connected");
-  if (interval) {
-    clearInterval(interval);
-  }
-  interval = setInterval(() => emit(socket), 6000);
-  socket.on("disconnect", () => {
-    console.log("Client disconnected");
-  });
-});
 
-const emit = async socket => {
-  try {
-    const res = await axios.get(
-      "http://localhost:4000/beacon_locations_average"
-    );
-    // -> data structure for socket.emit ->  topic name you emit -> res. -> data. -> json attribute/value
-    
-    // console.error(res);
-    // console.log(res)
-    socket.emit("emitSocket", res.data);
-  } catch (error) {
-    console.error(`Error: ${error.code}`);
-  }
-};
+let clients = 0
+io.on('connection', function(socket) {
 
-httpServer.listen(port, () => console.log(`\nSocket.io running on port ${port}`));
+    model.setup(function(data) {
+        if((data.new_val != null) && (data.old_val != null)) {
+            // status update only, if status or location changes
+            let locationChanged = data.new_val.location !== data.old_val.location
+            let statusChanged = data.new_val.status !== data.old_val.status
+            if (locationChanged || statusChanged) {
+                console.log('location', data.new_val.location)
+                io.emit('updates', data.new_val)
+            }           
+        } else if((data.new_val != null) && (data.old_val == null)) {
+            // new tenant
+            io.emit('new', data.new_val);
+            console.log('Emitting from realtimedb:', data.new_val)
+        }
+    })
+
+   clients++
+   io.sockets.emit('broadcast',{ description: clients + ' clients connected!'})
+   socket.on('disconnect', function () {
+      clients--
+      io.sockets.emit('broadcast',{ description: clients + ' clients connected!'})
+   })
+})
+
+
+
+httpServer.listen(port, () => console.log(`\nSocket.io running on port ${port}`))
 }
 
 module.exports = {
   start
-
-
-};
+}

@@ -80,6 +80,7 @@ const getReceiver = async (receiver_id, receivers) => {
     }
 }
 
+//obj= locations object
 const combineData = async (obj, tenants, receivers) => {
     let array = []
 

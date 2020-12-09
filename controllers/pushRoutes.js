@@ -1,3 +1,4 @@
+// Routes that are linked to push notifications
 const express = require("express");
 const { Expo } = require("expo-server-sdk");
 const router = express.Router()
