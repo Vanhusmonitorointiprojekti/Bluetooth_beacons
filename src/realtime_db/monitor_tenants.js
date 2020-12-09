@@ -111,46 +111,46 @@ const getStatusForTenants = async (tenantData) => {
 
 const defineStatus = (obj) => {
     let alarmStatus = 'alarm'
-    // Warning, this will fail if there is a receiver not stored in database!
-    // TODO handle unknown receivers
-    let pair = obj.tenant.profile_type + '.' + obj.receiver.location_type
-    let status = ''
-    let newObj = { 
-        id: obj.tenant.tenant_id,
-        firstname: obj.tenant.tenant_firstname,
-        lastname: obj.tenant.tenant_lastname,
-        measurement_time: obj.measurement_time,
-        location: obj.receiver.space_name
-    }
-    console.log(obj.tenant.space_name + ' ' + obj.receiver.space_name)
-    console.log('pair', pair)
-
-    const restricted = '1.1'
-    const restrictedVisiting = '3.1'
-    // check if tenant is in his/her own home or someone else's home
-    if (pair === restricted || pair === restrictedVisiting) {
-        if (obj.tenant.space_name === obj.receiver.space_name) {
-            // tenant's own home, status ok
-            status = statusMap.get(pair)[0]
-            //console.log(status)
+    // to handle unknown receivers and beacons not stored in database!
+    if (obj.receiver !== undefined && obj.tenant !== undefined) {
+        let pair = obj.tenant.profile_type + '.' + obj.receiver.location_type
+        let status = ''
+        let newObj = { 
+            id: obj.tenant.tenant_id,
+            firstname: obj.tenant.tenant_firstname,
+            lastname: obj.tenant.tenant_lastname,
+            measurement_time: obj.measurement_time,
+            location: obj.receiver.space_name
+        }
+        console.log(obj.tenant.space_name + ' ' + obj.receiver.space_name)
+        console.log('pair', pair)
+    
+        const restricted = '1.1'
+        const restrictedVisiting = '3.1'
+        // check if tenant is in his/her own home or someone else's home
+        if (pair === restricted || pair === restrictedVisiting) {
+            if (obj.tenant.space_name === obj.receiver.space_name) {
+                // tenant's own home, status ok
+                status = statusMap.get(pair)[0]
+                //console.log(status)
+            } else {
+                status = statusMap.get(pair)[1]
+                //console.log(status)
+            }
         } else {
-            status = statusMap.get(pair)[1]
+            status = statusMap.get(pair)
             //console.log(status)
         }
-    } else {
-        status = statusMap.get(pair)
-        //console.log(status)
-    }
-    newObj.status = status
-    //console.log('newObj', newObj)
-    console.log('objStatus', `${newObj.status} ${newObj.firstname} ${newObj.lastname}`)
-    updateData('http://localhost:4000/statuses', newObj)
-    // TODO go through tenants and add a check if their beacon has not sent data for x (?) seconds
-
-    // this function checks if a nurse has already reacted to the alarm, updates the tenant 
-    // checked-field according to tenant status, or sends a push notification in alarm mode
-    checkIfChecked(newObj) 
-   
+        newObj.status = status
+        //console.log('newObj', newObj)
+        console.log('objStatus', `${newObj.status} ${newObj.firstname} ${newObj.lastname}`)
+        updateData('http://localhost:4000/statuses', newObj)
+        // TODO go through tenants and add a check if their beacon has not sent data for x (?) seconds
+    
+        // this function checks if a nurse has already reacted to the alarm, updates the tenant 
+        // checked-field according to tenant status, or sends a push notification in alarm mode
+        checkIfChecked(newObj) 
+    }  
 }
 
 let statusMap = new Map([
