@@ -12,6 +12,9 @@ const monitor_tenants = async () => {
     } else {
         console.log('cannot get tenant or receiver data, app will not work')
     }
+    /* this setInterval is unnecessary for the function of the monitoring, it's for the purpose
+     of clearing the beacon_detections database table in the development
+     environment, you can comment out the next line */
     setInterval(() => clearDetections('http://localhost:4000/detections'), 60000)
 }
 
@@ -46,13 +49,6 @@ const clearDetections = async (url) => {
     }
 }
 
-
-/*const postData = async (url, newObject) => {  
-    const response = await axios.post(url, newObject)
-    return response.data
-}*/
-
-
 const updateData = async (url, newObj) => {
     const response = await axios.put(`${url}/${newObj.id}`, newObj)
     return response.data
@@ -77,7 +73,7 @@ const getTenant = async (beacon_id, tenants) => {
 const getReceiver = async (receiver_id, receivers) => {
 
     try {
-        let result = _.find(receivers, function(t) { return t.receiver_id.toLowerCase() === receiver_id })
+        let result = _.find(receivers, function(t) { return t.receiver_id.toLowerCase() === receiver_id.toLowerCase() })
         return result
     } catch(error) {
         console.log(error)
@@ -114,6 +110,8 @@ const getStatusForTenants = async (tenantData) => {
 
 const defineStatus = (obj) => {
     let alarmStatus = 'alarm'
+    // Warning, this will fail if there is a receiver not stored in database!
+    // TODO handle unknown receivers
     let pair = obj.tenant.profile_type + '.' + obj.receiver.location_type
     let status = ''
     let newObj = { 
@@ -146,6 +144,10 @@ const defineStatus = (obj) => {
     //console.log('newObj', newObj)
     console.log('objStatus', `${newObj.status} ${newObj.firstname} ${newObj.lastname}`)
     updateData('http://localhost:4000/statuses', newObj)
+    // TODO go through tenants and add a check if their beacon has not sent data for x (?) seconds
+
+    // this function checks if a nurse has already reacted to the alarm, updates the tenant 
+    // checked-field according to tenant status, or sends a push notification in alarm mode
     checkIfChecked(newObj) 
    
 }
@@ -173,7 +175,6 @@ let statusMap = new Map([
         console.log('checked?', tenant.checked)
         let alarmStatus = 'alarm'
         if (tenant.checked) {
-            // todo add counting logic (how long has it been since checked)
             if (newObj.status !== alarmStatus) {
                 console.log('status has changed, no need to keep checked')
                 updateChecked('http://localhost:4000/statuses', newObj.id, false)

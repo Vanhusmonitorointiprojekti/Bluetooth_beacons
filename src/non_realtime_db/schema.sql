@@ -65,6 +65,11 @@ FOREIGN KEY (beacon_id) REFERENCES beacons(beacon_id),
 FOREIGN KEY (profile_id) REFERENCES profiles(profile_id)
 );
 
+CREATE TABLE tokens (
+id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+token VARCHAR(30) NOT NULL
+);
+
 INSERT INTO profiles (profile_id, profile_type, description) VALUES
 ('2020PM1', 1, 'rajoitettu omaan pienkotiin'), ('2020PM2', 2, 'liikkuu vapaasti'),
 ('2020PM3', 3, 'muut pienkodit ei sallittu');
