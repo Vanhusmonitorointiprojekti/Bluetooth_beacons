@@ -110,7 +110,6 @@ const getStatusForTenants = async (tenantData) => {
 } 
 
 const defineStatus = (obj) => {
-    let alarmStatus = 'alarm'
     // to handle unknown receivers and beacons not stored in database!
     if (obj.receiver !== undefined && obj.tenant !== undefined) {
         let pair = obj.tenant.profile_type + '.' + obj.receiver.location_type
