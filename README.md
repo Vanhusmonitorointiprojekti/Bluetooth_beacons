@@ -10,15 +10,14 @@
 * [Installation](#installation)
   * [Development environment](#development-environment)
   * [Production environment](#production-environment)
-* [How to use](#How-to-use)
-  * [Webclient](#Webclient)
+* [Webclient](#Webclient)
 * [Known issues and future developments](#Known-issues-and-future-developments)
 * [License](#License)
 
 <!-- INTRODUCTION -->
 # Introduction
 
-The purpose of this project is to help nursing staff in a new nursing home (that will be completed in the near future) to monitor their patients who are suffering from memory disorders. Picture 1 represents the areas in the new nursing facility. The patients would like to walk freely in the premises, but if they reach an area where they shouldn't be, they need to be guided back to the allowed space. One of the ways this project accomplishes that is by tracking the patients via a bluetooth wristlet that they wear. This wristlet is tracked by Raspberry Pis installed inside the nursing facility. The system is programmed to allow the patients freedom of movement inside the areas they are permitted to access. However, the system will send an alarm if a patient leaves the designated areas. The areas that are allowed to the patients depend on their profile (free to move, restricted to one's own home, now allowed to visit others quarters etc.). The nurses can see where the patients move via a mobile application and a desktop application, and they can check out the alarms.
+The purpose of this project is to help nursing staff in a new nursing home (that will be completed in the near future) to monitor their patients who are suffering from memory disorders. Picture 1 represents the areas in the new nursing facility. The patients are allowed to walk freely in the premises, but if they reach an area where they shouldn't be, they need to be guided back to the allowed space. One of the ways this project accomplishes that is by tracking the patients via a bluetooth wristlet that they wear. This wristlet is tracked by Raspberry Pis installed inside the nursing facility. The system is programmed to allow the patients freedom of movement inside the areas they are permitted to access. However, the system will send an alarm if a patient leaves the designated areas. The areas that are allowed to the patients depend on their profile (free to move, restricted to one's own home, now allowed to visit others quarters etc.). The nurses can see where the patients move via a mobile application and a desktop application, and they can check out the alarms.
 
 The system's backend server is built with Node.js + Express framework and the front end client is made with React framework. The mobile application is built with Expo platform for universal React applications. The system has two databases: a non-realtime database using MariaDB database system and a real-time database using RethinkDB database system.
 
@@ -28,7 +27,7 @@ Picture 1. This picture is a model of the new nursing home that will be built in
 <!-- Architecture -->
 # Architecture and Technical Description
 
-Picture 2 shows the monitoring system. The Raspberry Pis in different locations send MQTT data of the beacon wristlets to the MQTT server. The backend server listens to this data from the MQTT server, determines the locations of the patients according to this data, and notifies the changes in real-time to the mobile and desktop clients. The non-realtime database is used to get information of the tenants, locations, profiles etc.
+Picture 2 shows the monitoring system. The Raspberry Pis in different locations send MQTT data of the beacon wristlets to the MQTT server. The backend server listens to this data from the MQTT server, determines the locations of the patients according to this data, and notifies the changes in realtime to the mobile and desktop clients. The non-realtime database is used to get information of the tenants, locations, profiles etc.
 
 ![architecture](img/phase2.PNG)
 Picture 2. The system architecture.
@@ -44,7 +43,7 @@ The system is built with these technologies:
 
 MariaDB database holds information related to the nursing home, its tenants and the monitoring system equipments. The MQTT data stored in this database is meant for future Big Data analysis. The RethinkDB database is used for its ability to push updated query results with changefeeds to other applications in realtime. This reduces the need for polling changes, and with the help of socket.io library that establishes a WebSocket communication channel between the client and the server, the changes in tenant locations and statuses are sent in realtime to the client. The front-end client in the browser is built with React. The mobile client uses the Expo-platform and its managed workflow for React Native, and the repository of the mobile version is linked [here](https://github.com/Vanhusmonitorointiprojekti/Bluetooth_beacons_mobile).
 
-The backend servers use the Express framework for Node.js. The MQTT client listens to the MQTT data transmission of the MQTT server, and writes data to the realtime database (RethinDB). The MQTT data the MQTT server sends and the monitoring system consumes is in the following form
+The backend servers use the Express framework for Node.js. The MQTT client listens to the MQTT data transmission of the MQTT server, and writes data to the realtime database (RethinDB). The MQTT data the MQTT server sends and the monitoring system consumes is in the following format
 (receiver-name mac-address-of-the-beacon signal-strengt):
 ```
 receiver2 ff:ff:ff:ff:ff:ff -37
@@ -79,7 +78,7 @@ Picture 3. The main components and connections.
 
 # The Database Systems
 ## Non-realtime Database (MariaDB)
-The non-realtime database uses the [MariaDB](https://mariadb.org/) database system and is used for holding information of the patients (tenants), beacons, receivers and other details related to these. Picture 4 shows the non-realtime database model.
+The non-realtime database uses the [MariaDB](https://mariadb.org/) database system and is used for holding information about the patients (tenants), beacons, receivers and other details related to these. Picture 4 shows the non-realtime database model.
 
 ![non_realtime_db](img/non_realtime.PNG)
 Picture 4. The non-realtime database.
@@ -162,6 +161,7 @@ Picture 4. The non-realtime database.
 The real-time database uses the [RethinkDB](https://rethinkdb.com/) database system and is used for the location information and detection data. The detection data on this database is deleted on regular intervals, where as the detection data stored in MariaDB non-realtime database is preserved. Picture 5 shows the real-time database model.
 
 ![realtime_db](img/realtime.PNG)
+
 Picture 5. The real-time database.
 
 > ### _beacon_detections_
@@ -280,39 +280,39 @@ During this project the backend and databases were installed on Ubuntu 20.04 ser
 
 A free domain name was acquired via [Freenom](https://www.freenom.com/). [Nginx](https://www.nginx.com/) was used as a reverse-proxy server for the backend application and configured with SSL with [Let's Encrypt certificate obtained with Certbot](https://letsencrypt.org/). [PM2 daemon process manager](https://pm2.keymetrics.io/) was used for making the node applications run as services in the background. 
 
-The MariaDB non-realtime database system was running on another server (private IP), whereas the Node.js backend and RethinkDB realtime database system were running on another server (public IP). For the MariaDB in the non-realtime server, in addition to the previous steps, define the nrt_user accordingly:
+The MariaDB non-realtime database system was running on another server (private IP), whereas the Node.js backend and RethinkDB realtime database system were running on another server (public IP). For the MariaDB in the non-realtime server, define the nrt_user accordingly:
 ```
 CREATE USER 'nrt_user' IDENTIFIED BY 'nrt_user_password';
 GRANT USAGE ON *.* TO 'nrt_user'@'%' IDENTIFIED BY 'nrt_user_password';
 GRANT SELECT ON senior_monitoring.* TO 'nrt_user'@'%';
 ```
+You will also need to configure MariaDB to [allow remote connections](https://mariadb.com/kb/en/configuring-mariadb-for-remote-client-access/).
 
 A couple of tweaks were made in the backend code. The src/realtime_db/rt_mqtt_client was started as separate node processes managed by PM2 (and not inside the monitorserver.js file, for instance). Clearing the detections from the database was handled as a separate service as well, and not in the src/realtime_db_monitor_tenants.js file. 
 
 Mobile version of the app can be found here: https://github.com/Vanhusmonitorointiprojekti/Bluetooth_beacons_mobile
 
-<!-- How to use -->
-## How to use
+<!-- Webclient  -->
+## Webclient
 
+Sijainnit (Locations) -page contains information about the locations and statuses of the tenants:
+![sijainnit](img/sijainnit.PNG)
 
-<!-- Webclient -->
-### Webclient
-
-
-#### Beacon info -page contains information about the users
-![beacon info](https://raw.githubusercontent.com/Marski96/Bluetooth_beacons/development/img/beaconinfo.JPG)
-
-#### Receiver info -page contains information about the receivers
-![receiver info](https://raw.githubusercontent.com/Marski96/Bluetooth_beacons/development/img/receiverinfo.JPG)
-
-#### Beacon locations -page contains the main info about locations of the beacons
-![beacon locations](https://raw.githubusercontent.com/Marski96/Bluetooth_beacons/development/img/beaconlocations.JPG)
+Other pages were hardcoded examples of beacon, nurse, alarm and tenant information pages and how they could look like in the future.
 
 
 <!-- Known issues and future developments -->
 ## Known issues and future developments
 
-See the [open issues](https://github.com/Marski96/Bluetooth_beacons/issues) for a list of proposed features (and known issues).
+- nurses can login into system
+- nurses can choose the tenants whose alarms and status they observe
+- a night profile needs to be added, where all the tenants are restricted to their own home during the night time
+- more steps for checking the alarms need to be added in addition to the "Situation ok" ("I'll go check", "Escalate to others")
+- if a beacon is not detected within a certain time limit, send an alarm
+- if the alarm is not checked by a nurse within a certain time limit, escalate to others automatically
+- the system should send a warning, if a tenant is not chosen for monitoring
+- improve the administrative panel (the webclient)
+- the backend monitor app crashes if an unknown receiver is found in the MQTT data, this needs to be fixed
 
 <!-- License -->
 ## License
