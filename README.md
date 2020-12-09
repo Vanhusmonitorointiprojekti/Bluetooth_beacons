@@ -311,8 +311,7 @@ Other pages were hardcoded examples of beacon, nurse, alarm and tenant informati
 - if a beacon is not detected within a certain time limit, send an alarm
 - if the alarm is not checked by a nurse within a certain time limit, escalate to others automatically
 - the system should send a warning, if a tenant is not chosen for monitoring
-- improve the administrative panel (the webclient)
-- the backend monitor app crashes if an unknown receiver is found in the MQTT data, this needs to be fixed
+- improve and develop further the administrative panel (the webclient)
 
 <!-- License -->
 ## License

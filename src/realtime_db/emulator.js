@@ -1,4 +1,5 @@
 const signals = [
+  'receiver1 dd:dd:dd:dd:dd:dd -18', // to test if handles unknown beacon
   'receiverX d6:2c:ca:c0:d4:9c -18', // to test if handles unknown receiver
   'receiver1 d6:2c:ca:c0:d4:9c -18',
   'receiver2 d6:2c:ca:c0:d4:9c -68',
