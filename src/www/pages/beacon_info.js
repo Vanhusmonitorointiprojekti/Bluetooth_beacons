@@ -1,13 +1,15 @@
+//Not complete/working
+//When ready should show beacon information and continue to adding and editing beacon info
 import React, { Component } from 'react';
 import { Paper, Table, TableRow, TableHead, TableCell, TableBody, Button, Avatar } from '@material-ui/core';
 import { Link, Router, BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
 import AddBeacon from './addnew_beacon';
 import EditBeacon from "./edit_beacon";
 import { withTranslation } from 'react-i18next';
-import user1 from './beaconuser1.jpg';
-import user2 from './beaconuser2.jpg';
-import user3 from './beaconuser3.jpg';
-import user4 from './beaconuser4.jpg';
+import user1 from './user_img/beaconuser1.jpg';
+import user2 from './user_img/beaconuser2.jpg';
+import user3 from './user_img/beaconuser3.jpg';
+import user4 from './user_img/beaconuser4.jpg';
 
 class Beacon_info extends Component {
     constructor(props) {

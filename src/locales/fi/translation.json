@@ -13,6 +13,9 @@
     "Time" : "Mittausaika (sekunneissa)",
     "Status" : "Tilanne",
     "Location" : "Sijainti",
+    "Nurse info" : "Hoitaja info",
+    "Alarm" : "Hälytykset",
+    "Locations" : "Sijainnit",
    
     "Edit" : "Muokkaa",
     "Delete" : "Poista",
