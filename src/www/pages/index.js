@@ -3,12 +3,13 @@ import { AppBar, Tabs, Tab, Button } from '@material-ui/core';
 import { Route, Switch, BrowserRouter, Link } from 'react-router-dom'
 import { withTranslation } from "react-i18next";
 
-import Receiver_info from './receiver_info.js';
 import Beacon_info from './beacon_info.js';
-import Beacon_locations from "./beacon_locations";
-import Clients from "./clients";
 import flag_UK from '../../locales/en/flag_UK.png'
 import flag_FI from '../../locales/fi/flag_FI.png'
+import Nurse_info from './nurse_info';
+import Admin_alarm from './admin_alarm';
+import Locations from './location';
+import Tenant from './tenant';
 
 class AdminFrontPage extends Component{
   constructor(props){
@@ -26,13 +27,6 @@ handleActiveTabChange = (event, val) => {
   this.setState( {activeTab: val});
 }
 
-/*handleClick() {
-  this.setState(state => ({
-    isEnglish: !state.isEnglish
-  }));
-} 
-*/
-
 switchEn = () => {
   this.setState({isEnglish: true});
   this.props.i18n.changeLanguage("en");
@@ -44,42 +38,31 @@ switchFi = () => {
 }
 
 
-/*
-toggleLang = event => {
-  console.log("selected language is ", event.target.value);
-  let newlang = event.target.value;
-  this.setState(prevState => ({ language: newlang}));
-  console.log("state value is ", newlang);
-  this.props.i18n.changeLanguage(newlang);
-}
-*/
-
-
 render(){
   const { t, i18n } = this.props;
   return(
   <div>
     <BrowserRouter>
-    <div style={{paddingLeft: '20%', paddingRight: '20%'}}>
+    <div style={{paddingLeft: '0%', paddingRight: '0%'}}>
           <AppBar position="static">
             <Tabs value={this.state.activeTab} onChange={this.handleActiveTabChange}>
-              <Tab label={t("Beacon info")} component={Link} to="/"/>
-              <Tab label={t("Receiver info")} component={Link} to="/ReceiverInfo" />
-              <Tab label={t("Beacon locations")} component={Link} to="/BeaconLocations" />
-              <Tab label={"Clients"} component={Link} to="/Clients" />
+              <Tab style={{fontSize: '22px', marginLeft: '5%'}} label={t("Nurse info")} component={Link} to="/"/>
+              <Tab style={{fontSize: '22px', marginLeft: '5%'}} label={t("Alarm")} component={Link} to="/Admin_alarm"/>
+              <Tab style={{fontSize: '22px', marginLeft: '5%'}} label={t("Locations")} component={Link} to="/Locations"/>
+              <Tab style={{fontSize: '22px', marginLeft: '5%'}} label={t("Tenants")} component={Link} to="/Tenant"/>
               <Button style={{marginLeft: "auto"}} onClick={this.switchEn}><img src= {flag_UK} alt="FlagOfUK" height='25' width='40' /></Button>
               <Button onClick={this.switchFi}><img src= {flag_FI} alt="FlagOfFI" height='25' width='40' /></Button>
-              
+
             </Tabs>
-            
+
           </AppBar>
         </div>
         <div>
                           <Switch>
-                              <Route exact path="/" component={Beacon_info}></Route>
-                              <Route path="/ReceiverInfo" component={Receiver_info}></Route>
-                              <Route path="/BeaconLocations" component={Beacon_locations}></Route>
-                              <Route path="/Clients" component={Clients}></Route>
+                              <Route exact path="/" component={Nurse_info}></Route>
+                              <Route path="/Admin_alarm" component={Admin_alarm}></Route>
+                              <Route path="/Locations" component={Locations}></Route>
+                              <Route path="/Tenant" component={Tenant}></Route>
                           </Switch>
                       </div>
         </BrowserRouter>
@@ -87,5 +70,9 @@ render(){
   )
 }
 }
+
+//Beacon info page not complete
+/*<Route exact path="/" component={Beacon_info}></Route>
+<Tab style={{fontSize: '22px', marginLeft: '5%'}} label={t("Beacon info")} component={Link} to="/"/>*/
 
 export default (withTranslation("translation"))(AdminFrontPage);
