@@ -290,7 +290,7 @@ You will also need to configure MariaDB to [allow remote connections](https://ma
 
 More useful information about the deployment and the administration of the RethinkDB database system can be found in the [RethinkDB documentation](https://rethinkdb.com/docs).
 
-A couple of tweaks were made in the backend code. The src/realtime_db/rt_mqtt_client was started as separate node processes managed by PM2 (and not inside the monitorserver.js file). Clearing the detections from the database was handled as a separate service as well, and not in the src/realtime_db_monitor_tenants.js file. 
+A couple of tweaks were made in the backend code. The src/realtime_db/rt_mqtt_client was started as a separate node process managed by PM2 (and not inside the monitorserver.js file). Clearing the detections from the database was handled as a separate service as well, and not in the src/realtime_db/monitor_tenants.js file. 
 
 <!-- Webclient  -->
 ## Webclient
