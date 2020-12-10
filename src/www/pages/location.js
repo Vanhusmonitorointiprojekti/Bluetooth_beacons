@@ -11,12 +11,12 @@ class Location extends Component {
             tieto: [],
             response: "",
             tenant: "",
-            endpoint: "http://195.148.21.28:4002",
+            endpoint: "http://localhost:4002",
         };
     }
 
     componentDidMount() {
-        fetch('https://www.vanhusmonitorointi.tk/statuses')
+        fetch('http://localhost:4000/statuses')
         .then((response) => response.json())
         .then(responseJson => {
             console.log('tieto', responseJson)
@@ -40,7 +40,6 @@ class Location extends Component {
     }
 
     render() {
-        const tenant = this.state.tenant;
 
         return (
             <div style={{textAlign: "center"}}>

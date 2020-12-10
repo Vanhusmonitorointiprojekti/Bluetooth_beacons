@@ -23,6 +23,7 @@ class Beacon_info extends Component {
 
 
     componentDidMount = () => {
+        // THIS PATH DOES NOT EXIST
         fetch('http://localhost:4000/beacon_info')
             .then((response) => response.json())
             .then(responseJson => {
@@ -37,6 +38,7 @@ class Beacon_info extends Component {
 
 
     delete_beacon = (beacon_id) => {
+        // THIS PATH DOES NOT EXIST
         fetch('http://localhost:4000/delete/' + beacon_id)
             .then((response) => response.json())
             .then((responseJson) =>

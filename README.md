@@ -49,9 +49,9 @@ The backend servers use the Express framework for Node.js. The MQTT client liste
 receiver2 ff:ff:ff:ff:ff:ff -37
 ```
 
-Another MQTT client writes MQTT data to the non-realtime database (MariaDB) The API server gets the MQTT data from realtime database and checks the locations of each beacon in the interval of 6 seconds by calculating the average signal strenght of the three latest detection measurements per beacon and determines the closest receiver for all the beacons. After this, the server checks if it's alright for the tenant holding the beacon wristlet to be in the location where the receiver is, and updates the tenant's status to the realtime database. If the tenant is not allowed in the area, the server sends a push notification to the mobile phone of the nurse. The server also updates the tenant statuses and locations to the realtime database. These changes are sent via a socket.io connection from the http-server with socket.io-instance attached to it to client applications. 
+Another MQTT client writes MQTT data to the non-realtime database (MariaDB) The API server gets the MQTT data from realtime database and checks the locations of each beacon in the interval of 6 seconds by calculating the average signal strenght of the three latest detection measurements per beacon and determines the closest receiver for all the beacons. After this, the server checks if it's ok for the tenant holding the beacon wristlet to be in the location where the receiver is, and updates the tenant's status to the realtime database. If the tenant is not allowed in the area, the server sends a push notification to the mobile phone of the nurse. The server also updates the tenant statuses and locations to the realtime database. These changes are sent via a socket.io connection from the http-server (with socket.io-instance attached to it) to the client applications. 
 
-In the mobile application the nurse can check the alarm, and if the tenant's alarm state is checked, the server will not send new notifications. When the tenant returns to the allowed space, the server determines that the alarm situtation is over and returns the tenant's state to unchecked. If the tenant moves again to the restricted area, there will be a new notification.  
+In the mobile application the nurse can check out the alarm by pressing a button, and if the tenant's alarm state is checked, the server will not send new notifications about this particular tenant. Otherwise, there will be notifications as long as the situation is not checked, or the tenant has not moved away from the restricted area. When the tenant returns to the allowed space, the server determines that the alarm situation is over and returns the tenant's state to unchecked. If the tenant moves again to the restricted area, there will be a new notification.  
 
 Picture 3 shows the main components and connections of the system in the production environment. The difference to the development environment is that both databases are located on the same server. The mobile system is depicted [here](https://github.com/Vanhusmonitorointiprojekti/Bluetooth_beacons_mobile).
 
@@ -73,7 +73,6 @@ Picture 3. The main components and connections.
 > PUT | /statuses/:id | Updates the record of a tenant with id
 > POST | /api/push_notification/push_token | Adds a new token
 > POST | /api/push_notification/message | Adds a message and sends it as a push notification
-
 
 
 # The Database Systems
@@ -158,11 +157,11 @@ Picture 4. The non-realtime database.
 > token | char(30) |  The Expo token of the mobile phone
 
 ## Realtime Database (RethinkDB)
-The real-time database uses the [RethinkDB](https://rethinkdb.com/) database system and is used for the location information and detection data. The detection data on this database is deleted on regular intervals, where as the detection data stored in MariaDB non-realtime database is preserved. Picture 5 shows the real-time database model.
+The real-time database uses the [RethinkDB](https://rethinkdb.com/) database system and is used for the location information and detection data. The detection data on this database is deleted at regular intervals, whereas the detection data stored in the MariaDB non-realtime database is preserved. Picture 5 shows the realtime database model.
 
 ![realtime_db](img/realtime.PNG)
 
-Picture 5. The real-time database.
+Picture 5. The realtime database.
 
 > ### _beacon_detections_
 > _The beacon_detections table contains the MQTT data received from the MQTT server._
@@ -274,6 +273,7 @@ node monitorserver.js
  npm start
 ```
 - in your browser, go to [http://localhost:3000](http://localhost:3000) to see the React application
+
 ### Production environment
 
 During this project the backend and databases were installed on Ubuntu 20.04 servers following the aforementioned instructions and [this guide](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-20-04). 
@@ -288,18 +288,17 @@ GRANT SELECT ON senior_monitoring.* TO 'nrt_user'@'%';
 ```
 You will also need to configure MariaDB to [allow remote connections](https://mariadb.com/kb/en/configuring-mariadb-for-remote-client-access/).
 
-A couple of tweaks were made in the backend code. The src/realtime_db/rt_mqtt_client was started as separate node processes managed by PM2 (and not inside the monitorserver.js file, for instance). Clearing the detections from the database was handled as a separate service as well, and not in the src/realtime_db_monitor_tenants.js file. 
+More useful information about the deployment and the administration of the RethinDB database system can be found in the [RethinkDB documentation](https://rethinkdb.com/docs).
 
-Mobile version of the app can be found here: https://github.com/Vanhusmonitorointiprojekti/Bluetooth_beacons_mobile
+A couple of tweaks were made in the backend code. The src/realtime_db/rt_mqtt_client was started as separate node processes managed by PM2 (and not inside the monitorserver.js file, for instance). Clearing the detections from the database was handled as a separate service as well, and not in the src/realtime_db_monitor_tenants.js file. 
 
 <!-- Webclient  -->
 ## Webclient
 
 Sijainnit (Locations) -page contains information about the locations and statuses of the tenants:
-![sijainnit](img/sijainnit.PNG)
+![sijainnit](img/locations2.PNG)
 
-Other pages were hardcoded examples of beacon, nurse, alarm and tenant information pages and how they could look like in the future.
-
+Other pages were hardcoded examples of nurse, alarm and tenant information pages and how they could look like in the future.
 
 <!-- Known issues and future developments -->
 ## Known issues and future developments

@@ -46,7 +46,7 @@ render(){
     <div style={{paddingLeft: '0%', paddingRight: '0%'}}>
           <AppBar position="static">
             <Tabs value={this.state.activeTab} onChange={this.handleActiveTabChange}>
-              <Tab style={{fontSize: '22px', marginLeft: '5%'}} label={t("Nurse info")} component={Link} to="/Nurse"/>
+              <Tab style={{fontSize: '22px', marginLeft: '5%'}} label={t("Nurse info")} component={Link} to="/"/>
               <Tab style={{fontSize: '22px', marginLeft: '5%'}} label={t("Alarm")} component={Link} to="/Admin_alarm"/>
               <Tab style={{fontSize: '22px', marginLeft: '5%'}} label={t("Locations")} component={Link} to="/Locations"/>
               <Tab style={{fontSize: '22px', marginLeft: '5%'}} label={t("Tenants")} component={Link} to="/Tenant"/>
@@ -59,7 +59,7 @@ render(){
         </div>
         <div>
                           <Switch>
-                              <Route path="/Nurse" component={Nurse_info}></Route>
+                              <Route exact path="/" component={Nurse_info}></Route>
                               <Route path="/Admin_alarm" component={Admin_alarm}></Route>
                               <Route path="/Locations" component={Locations}></Route>
                               <Route path="/Tenant" component={Tenant}></Route>
