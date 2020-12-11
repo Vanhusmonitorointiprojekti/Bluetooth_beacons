@@ -313,6 +313,9 @@ Other pages were hardcoded examples of nurse, alarm and tenant information pages
 - improve and develop further the administrative panel (the webclient)
 - add the functionality to insert and edit beacon owners and get the API server notified about the changes to the database
 
+More information about ![databases](documents/Tietokantasuunnitelma.xlsx) 
+and ![requirements](documents/Vaatimukset.docx)
+
 <!-- License -->
 ## License
 Licensed under MIT-license.
